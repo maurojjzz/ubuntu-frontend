@@ -3,14 +3,30 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
+      main: '#ffffff',
+      grisClaro: '#EAEAEA',
+      grisMedio:'D2D2D2',
+      grisOscuro: '#6E6F70',
+      verdeFuentes:'#59BA47',
+      verdeCards:'#226516',
+      verdeGestion:'#1D9129',
+      naranja:'#B86B11',
+      rojo:'#BC1111',
+      azul: '#093C59',
+      negro: '#090909',
     },
     secondary: {
-      main: '#dc004e',
+      main: '#59BA47',
     },
   },
   typography: {
-    fontFamily: 'Roboto, sans-serif',
+    fontFamily:[
+      'Antipasto-ExtraLightTrial',
+      'Antipasto-ExtraBoldTrial',
+      'Antipasto-RegularTrial',
+      'big_noodle.titling',
+      'big_noodle_titling_oblique'
+    ]
   },
 });
 
