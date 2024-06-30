@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   Card,
-  CardHeader,
   CardMedia,
   CardContent,
   CardActions,
@@ -54,12 +53,29 @@ const CustomCard = ({
     );
   };
 
+  const renderDots = () => {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '8px' }}>
+        {images.map((_, index) => (
+          <div
+            key={index}
+            style={{
+              height: '10px',
+              width: '10px',
+              borderRadius: '50%',
+              margin: '0 5px',
+              backgroundColor: currentImageIndex === index ? theme.palette.primary.azul : 'white',
+            }}
+          />
+        ))}
+      </div>
+    );
+  };
+
   return (
     <Card
       style={{
         backgroundColor: theme.palette.primary.grisClaro,
-        borderColor: theme.palette.primary.azul,
-        border: "3px solid",
         borderRadius: "16px",
       }}
     >
@@ -74,20 +90,24 @@ const CustomCard = ({
             position: "relative",
           }}
         >
-          <IconButton
-            onClick={handlePrevImage}
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: 0,
-              transform: "translateY(-50%)",
-              zIndex: 1,
-              backgroundColor: "rgba(0,0,0,0.5)",
-              color: "white",
-            }}
-          >
-            <ArrowBackIosNewIcon />
-          </IconButton>
+          {currentImageIndex > 0 && (
+            <IconButton
+              onClick={handlePrevImage}
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: 0,
+                transform: "translateY(-50%)",
+                zIndex: 1,
+                color: "white",
+                width: "7.41px",
+                height: "12px",
+                padding: "20px"
+              }}
+            >
+              <ArrowBackIosNewIcon />
+            </IconButton>
+          )}
 
           <CardMedia
             component="img"
@@ -108,13 +128,16 @@ const CustomCard = ({
               right: 0,
               transform: "translateY(-50%)",
               zIndex: 1,
-              backgroundColor: "rgba(0,0,0,0.5)",
               color: "white",
+              width: "7.41px",
+              height: "12px",
+              padding: "20px"
             }}
           >
             <ArrowForwardIosIcon />
           </IconButton>
         </div>
+        {renderDots()}
       </div>
 
       <CardContent>
