@@ -22,8 +22,6 @@ const ExpandMoreButton = styled((props) => {
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  // alignItems:"center",
-  
   transition: theme.transitions.create("transform", {
     duration: theme.transitions.duration.shortest,
   }),
@@ -68,8 +66,6 @@ const CustomCard = ({
       <div
         style={{
           position: "relative",
-          // borderColor: theme.palette.primary.naranja,
-          // border: "2px solid",
         }}
       >
         <div
@@ -121,10 +117,8 @@ const CustomCard = ({
         </div>
       </div>
 
-      {/* <CardHeader title={title} subheader={subtitle} /> */}
-
       <CardContent>
-        <Typography variant="body1" color={theme.palette.primary.negro} >
+        <Typography variant="body1" color={theme.palette.primary.negro}>
           {title}
         </Typography>
         <Typography variant="body2" color={theme.palette.primary.azul}>
@@ -139,22 +133,23 @@ const CustomCard = ({
         </Typography>
       </CardContent>
 
-      <CardActions disableSpacing style={{ display: 'flex', justifyContent: 'center' }}>
-        <ExpandMoreButton
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-          style={{
-            backgroundColor: theme.palette.primary.grisClaro,
-            color: theme.palette.primary.azul,
-            fontSize: "14px",
-          }}
-        >
-          <ExpandMoreIcon />
-        </ExpandMoreButton>
-      </CardActions>
-
+      {!expanded && (
+        <CardActions disableSpacing style={{ display: 'flex', justifyContent: 'center' }}>
+          <ExpandMoreButton
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+            style={{
+              backgroundColor: theme.palette.primary.grisClaro,
+              color: theme.palette.primary.azul,
+              fontSize: "14px",
+            }}
+          >
+            <ExpandMoreIcon />
+          </ExpandMoreButton>
+        </CardActions>
+      )}
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
@@ -169,21 +164,35 @@ const CustomCard = ({
       </Collapse>
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-  <div style={{ display: 'flex', justifyContent: 'center', paddingBottom:"24px"}}>
-    <Button
-      size="small"
-      href=""
-      style={{
-        backgroundColor: theme.palette.primary.azul,
-        color: "white",
-        borderRadius: "100px"        
-      }}
-    >
-      Contactar
-    </Button>
-  </div>
-</Collapse>
-
+        <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: "24px" }}>
+          <Button
+            size="small"
+            href="mailto:tu-email@ejemplo.com"
+            style={{
+              backgroundColor: theme.palette.primary.azul,
+              color: "white",
+              borderRadius: "100px"
+            }}
+          >
+            Contactar
+          </Button>
+        </div>
+        <CardActions disableSpacing style={{ display: 'flex', justifyContent: 'center' }}>
+          <ExpandMoreButton
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show less"
+            style={{
+              backgroundColor: theme.palette.primary.grisClaro,
+              color: theme.palette.primary.azul,
+              fontSize: "14px",
+            }}
+          >
+            <ExpandMoreIcon />
+          </ExpandMoreButton>
+        </CardActions>
+      </Collapse>
     </Card>
   );
 };
