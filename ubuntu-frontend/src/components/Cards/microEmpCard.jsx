@@ -146,7 +146,6 @@ const CustomCard = ({
           aria-expanded={expanded}
           aria-label="show more"
           style={{
-            marginTop: "8px",
             backgroundColor: theme.palette.primary.grisClaro,
             color: theme.palette.primary.azul,
             fontSize: "14px",
@@ -170,19 +169,21 @@ const CustomCard = ({
       </Collapse>
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <Button
-          size="small"
-          color="primary"
-          href="mailto:tu-email@ejemplo.com"
-          style={{
-            marginLeft: "auto",
-            backgroundColor: theme.palette.primary.azul,
-            color: "white",
-          }}
-        >
-          Contactar
-        </Button>
-      </Collapse>
+  <div style={{ display: 'flex', justifyContent: 'center', paddingBottom:"24px"}}>
+    <Button
+      size="small"
+      href=""
+      style={{
+        backgroundColor: theme.palette.primary.azul,
+        color: "white",
+        borderRadius: "100px"        
+      }}
+    >
+      Contactar
+    </Button>
+  </div>
+</Collapse>
+
     </Card>
   );
 };
