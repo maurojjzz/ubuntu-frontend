@@ -8,13 +8,14 @@ import {
   IconButton,
   Collapse,
   Button,
-  useTheme, // Importa useTheme para acceder al tema
+  useTheme, 
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import CustomLocationIcon from "../../assets/img/location_on.png";
 
 const ExpandMoreButton = styled((props) => {
   const { expand, ...other } = props;
@@ -60,10 +61,10 @@ const CustomCard = ({
           <div
             key={index}
             style={{
-              height: '10px',
-              width: '10px',
+              height: '6px',
+              width: '6px',
               borderRadius: '50%',
-              margin: '0 5px',
+              margin: '0 2px',
               backgroundColor: currentImageIndex === index ? theme.palette.primary.azul : 'white',
             }}
           />
@@ -77,6 +78,8 @@ const CustomCard = ({
       style={{
         backgroundColor: theme.palette.primary.grisClaro,
         borderRadius: "16px",
+        boxShadow:"0px 0px 0px rgba(0, 0, 0, 0)",  //corregir esto, me carga un shadown por defecto 
+        
       }}
     >
       <div
@@ -86,7 +89,7 @@ const CustomCard = ({
       >
         <div
           style={{
-            margin: "16px",
+             margin: "16px",            
             position: "relative",
           }}
         >
@@ -140,20 +143,28 @@ const CustomCard = ({
         {renderDots()}
       </div>
 
-      <CardContent>
-        <Typography variant="body1" color={theme.palette.primary.negro}>
+      <CardContent>        
+        <Typography  color={theme.palette.primary.negro} style={{ fontFamily: "'Lato' ", fontWeight:"600", fontSize: "18px", lineHeight: "25px",  marginBottom: "4px"}}>
           {title}
         </Typography>
-        <Typography variant="body2" color={theme.palette.primary.azul}>
+
+        <Typography  color={theme.palette.primary.azul} style={{ fontFamily: "'Lato' ", fontWeight:"700", fontSize:"14px", lineHeight: "18px", marginBottom: "4px"  }}>
           {subtitle}
         </Typography>
 
-        <Typography variant="body2" color={theme.palette.primary.negro}>
+        <Typography  color={theme.palette.primary.negro} style={{ fontFamily: "'Lato' ", fontWeight:"400", fontSize:"14px", lineHeight: "18px",  }}>
           {category}
         </Typography>
-        <Typography variant="body2" color={theme.palette.primary.negro}>
-          <LocationOnIcon fontSize="small" /> {location}
-        </Typography>
+      
+        
+        <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
+          <img src={CustomLocationIcon} alt="Location Icon" style={{ width: '20px', marginRight: '8px' }} />
+          <Typography color={theme.palette.primary.negro} style={{ fontFamily: "'Lato'", fontWeight: "400", fontSize: "14px", lineHeight: "20px" }}>
+            {location}
+          </Typography>
+        </div>
+        
+
       </CardContent>
 
       {!expanded && (
