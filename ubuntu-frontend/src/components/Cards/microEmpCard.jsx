@@ -9,10 +9,10 @@ import {
   Collapse,
   Button,
   useTheme,
+  Divider,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import CustomLocationIcon from "../../assets/img/location_on.png";
@@ -83,7 +83,7 @@ const CustomCard = ({
       style={{
         backgroundColor: theme.palette.primary.grisClaro,
         borderRadius: "16px",
-        boxShadow: "0px 0px 0px rgba(0, 0, 0, 0)", //corregir esto, me carga un shadown por defecto
+        boxShadow: "0px 0px 0px rgba(0, 0, 0, 0)",
       }}
     >
       <div
@@ -107,12 +107,10 @@ const CustomCard = ({
                 transform: "translateY(-50%)",
                 zIndex: 1,
                 color: "white",
-                width: "7.41px",
-                height: "12px",
-                padding: "20px",
+                padding: "10px",
               }}
             >
-              <ArrowBackIosNewIcon />
+              <ArrowBackIosNewIcon style={{ fontSize: "20px" }} />
             </IconButton>
           )}
 
@@ -136,12 +134,10 @@ const CustomCard = ({
               transform: "translateY(-50%)",
               zIndex: 1,
               color: "white",
-              width: "7.41px",
-              height: "12px",
-              padding: "20px",
+              padding: "10px",
             }}
           >
-            <ArrowForwardIosIcon />
+            <ArrowForwardIosIcon style={{ fontSize: "20px" }} />
           </IconButton>
         </div>
         {renderDots()}
@@ -161,20 +157,20 @@ const CustomCard = ({
           {title}
         </Typography>
 
-        {expanded && (
-          <Typography
-            color={theme.palette.primary.azul}
-            style={{
-              fontFamily: "'Lato' ",
-              fontWeight: "700",
-              fontSize: "14px",
-              lineHeight: "18px",
-              marginBottom: "4px",
-            }}
-          >
-            {subtitle}
-          </Typography>
-        )}
+        {/* {expanded && (   aca esta comentado, lo que hace que al estar cerrado la card no muestra subtitulo*/}
+        <Typography
+          color={theme.palette.primary.azul}
+          style={{
+            fontFamily: "'Lato' ",
+            fontWeight: "700",
+            fontSize: "14px",
+            lineHeight: "18px",
+            marginBottom: "4px",
+          }}
+        >
+          {subtitle}
+        </Typography>
+        {/* )} */}
 
         <Typography
           color={theme.palette.primary.negro}
@@ -225,22 +221,77 @@ const CustomCard = ({
               color: theme.palette.primary.azul,
             }}
           >
-            <ExpandMoreIcon style={{ 
-              fontSize: "50px"
-               }} />
+            <ExpandMoreIcon
+              style={{
+                fontSize: "50px",
+              }}
+            />
           </ExpandMoreButton>
         </CardActions>
       )}
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>{details}</Typography>
+          <Typography
+            color={theme.palette.primary.azul}
+            style={{
+              fontFamily: "Lato",
+              fontWeight: "600",
+              fontSize: "16px",
+              lineHeight: "25px",
+              marginBottom: "4px",
+            }}
+          >
+            Descripción del Microemprendimiento
+          </Typography>
+          <Typography
+            color={theme.palette.primary.negro}
+            style={{
+              fontFamily: "Lato",
+              fontWeight: "400",
+              fontSize: "16px",
+              lineHeight: "20px",
+              marginBottom: "4px",
+            }}
+          >
+            {details}
+          </Typography>
         </CardContent>
       </Collapse>
 
+      {expanded && (
+        <Divider
+          variant="middle"
+          style={{ backgroundColor: theme.palette.primary.negro }}
+        />
+      )}
+
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>{moreInf}</Typography>
+          <Typography
+            color={theme.palette.primary.azul}
+            style={{
+              fontFamily: "Lato",
+              fontWeight: "600",
+              fontSize: "16px",
+              lineHeight: "25px",
+              marginBottom: "4px",
+            }}
+          >
+            Más información de interés
+          </Typography>
+          <Typography
+            color={theme.palette.primary.negro}
+            style={{
+              fontFamily: "Lato",
+              fontWeight: "400",
+              fontSize: "16px",
+              lineHeight: "20px",
+              marginBottom: "4px",
+            }}
+          >
+            {moreInf}
+          </Typography>
         </CardContent>
       </Collapse>
 
@@ -249,16 +300,22 @@ const CustomCard = ({
           style={{
             display: "flex",
             justifyContent: "center",
-            paddingBottom: "24px",
           }}
         >
           <Button
             size="small"
             href="mailto:tu-email@ejemplo.com"
             style={{
+              fontFamily: "Lato",
               backgroundColor: theme.palette.primary.azul,
-              color: "white",
+              color: theme.palette.primary.blanco,
+              fontWeight: "700",
+              fontSize: "16px",
+              lineHeight: "20px",
+              textTransform: "none",
+              border: "1px solid",
               borderRadius: "100px",
+              padding: "10px 24px 10px 24px",
             }}
           >
             Contactar
@@ -278,9 +335,12 @@ const CustomCard = ({
               color: theme.palette.primary.azul,
             }}
           >
-<ExpandMoreIcon style={{ 
-              fontSize: "50px"
-               }} />          </ExpandMoreButton>
+            <ExpandMoreIcon
+              style={{
+                fontSize: "50px",
+              }}
+            />{" "}
+          </ExpandMoreButton>
         </CardActions>
       </Collapse>
     </Card>
