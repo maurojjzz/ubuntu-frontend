@@ -1,6 +1,6 @@
 import { Typography, Container, Grid } from "@mui/material"; 
 import data from "../../../../data.json"
-import CustomCard from "../../cards/MicroEmpCard"; 
+import CustomCard from "../../Cards/microEmpCard"; 
 
 const ViewMicroEmprendimientos = () => {
     return (
