@@ -146,7 +146,7 @@ const CustomCard = ({
       <CardContent>
         <Typography
           color={theme.palette.primary.negro}
-          style={{
+          sx={{
             fontFamily: "'Lato' ",
             fontWeight: "600",
             fontSize: "18px",
