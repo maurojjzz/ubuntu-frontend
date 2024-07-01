@@ -1,14 +1,21 @@
-import { Typography, Container } from "@mui/material";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ViewMicroEmprendimientos from "./components/view/microEmprendimientos/ViewMicroEmprendimientos";
+import { Typography } from "@mui/material"; 
 
 function App() {
   return (
-    <>
-      <Container>
-        <Typography variant="h1" sx={{ fontFamily: 'big_noodle.titling'}} color="primary.azul">
+    <Router>
+      <div>
+      <Typography variant="h1" color="primary-grisOscuro">
           Ubuntu
         </Typography>
-      </Container>
-    </>
+
+        
+        <Routes>
+          <Route path="/microemprendimientos" element={<ViewMicroEmprendimientos />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
