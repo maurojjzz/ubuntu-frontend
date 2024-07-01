@@ -10,12 +10,13 @@ import {
   Button,
   useTheme,
   Divider,
+  Box, // Importar Box
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import CustomLocationIcon from "../../assets/img/location_on.png";
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 const ExpandMoreButton = styled((props) => {
   const { expand, ...other } = props;
@@ -56,13 +57,13 @@ const CustomCard = ({
 
   const renderDots = () => {
     return (
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "8px" }}
+      <Box
+        sx={{ display: "flex", justifyContent: "center", marginTop: "8px" }}
       >
         {images.map((_, index) => (
-          <div
+          <Box
             key={index}
-            style={{
+            sx={{
               height: "6px",
               width: "6px",
               borderRadius: "50%",
@@ -74,25 +75,25 @@ const CustomCard = ({
             }}
           />
         ))}
-      </div>
+      </Box>
     );
   };
 
   return (
     <Card
-      style={{
+      sx={{
         backgroundColor: theme.palette.primary.grisClaro,
         borderRadius: "16px",
         boxShadow: "0px 0px 0px rgba(0, 0, 0, 0)",
       }}
     >
-      <div
-        style={{
+      <Box
+        sx={{
           position: "relative",
         }}
       >
-        <div
-          style={{
+        <Box
+          sx={{
             margin: "16px",
             position: "relative",
           }}
@@ -100,7 +101,7 @@ const CustomCard = ({
           {currentImageIndex > 0 && (
             <IconButton
               onClick={handlePrevImage}
-              style={{
+              sx={{
                 position: "absolute",
                 top: "50%",
                 left: 0,
@@ -110,7 +111,7 @@ const CustomCard = ({
                 padding: "10px",
               }}
             >
-              <ArrowBackIosNewIcon style={{ fontSize: "20px" }} />
+              <ArrowBackIosNewIcon sx={{ fontSize: "20px" }} />
             </IconButton>
           )}
 
@@ -120,14 +121,14 @@ const CustomCard = ({
             width="304"
             image={images[currentImageIndex]}
             alt="Image"
-            style={{
+            sx={{
               borderRadius: "16px",
             }}
           />
 
           <IconButton
             onClick={handleNextImage}
-            style={{
+            sx={{
               position: "absolute",
               top: "50%",
               right: 0,
@@ -137,11 +138,11 @@ const CustomCard = ({
               padding: "10px",
             }}
           >
-            <ArrowForwardIosIcon style={{ fontSize: "20px" }} />
+            <ArrowForwardIosIcon sx={{ fontSize: "20px" }} />
           </IconButton>
-        </div>
+        </Box>
         {renderDots()}
-      </div>
+      </Box>
 
       <CardContent>
         <Typography
@@ -157,10 +158,9 @@ const CustomCard = ({
           {title}
         </Typography>
 
-        {/* {expanded && (   aca esta comentado, lo que hace que al estar cerrado la card no muestra subtitulo*/}
         <Typography
           color={theme.palette.primary.azul}
-          style={{
+          sx={{
             fontFamily: "'Lato' ",
             fontWeight: "700",
             fontSize: "14px",
@@ -170,11 +170,10 @@ const CustomCard = ({
         >
           {subtitle}
         </Typography>
-        {/* )} */}
 
         <Typography
           color={theme.palette.primary.negro}
-          style={{
+          sx={{
             fontFamily: "'Lato' ",
             fontWeight: "400",
             fontSize: "14px",
@@ -184,17 +183,15 @@ const CustomCard = ({
           {category}
         </Typography>
 
-        <div
-          style={{ display: "flex", alignItems: "center", marginTop: "10px" }}
+        <Box
+          sx={{ display: "flex", alignItems: "center", marginTop: "10px" }}
         >
-          <img
-            src={CustomLocationIcon}
-            alt="Location Icon"
-            style={{ width: "20px", marginRight: "8px" }}
+          <LocationOnIcon
+            sx={{ width: "20px", marginRight: "8px" }}
           />
           <Typography
             color={theme.palette.primary.negro}
-            style={{
+            sx={{
               fontFamily: "'Lato'",
               fontWeight: "400",
               fontSize: "14px",
@@ -203,26 +200,26 @@ const CustomCard = ({
           >
             {location}
           </Typography>
-        </div>
+        </Box>
       </CardContent>
 
       {!expanded && (
         <CardActions
           disableSpacing
-          style={{ display: "flex", justifyContent: "center" }}
+          sx={{ display: "flex", justifyContent: "center" }}
         >
           <ExpandMoreButton
             expand={expanded}
             onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
-            style={{
+            sx={{
               backgroundColor: theme.palette.primary.grisClaro,
               color: theme.palette.primary.azul,
             }}
           >
             <ExpandMoreIcon
-              style={{
+              sx={{
                 fontSize: "50px",
               }}
             />
@@ -234,7 +231,7 @@ const CustomCard = ({
         <CardContent>
           <Typography
             color={theme.palette.primary.azul}
-            style={{
+            sx={{
               fontFamily: "Lato",
               fontWeight: "600",
               fontSize: "16px",
@@ -246,7 +243,7 @@ const CustomCard = ({
           </Typography>
           <Typography
             color={theme.palette.primary.negro}
-            style={{
+            sx={{
               fontFamily: "Lato",
               fontWeight: "400",
               fontSize: "16px",
@@ -262,7 +259,7 @@ const CustomCard = ({
       {expanded && (
         <Divider
           variant="middle"
-          style={{ backgroundColor: theme.palette.primary.negro }}
+          sx={{ backgroundColor: theme.palette.primary.negro }}
         />
       )}
 
@@ -270,7 +267,7 @@ const CustomCard = ({
         <CardContent>
           <Typography
             color={theme.palette.primary.azul}
-            style={{
+            sx={{
               fontFamily: "Lato",
               fontWeight: "600",
               fontSize: "16px",
@@ -282,7 +279,7 @@ const CustomCard = ({
           </Typography>
           <Typography
             color={theme.palette.primary.negro}
-            style={{
+            sx={{
               fontFamily: "Lato",
               fontWeight: "400",
               fontSize: "16px",
@@ -296,8 +293,8 @@ const CustomCard = ({
       </Collapse>
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <div
-          style={{
+        <Box
+          sx={{
             display: "flex",
             justifyContent: "center",
           }}
@@ -305,7 +302,7 @@ const CustomCard = ({
           <Button
             size="small"
             href="mailto:tu-email@ejemplo.com"
-            style={{
+            sx={{
               fontFamily: "Lato",
               backgroundColor: theme.palette.primary.azul,
               color: theme.palette.primary.blanco,
@@ -320,26 +317,26 @@ const CustomCard = ({
           >
             Contactar
           </Button>
-        </div>
+        </Box>
         <CardActions
           disableSpacing
-          style={{ display: "flex", justifyContent: "center" }}
+          sx={{ display: "flex", justifyContent: "center" }}
         >
           <ExpandMoreButton
             expand={expanded}
             onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show less"
-            style={{
+            sx={{
               backgroundColor: theme.palette.primary.grisClaro,
               color: theme.palette.primary.azul,
             }}
           >
             <ExpandMoreIcon
-              style={{
+              sx={{
                 fontSize: "50px",
               }}
-            />{" "}
+            />
           </ExpandMoreButton>
         </CardActions>
       </Collapse>
