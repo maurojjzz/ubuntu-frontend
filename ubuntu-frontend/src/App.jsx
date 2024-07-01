@@ -1,16 +1,21 @@
-import { Typography, Container } from "@mui/material"; // Importa Grid para organizar las tarjetas
-
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ViewMicroEmprendimientos from "./components/view/microEmprendimientos/ViewMicroEmprendimientos";
+import { Typography } from "@mui/material"; 
 
 function App() {
   return (
-    <>
-      <Container>
-        <Typography variant="h1" color="primary-grisOscuro">
+    <Router>
+      <div>
+      <Typography variant="h1" color="primary-grisOscuro">
           Ubuntu
         </Typography>
+
         
-      </Container>
-    </>
+        <Routes>
+          <Route path="/microemprendimientos" element={<ViewMicroEmprendimientos />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
