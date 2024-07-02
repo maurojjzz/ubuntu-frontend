@@ -1,9 +1,11 @@
 import { useTheme } from "@mui/material/styles";
-
 import { Box, Typography, Container, Grid } from "@mui/material";
 import data from "../../../../data.json";
 import CustomCard from "../../Cards/microEmpCard";
 import imagenmicro from "../../../assets/img/imagen microemprendimientos.jpg";
+import SearchBar from "../../SearchBar";
+import DrawerComponent from "../../DrawerComponent";
+
 
 const ViewMicroEmprendimientos = () => {
   const theme = useTheme();
@@ -19,10 +21,10 @@ const ViewMicroEmprendimientos = () => {
           mb: 4,
           backgroundImage: `url(${imagenmicro})`,          backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "55vh",
+          height: "60vh",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
+          // justifyContent: "center",
           pl: 2,
         }}
       >
@@ -44,6 +46,17 @@ const ViewMicroEmprendimientos = () => {
             // maxWidth: '70%',
           }}
         >
+          <Box sx={{
+            position: "relative",
+            zIndex: 2, 
+            // maxWidth: '70%',
+            marginBottom: 6,
+            marginTop: 3,
+          }}
+          >
+          <SearchBar />
+          </Box>
+
           <Typography
             sx={{
               fontFamily: "'Lato' ",
@@ -51,7 +64,7 @@ const ViewMicroEmprendimientos = () => {
               fontSize: "18px",
               lineHeight: "24px",
               textAlign: "left",
-              marginTop: "1vh",
+              // marginTop: "1vh",
               color: "white",
             }}
           >
