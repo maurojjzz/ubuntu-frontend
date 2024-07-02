@@ -152,7 +152,7 @@ const ViewMicroEmprendimientos = () => {
         </Typography>
       </Box>
 
-      <Box sx={{margin: "2vh"}}>
+      <Box sx={{margin:"2vh"}}>
       <Grid container spacing={3}>
         {data.map((cardData, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
