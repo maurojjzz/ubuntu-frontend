@@ -89,8 +89,7 @@ const LandingPage = () => {
               ml: "16px",
               minWidth: "240px",
               width: "55vw",
-              mt: "16px",
-              
+              mt: "16px",             
             }}
           >
             Impulsamos el desarrollo de finanzas de impacto, liderando
