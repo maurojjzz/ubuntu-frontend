@@ -1,4 +1,4 @@
-import { Typography, Container, Grid } from "@mui/material"; 
+import { Container, Grid } from "@mui/material"; 
 import data from "../../../../data.json"
 import CustomCard from "../../Cards/microEmpCard"; 
 

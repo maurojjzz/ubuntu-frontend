@@ -1,15 +1,16 @@
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import DrawerComponent from "../../DrawerComponent";
 import logo from "../../../assets/img/logoubuntu.png";
 import SearchBar from "../../SearchBar";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
-import ViewMicroEmprendimientos from "../microEmprendimientos/ViewMicroEmprendimientos";
+import { Typography, Toolbar, Box, AppBar } from "@mui/material";
 
-const LandingPage=()=> {
+const LandingPage = () => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box
+      sx={{
+        displayflexGrow: 1,
+      }}
+    >
       <AppBar
         sx={{
           position: "static",
@@ -37,7 +38,7 @@ const LandingPage=()=> {
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "50vh", // Ajusta la altura según sea necesario
+          height: "50vh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
@@ -47,10 +48,23 @@ const LandingPage=()=> {
       >
         <SearchBar />
       </Box>
-      <Box> </Box>
       <Box></Box>
+      <Box>
+        <Typography
+          variant="body1"
+          color="initial"
+          sx={{
+            textAlign: "center",
+            fontFamily: "'Lato', sans-serif",
+            fontSize: "32px",
+            lineHeight: "40px",
+          }}
+        >
+          Microemprendimientos Ubuntu
+        </Typography>
+      </Box>
       <Box> </Box>
     </Box>
   );
-}
+};
 export default LandingPage;
