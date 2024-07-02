@@ -11,20 +11,27 @@ import backgroundImage from "../../../assets/img/imagenlanding.jpg";
 const LandingPage=()=> {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="grey">
+      <AppBar
+        sx={{
+          position: "static",
+          color: "grey",
+        }}
+      >
         <Toolbar variant="dense">
           <DrawerComponent />
-          <Typography
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            width="100vw"
-            variant="h6"
-            color="inherit"
-            component="div"
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignContent: "center",
+              width: "100vw",
+              variant: "h6",
+              color: "inherit",
+              component: "div",
+            }}
           >
-            <img src={logo} alt="logo" margin-left="5 rem" />
-          </Typography>
+            <img src={logo} alt="logo" />
+          </Box>
         </Toolbar>
       </AppBar>
       <Box

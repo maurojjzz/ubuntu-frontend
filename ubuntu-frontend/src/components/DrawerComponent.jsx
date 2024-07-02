@@ -34,7 +34,7 @@ const DrawerComponent = () => {
         edge="start"
         color="blue"
         aria-label="menu"
-        sx={{ mr: 2 }}
+        sx={{mr: 2 }}
       >
         <MenuIcon />
       </IconButton>

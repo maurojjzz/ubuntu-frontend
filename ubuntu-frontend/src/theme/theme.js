@@ -5,7 +5,7 @@ const theme = createTheme({
     primary: {
       main: '#ffffff',
       grisClaro: '#EAEAEA',
-      grisMedio:'D2D2D2',
+      grisMedio:'#D2D2D2',
       grisOscuro: '#6E6F70',
       verdeFuentes:'#59BA47',
       verdeCards:'#226516',
