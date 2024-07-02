@@ -4,8 +4,7 @@ import data from "../../../../data.json";
 import CustomCard from "../../Cards/microEmpCard";
 import imagenmicro from "../../../assets/img/imagen microemprendimientos.jpg";
 import SearchBar from "../../SearchBar";
-import DrawerComponent from "../../DrawerComponent";
-
+import Navba from "../../Navbar"
 
 const ViewMicroEmprendimientos = () => {
   const theme = useTheme();
@@ -13,6 +12,7 @@ const ViewMicroEmprendimientos = () => {
 
   return (
     <Container sx={{ padding: "0px" }}>
+      <Navba />
       <Box
         sx={{
           position: "relative",
