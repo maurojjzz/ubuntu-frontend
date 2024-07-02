@@ -1,10 +1,14 @@
+import { Typography, Toolbar, Box, AppBar, useTheme } from "@mui/material";
 import DrawerComponent from "../../DrawerComponent";
 import logo from "../../../assets/img/logoubuntu.png";
 import SearchBar from "../../SearchBar";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
-import { Typography, Toolbar, Box, AppBar } from "@mui/material";
+
+import CategoryItem from "../../CategoryItem";
 
 const LandingPage = () => {
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
@@ -49,19 +53,72 @@ const LandingPage = () => {
         <SearchBar />
       </Box>
       <Box></Box>
-      <Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          border: "1px solid red",
+        }}
+      >
         <Typography
           variant="body1"
-          color="initial"
+          align="center"
           sx={{
-            textAlign: "center",
-            fontFamily: "'Lato', sans-serif",
-            fontSize: "32px",
-            lineHeight: "40px",
+            color: theme.palette.primary.negro,
+            fontFamily: "Lato",
+            fontWeight: "600",
+            fontSize: "16px",
+            lineHeight: "25px",
+            mt: "32px",
+            letterSpacing: "0.5px",
           }}
         >
           Microemprendimientos Ubuntu
         </Typography>
+        <Typography
+          variant="h4"
+          align="center"
+          sx={{
+            color: theme.palette.primary.negro,
+            fontFamily: "Lato",
+            fontWeight: "600",
+            fontSize: "22px",
+            lineHeight: "25px",
+            mt: "10px",
+            mb: "32px",
+          }}
+        >
+          Categorías
+        </Typography>
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "16px",
+            mb: "24px",
+          }}
+        >
+          <CategoryItem
+            picUrl="Economia social.png"
+            contentText="Economía social/Desarrollo local/ Inclusión financiera"
+          />
+          <CategoryItem 
+            picUrl="Agroecologia.png" 
+            contentText="Agroecología/Orgánicos/ Alimentación saludable" 
+          />
+          <CategoryItem 
+            picUrl="Conservacion.png" 
+            contentText="Conservación/Regeneración/ Servicios ecosistémicos" 
+          />
+          <CategoryItem 
+            picUrl="Empresas.png" 
+            contentText="Empresas/Organismos de impacto/Economía circular" 
+          />
+        </Box>
       </Box>
       <Box> </Box>
     </Box>

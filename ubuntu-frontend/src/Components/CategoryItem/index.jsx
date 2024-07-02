@@ -36,7 +36,7 @@ const CategoryItem = ({picUrl, contentText}) => {
           marginRight: "8px",
         }}
       >
-        <Img src={`src/assets/img/${picUrl}`} alt="icon category" />
+        <Img src={`src/assets/img/${picUrl}`} alt={`icon ${contentText}`} />
       </Box>
       <Box
         className={"hovertiza"}
