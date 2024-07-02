@@ -10,7 +10,7 @@ import backgroundImage from "../../../assets/img/imagenlanding.jpg";
 
 const LandingPage=()=> {
   return (
-    <Box sx={{ flexGrow: 1}}>
+    <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="grey">
         <Toolbar variant="dense">
           <DrawerComponent />
@@ -42,6 +42,9 @@ const LandingPage=()=> {
       >
         <SearchBar />
       </Box>
+      <Box> </Box>
+      <Box> </Box>
+      <Box> </Box>
     </Box>
   );
 }
