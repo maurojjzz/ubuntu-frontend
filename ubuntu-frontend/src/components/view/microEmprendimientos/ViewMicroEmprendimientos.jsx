@@ -120,24 +120,39 @@ const ViewMicroEmprendimientos = () => {
         <Typography 
         sx={{
           fontFamily: "'Lato' ",
-          fontWeight: "600",
-          fontSize: "24px",
-          lineHeight: "25px",
+          fontWeight: "500",
+          fontSize: "20px",
+          lineHeight: "30px",
           textAlign: "center",
-          marginTop: "4vh",
+          marginTop: "3vh",
+          marginLeft: "6vh",
+          marginRight: "6vh",
+
           color: theme.palette.primary.azul
         }}>
-          Agroecología/Orgánicos/Alimentación saludable
+          Agroecología/ Orgánicos/ Alimentación saludable
         </Typography>
 
 
-        <Typography variant="body1" component="p" sx={{ marginTop: 1 }}>
+        <Typography 
+        sx={{
+          fontFamily: "'Lato' ",
+          fontWeight: "400",
+          fontSize: "16px",
+          lineHeight: "25px",
+          textAlign: "center",
+          marginTop: "2vh",
+          marginLeft: "7vh",
+          marginRight: "7vh",
+          color: theme.palette.primary.negro        }}
+        >
           Conectate con Microemprendimientos que respetan la tierra y priorizan
           la salud, a través de prácticas agrícolas limpias y alimentos
           nutritivos.
         </Typography>
       </Box>
 
+      <Box sx={{margin: "2vh"}}>
       <Grid container spacing={3}>
         {data.map((cardData, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
@@ -153,6 +168,8 @@ const ViewMicroEmprendimientos = () => {
           </Grid>
         ))}
       </Grid>
+      </Box>
+      
     </Container>
   );
 };
