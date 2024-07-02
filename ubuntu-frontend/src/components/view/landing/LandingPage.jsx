@@ -10,7 +10,7 @@ import backgroundImage from "../../../assets/img/imagenlanding.jpg";
 
 const LandingPage=()=> {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1}}>
       <AppBar position="static" color="grey">
         <Toolbar variant="dense">
           <DrawerComponent />
@@ -27,14 +27,20 @@ const LandingPage=()=> {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Box sx={{backgroundImage: `url(${backgroundImage})`,
+      <Box
+        sx={{
+          backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           height: "50vh", // Ajusta la altura según sea necesario
           display: "flex",
-          justifyContent: "center",
-          alignItems: "center",}}>
-        <SearchBar/>
+          flexDirection: "column",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          padding: "20px 20px 0",
+        }}
+      >
+        <SearchBar />
       </Box>
     </Box>
   );
