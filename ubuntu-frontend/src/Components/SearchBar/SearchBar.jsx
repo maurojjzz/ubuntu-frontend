@@ -23,6 +23,7 @@ const SearchBar = () => {
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", 
         width:"90vw",
         border:"0",
+        zIndex:"100"
       }}
     >
       <TextField

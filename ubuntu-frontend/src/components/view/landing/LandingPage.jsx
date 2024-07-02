@@ -42,17 +42,68 @@ const LandingPage = () => {
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "50vh",
+          height: "488px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
           alignItems: "center",
           padding: "20px 20px 0",
+          position: "relative",
         }}
       >
         <SearchBar />
+        <Box
+          sx={{
+            position: "absolute",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "488px",
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+          }}
+        >
+          <Typography
+            align="left"
+            sx={{
+              color: theme.palette.primary.main,
+              fontFamily: "Lato",
+              fontWeight: "600",
+              fontSize: "18px",
+              lineHeight: "24px",
+              textTransform: "uppercase",
+              mt: "120px",
+              ml: "16px",
+            }}
+          >
+            FINANCIAMIENTO SOSTENIBLE
+          </Typography>
+          <Typography
+            align="left"
+            variant="h5"
+            sx={{
+              color: theme.palette.primary.main,
+              fontFamily: "Lato",
+              fontWeight: "500",
+              fontSize: "28px",
+              lineHeight: "33px",
+              ml: "16px",
+              minWidth: "240px",
+              width: "55vw",
+              mt: "16px",
+              
+            }}
+          >
+            Impulsamos el desarrollo de finanzas de impacto, liderando
+            transición hacia un modelo financiero sostenible
+          </Typography>
+
+        </Box>
       </Box>
-      <Box></Box>
+      {/* inicio objetivos ubuntu */}
+      <Box>
+
+      </Box>
+      {/* fin objetivos ubuntu */}
       <Box
         sx={{
           display: "flex",
