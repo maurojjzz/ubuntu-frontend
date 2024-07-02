@@ -10,7 +10,7 @@ function Login() {
         {/* <navbar></navbar> Debe agregarse el componente Navbar*/}
         <div className='login__container'>
             <Card className='login__container__card'>
-                <h2 className='login__container__card__titulo'>Ingreso administrador</h2>
+                <h2 className='login__container__card__titulo'>Ingreso Administrador</h2>
                 <div className='login__container__card__logoContainer'>
                     <img src={logoRegistro} alt="logo registro"/>
                 </div>
