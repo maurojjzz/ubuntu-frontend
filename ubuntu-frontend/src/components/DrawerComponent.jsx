@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Drawer, Button, List, ListItem, ListItemText,IconButton} from "@mui/material";
+import { useState } from "react";
+import { Drawer, List, ListItem, ListItemText,IconButton, Box} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
 const DrawerComponent = () => {
@@ -19,7 +19,7 @@ const DrawerComponent = () => {
     >
       <List>
         {["Inicio", "Microemprendimientos", "Publicaciones", "Login"].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem Button key={text}>
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -28,13 +28,17 @@ const DrawerComponent = () => {
   );
 
   return (
-    <div>
+    <Box>
       <IconButton
         onClick={toggleDrawer(true)}
         edge="start"
         color="blue"
         aria-label="menu"
-        sx={{mr: 2 }}
+        sx={{
+          position: 'fixed',
+          top:'0',
+          mt:'7px'
+         }}
       >
         <MenuIcon />
       </IconButton>
@@ -46,18 +50,17 @@ const DrawerComponent = () => {
           style: {
             background: "#093C59",
             color: "#FDFDFE",
-            top: anchorEl ? anchorEl.getBoundingClientRect().bottom : 0,
             height: `calc(100% - ${
               anchorEl ? anchorEl.getBoundingClientRect().bottom : 0
             }px)`,
             width: "16rem",
-            top: "3.5rem",
+            top: "3.5rem"
           },
         }}
       >
         {list()}
       </Drawer>
-    </div>
+    </Box>
   );
 };
 
