@@ -3,12 +3,13 @@ import Card from '@mui/material/Card';
 import { Box } from '@mui/material';
 import logoRegistro from '../../../assets/img/logo card ingreso registro.png'
 import ButtonLogin from './ButtonLogin';
-import "./Login.css"
+import "./Login.css";
+import Navbar from '../../Navbar';
 
 function Login() {
     return (
     <>
-        {/* <navbar></navbar> Debe agregarse el componente Navbar*/}
+        <Navbar></Navbar>
         <Box className='login__container'>
             <Card className='login__container__card'>
                 <h2 className='login__container__card__titulo'>Ingreso Administrador</h2>
@@ -18,7 +19,6 @@ function Login() {
                 <ButtonLogin></ButtonLogin>
             </Card>
         </Box>
-
     </>
     )
 }
