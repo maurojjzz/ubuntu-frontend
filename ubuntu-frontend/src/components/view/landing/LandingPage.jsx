@@ -1,7 +1,7 @@
 import { Typography, Toolbar, Box, AppBar, useTheme, Button } from "@mui/material";
-import DrawerComponent from "../../DrawerComponent";
+import DrawerComponent from "../../DrawerComponent/DrawerComponent";
 import logo from "../../../assets/img/logoubuntu.png";
-import SearchBar from "../../SearchBar";
+import SearchBar from "../../SearchBar/SearchBar";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
 
 import CategoryItem from "../../CategoryItem";
