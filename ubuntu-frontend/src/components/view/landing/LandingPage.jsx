@@ -1,4 +1,4 @@
-import { Typography, Toolbar, Box, AppBar, useTheme } from "@mui/material";
+import { Typography, Toolbar, Box, AppBar, useTheme, Button } from "@mui/material";
 import DrawerComponent from "../../DrawerComponent";
 import logo from "../../../assets/img/logoubuntu.png";
 import SearchBar from "../../SearchBar";
@@ -58,7 +58,7 @@ const LandingPage = () => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          border: "1px solid red",
+          alignItems: "center",
         }}
       >
         <Typography
@@ -119,8 +119,37 @@ const LandingPage = () => {
             contentText="Empresas/Organismos de impacto/Economía circular" 
           />
         </Box>
+          <Button 
+            variant="contained" 
+            sx={{
+              backgroundColor: theme.palette.primary.azul,
+              width: "184px",
+              height: "40px",
+              borderRadius: "100px",
+              mb: "40px",
+              "&:hover": {
+                  backgroundColor: "#0E537B",
+              }
+            }} 
+            onClick={() => {console.log("Ver más categorias")}}
+          >
+            <Typography 
+              variant="p"
+              sx={{
+                textTransform: "none",
+                color: theme.palette.primary.main,
+                fontFamily: "Lato",
+                fontWeight: "700",
+                fontSize: "16px",
+                
+              }}
+            >
+              Ver más categorias
+            </Typography>
+            
+          </Button>
       </Box>
-      <Box> </Box>
+      <Box></Box>
     </Box>
   );
 };
