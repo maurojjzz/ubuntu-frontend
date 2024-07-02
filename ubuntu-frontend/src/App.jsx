@@ -5,17 +5,17 @@ import Login from "./components/view/login/Login";
 
 function App() {
   return (
-  //   <Router>
-  //     <div>
-  //     <Typography variant="h1" color="primary-grisOscuro">
-  //         Ubuntu
-  //       </Typography>
-  //       <Routes>
-  //         <Route path="/microemprendimientos" element={<ViewMicroEmprendimientos />} />
-  //       </Routes>
-  //     </div>
-  //   </Router>
-  <Login></Login>
+    <Router>
+      <div>
+      <Typography variant="h1" color="primary-grisOscuro">
+          Ubuntu
+        </Typography>
+        <Routes>
+          <Route path="/microemprendimientos" element={<ViewMicroEmprendimientos />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
