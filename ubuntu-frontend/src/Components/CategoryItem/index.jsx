@@ -22,6 +22,7 @@ const CategoryItem = ({picUrl, contentText}) => {
         alignItems: "center",
         cursor: "pointer",
       }}
+      onClick={() => console.log("category clicked")}
     >
       <Box
         sx={{
@@ -51,9 +52,10 @@ const CategoryItem = ({picUrl, contentText}) => {
           align="left"
           color={theme.palette.primary.azul}
           sx={{ 
-            fontFamily: "Antipasto-RegularTrial", 
+            fontFamily: "Lato", 
             fontSize: "16px", 
             lineHeight: "25px",
+            fontWeight: "400",
           }}
         >
           {contentText}
