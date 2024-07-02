@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Drawer, Button, List, ListItem, ListItemText,IconButton} from "@mui/material";
+import { Drawer, Button, List, ListItem, ListItemText,IconButton,Box} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
 const DrawerComponent = () => {
@@ -12,7 +12,7 @@ const DrawerComponent = () => {
   };
 
   const list = () => (
-    <div
+    <Box
       role="presentation"
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
@@ -24,11 +24,11 @@ const DrawerComponent = () => {
           </ListItem>
         ))}
       </List>
-    </div>
+    </Box>
   );
 
   return (
-    <div>
+    <Box>
       <IconButton
         onClick={toggleDrawer(true)}
         edge="start"
@@ -57,7 +57,7 @@ const DrawerComponent = () => {
       >
         {list()}
       </Drawer>
-    </div>
+    </Box>
   );
 };
 

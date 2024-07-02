@@ -7,6 +7,7 @@ import DrawerComponent from "../../DrawerComponent";
 import logo from "../../../assets/img/logoubuntu.png";
 import SearchBar from "../../SearchBar";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
+import ViewMicroEmprendimientos from "../microEmprendimientos/ViewMicroEmprendimientos";
 
 const LandingPage=()=> {
   return (
@@ -50,7 +51,7 @@ const LandingPage=()=> {
         <SearchBar />
       </Box>
       <Box> </Box>
-      <Box> </Box>
+      <Box></Box>
       <Box> </Box>
     </Box>
   );

@@ -21,6 +21,7 @@ const SearchBar = () => {
         padding: "1px", // Espaciado interno
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Sombra
         width:"90vw",
+        border:"0",
       }}
     >
       <TextField
@@ -29,7 +30,6 @@ const SearchBar = () => {
         onChange={handleInputChange}
         placeholder="Buscar Microemprendimiento"
         InputProps={{
-            bordercolor:"transparent",
           startAdornment: (
             <InputAdornment position="start">
               <IconButton onClick={handleSearch}>
@@ -37,6 +37,10 @@ const SearchBar = () => {
               </IconButton>
             </InputAdornment>
           ),
+          sx: {
+            '& .MuiOutlinedInput-notchedOutline': {
+              border: 'none',
+            }}
         }}
         fullWidth
       />
