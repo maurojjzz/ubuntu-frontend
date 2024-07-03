@@ -25,3 +25,9 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+.publicacionesCard__container__button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

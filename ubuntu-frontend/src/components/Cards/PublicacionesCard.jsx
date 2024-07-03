@@ -27,7 +27,7 @@ const PublicacionesCard = ({ title, images, date, text }) => {
             borderRadius: '16px',
             backgroundColor: theme.palette.primary.grisClaro,
         }}>
-            <CardContent>
+            <CardContent >
                 <Box className='publicacionesCard__container__title'>
                     {title}
                 </Box>
@@ -47,9 +47,11 @@ const PublicacionesCard = ({ title, images, date, text }) => {
                                 </Box>
                         )
                 )}
-                <Button sx={{ color: 'black' }} onClick={handleExpandClick}>
-                    {expanded ? 'Mostrar menos' : 'Leer más'}
-                </Button>
+                <Box className='publicacionesCard__container__button'>
+                    <Button sx={{ color: theme.palette.primary.azul, textTransform: 'none',}} onClick={handleExpandClick}>
+                        {expanded ? 'Ver menos' : 'Ver más'}
+                    </Button>
+                </Box>
             </CardContent>
         </Card>
     );
