@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import { Drawer, Button, List, ListItem, ListItemText,IconButton,Box} from "@mui/material";
+import { useState } from "react";
+import { Drawer, IconButton, List, ListItemButton, ListItemText, Box } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
+import { Link } from "react-router-dom";
 
 const DrawerComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,11 +20,15 @@ const DrawerComponent = () => {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {["Inicio", "Microemprendimientos", "Publicaciones", "Login"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+      {["Inicio", "Microemprendimientos", "Publicaciones", "Login"].map((text) => (
+  <ListItemButton 
+    component={Link} 
+    to={text === "Inicio" ? "/" : `/${text.toLowerCase()}`} 
+    key={text}
+  >
+    <ListItemText primary={text} />
+  </ListItemButton>
+))}
       </List>
     </Box>
   );
@@ -32,11 +38,11 @@ const DrawerComponent = () => {
       <IconButton
         onClick={toggleDrawer(true)}
         edge="start"
-        color="blue"
+        color="inherit"
         aria-label="menu"
-        sx={{mr: 2 }}
+        sx={{ mr: 2 }}
       >
-        <MenuIcon />
+        {isOpen ? <CloseIcon /> : <MenuIcon />}
       </IconButton>
       <Drawer
         anchor="bottom"
@@ -46,12 +52,9 @@ const DrawerComponent = () => {
           style: {
             background: "#093C59",
             color: "#FDFDFE",
-            top: anchorEl ? anchorEl.getBoundingClientRect().bottom : 0,
-            height: `calc(100% - ${
-              anchorEl ? anchorEl.getBoundingClientRect().bottom : 0
-            }px)`,
+            top: "7vh",
+            height: `calc(100% - ${anchorEl ? anchorEl.getBoundingClientRect().bottom : 0}px)`,
             width: "16rem",
-            top: "3.5rem",
           },
         }}
       >

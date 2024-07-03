@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { TextField, InputAdornment, IconButton, Box, colors } from "@mui/material";
+import { useState } from "react";
+import { TextField, InputAdornment, IconButton, Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import theme from "../../theme/theme.js";
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,12 +17,13 @@ const SearchBar = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "rgba(255, 255, 255, 0.8)", // Fondo blanco semi-transparente
-        borderRadius: "20px", // Borde redondeado
-        padding: "1px", // Espaciado interno
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Sombra
+        backgroundColor: theme.palette.primary.main, 
+        borderRadius: "20px", 
+        padding: "1px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", 
         width:"90vw",
         border:"0",
+        zIndex:"100"
       }}
     >
       <TextField

@@ -21,11 +21,13 @@ const theme = createTheme({
   },
   typography: {
     fontFamily:[
+      'Lato',
       'Antipasto-ExtraLightTrial',
       'Antipasto-ExtraBoldTrial',
       'Antipasto-RegularTrial',
       'big_noodle.titling',
-      'big_noodle_titling_oblique'
+      'big_noodle_titling_oblique',
+      'sans-serif'
     ]
   },
 });
