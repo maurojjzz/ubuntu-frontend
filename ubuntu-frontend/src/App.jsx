@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ViewMicroEmprendimientos from "./components/view/microEmprendimientos/ViewMicroEmprendimientos";
-import { Typography } from "@mui/material"; 
 import LandingPage from "./components/view/landing/LandingPage";
 import Login from "./components/view/login/Login";
 

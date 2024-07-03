@@ -3,8 +3,8 @@ import { Box, Typography, Container, Grid } from "@mui/material";
 import data from "../../../../data.json";
 import CustomCard from "../../Cards/microEmpCard";
 import imagenmicro from "../../../assets/img/imagen microemprendimientos.jpg";
-import SearchBar from "../../SearchBar";
-import Navba from "../../Navbar"
+import SearchBar from "../../SearchBar/SearchBar";
+import Navbar from "../../Navbar/Navbar"
 
 const ViewMicroEmprendimientos = () => {
   const theme = useTheme();
@@ -12,7 +12,7 @@ const ViewMicroEmprendimientos = () => {
 
   return (
     <Container sx={{ padding: "0px" }}>
-      <Navba />
+      <Navbar />
       <Box
         sx={{
           position: "relative",
