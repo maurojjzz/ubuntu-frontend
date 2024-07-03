@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { Card, CardContent, Typography, Button } from '@mui/material';
 
 
-
-const PublicacionesCard = ({ title, reel, date, text }) => {
+const PublicacionesCard = ({ title, images, date, text }) => {
     const [expanded, setExpanded] = useState(false);
 
     const handleExpandClick = () => {
@@ -25,7 +24,7 @@ const PublicacionesCard = ({ title, reel, date, text }) => {
                     {date}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    {reel}
+                    {images}
                 </Typography>
                 <Typography variant="body1" component="p">
                     {firstParagraph}
@@ -45,7 +44,7 @@ const PublicacionesCard = ({ title, reel, date, text }) => {
 
 PublicacionesCard.propTypes = {
     title: PropTypes.string.isRequired,
-    reel: PropTypes.string.isRequired,
+    images: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
 };

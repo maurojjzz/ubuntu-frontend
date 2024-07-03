@@ -3,6 +3,7 @@ import ViewMicroEmprendimientos from "./components/view/microEmprendimientos/Vie
 import { Typography } from "@mui/material"; 
 import Login from "./components/view/login/Login"
 import LandingPage from "./components/view/landing/LandingPage";
+import ViewPublicaciones from "./components/view/publicaciones/ViewPublicaciones";
 
 function App() {
   return (
@@ -19,7 +20,11 @@ function App() {
           />
           <Route
             path="/login"
-            element={<Login/>}
+            element={<Login />}
+          />
+          <Route
+            path="/publicaciones"
+            element={<ViewPublicaciones />}
           />
         </Routes>
       </div>

@@ -1,5 +1,5 @@
 .login__container{
-    height: 100vh; /* menos el navbar */
+    height: 93vh; /* menos el navbar */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -22,7 +22,7 @@
     align-items: center;
     padding: 0;
     padding-bottom: 5vh;
-    border-radius: 8px;
+    border-radius: 12px !important;
 }
 
 .login__container__card__titulo{
