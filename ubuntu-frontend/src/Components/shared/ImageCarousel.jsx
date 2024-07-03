@@ -7,10 +7,9 @@ function ImageCarousel({ images }) {
     return (
         <Carousel
         //opciones de customizacion:
-        className="carousel-container"
         interval={5000}
         autoPlay={true}
-        indicators={true}
+        // indicators={true}
         // animation="slide"
         navButtonsAlwaysVisible={true}
         navButtonsProps={{

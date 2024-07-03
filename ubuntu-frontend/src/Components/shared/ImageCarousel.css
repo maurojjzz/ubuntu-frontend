@@ -1,15 +1,7 @@
-.carousel-container{
-    position: relative;
-    height: 20vh;
-    overflow: hidden;
-}
-
-
 .carousel-image {
     border-radius: 16px; 
     height: 15vh; 
     object-fit: cover; 
     width: 100%; 
-    border: none;
     display: block;
 }
