@@ -1,42 +1,15 @@
-import { Typography, Toolbar, Box, AppBar, useTheme, Button } from "@mui/material";
-import DrawerComponent from "../../DrawerComponent/DrawerComponent";
-import logo from "../../../assets/img/logoubuntu.png";
+import { Typography, Box, useTheme, Button } from "@mui/material";
 import SearchBar from "../../SearchBar/SearchBar";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
-
 import CategoryItem from "../../CategoryItem";
+import Navbar from "../../Navbar/Navbar";
 
 const LandingPage = () => {
   const theme = useTheme();
 
   return (
-    <Box
-      sx={{
-        displayflexGrow: 1,
-      }}
-    >
-      <AppBar
-        sx={{
-          position: "static",
-          color: "grey",
-        }}
-      >
-        <Toolbar variant="dense">
-          <DrawerComponent />
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignContent: "center",
-              width: "100vw",
-              color: "inherit",
-              component: "div",
-            }}
-          >
-            <img src={logo} alt="logo" />
-          </Box>
-        </Toolbar>
-      </AppBar>
+    <Box>
+      <Navbar />
       <Box
         sx={{
           backgroundImage: `url(${backgroundImage})`,
@@ -203,4 +176,6 @@ const LandingPage = () => {
     </Box>
   );
 };
+
 export default LandingPage;
+
