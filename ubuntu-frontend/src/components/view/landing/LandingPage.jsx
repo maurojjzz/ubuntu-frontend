@@ -3,6 +3,7 @@ import SearchBar from "../../SearchBar/SearchBar";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
 import CategoryItem from "../../CategoryItem";
 import Navbar from "../../Navbar/Navbar";
+import SvgStyle from "../../svg/CategoriesSvg";
 
 const LandingPage = () => {
   const theme = useTheme();
@@ -62,28 +63,27 @@ const LandingPage = () => {
               ml: "16px",
               minWidth: "240px",
               width: "55vw",
-              mt: "16px",             
+              mt: "16px",
             }}
           >
             Impulsamos el desarrollo de finanzas de impacto, liderando
             transición hacia un modelo financiero sostenible
           </Typography>
-
         </Box>
       </Box>
       {/* inicio objetivos ubuntu */}
-      <Box>
-
-      </Box>
+      <Box></Box>
       {/* fin objetivos ubuntu */}
       <Box
         sx={{
+          position: "relative",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
         }}
       >
+        <SvgStyle/>
         <Typography
           variant="body1"
           align="center"
@@ -95,6 +95,7 @@ const LandingPage = () => {
             lineHeight: "25px",
             mt: "32px",
             letterSpacing: "0.5px",
+            zIndex: 1,
           }}
         >
           Microemprendimientos Ubuntu
@@ -110,6 +111,7 @@ const LandingPage = () => {
             lineHeight: "25px",
             mt: "10px",
             mb: "32px",
+            zIndex: 1,
           }}
         >
           Categorías
@@ -123,6 +125,7 @@ const LandingPage = () => {
             alignItems: "center",
             gap: "16px",
             mb: "24px",
+            zIndex: 1,
           }}
         >
           <CategoryItem
@@ -142,35 +145,34 @@ const LandingPage = () => {
             contentText="Empresas/Organismos de impacto/Economía circular" 
           />
         </Box>
-          <Button 
-            variant="contained" 
+        <Button 
+          variant="contained" 
+          sx={{
+            backgroundColor: theme.palette.primary.azul,
+            width: "184px",
+            height: "40px",
+            borderRadius: "100px",
+            mb: "40px",
+            zIndex: 1,
+            "&:hover": {
+              backgroundColor: "#0E537B",
+            }
+          }} 
+          onClick={() => {console.log("Ver más categorias")}}
+        >
+          <Typography 
+            variant="p"
             sx={{
-              backgroundColor: theme.palette.primary.azul,
-              width: "184px",
-              height: "40px",
-              borderRadius: "100px",
-              mb: "40px",
-              "&:hover": {
-                  backgroundColor: "#0E537B",
-              }
-            }} 
-            onClick={() => {console.log("Ver más categorias")}}
+              textTransform: "none",
+              color: theme.palette.primary.main,
+              fontFamily: "Lato",
+              fontWeight: "700",
+              fontSize: "16px",
+            }}
           >
-            <Typography 
-              variant="p"
-              sx={{
-                textTransform: "none",
-                color: theme.palette.primary.main,
-                fontFamily: "Lato",
-                fontWeight: "700",
-                fontSize: "16px",
-                
-              }}
-            >
-              Ver más categorias
-            </Typography>
-            
-          </Button>
+            Ver más categorias
+          </Typography>
+        </Button>
       </Box>
       <Box></Box>
     </Box>
@@ -178,4 +180,3 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-
