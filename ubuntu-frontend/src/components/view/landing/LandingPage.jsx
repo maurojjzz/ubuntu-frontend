@@ -1,9 +1,9 @@
-import { Typography, Box, useTheme, Button,List,ListItemText,ListItemIcon} from "@mui/material";
+import { Typography, Box, useTheme, Button,List,ListItemText, ListItem, ListItemIcon} from "@mui/material";
 import SearchBar from "../../SearchBar/SearchBar";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
 import CategoryItem from "../../CategoryItem";
 import Navbar from "../../Navbar/Navbar";
-import CircleIcon from "@mui/icons-material/Circle";
+import CircleIcon from "@mui/icons-material/Circle"
 
 const LandingPage = () => {
   const theme = useTheme();
@@ -75,7 +75,7 @@ const LandingPage = () => {
       <Box
         sx={{
           padding: "0.5rem 0 1rem 0",
-          margin: "2rem 2rem 0rem",
+          margin: "1rem 1rem 0rem",
           with: "20.5rem",
           heigt: "15rem",
           borderTop: "1px solid #226516",
@@ -100,29 +100,59 @@ const LandingPage = () => {
           Objetivos de Ubuntu
         </Typography>
         <Box>
-          <List
-            sx={{
-              color: "#090909",
-              fontFamily: "Lato",
-              fontWeight: "400",
-              fontSize: "1rem",
-              lineHeight: "1.25rem",
-              heigt: "15rem",
-              width: "20.5rem",
-            }}
-          >
-            {[
-              "Facilitar a productores o microemprendedores el acceso a microcréditos que les permitandesarrollar sus iniciativas empresariales.",
-              "Proporcionar financiación a empresas y organizaciones que  ejecutan proyectos con objetivos sociales, ambientales y culturales.",
-              "Ofrecer a potenciales inversores la oportunidad de participar en proyectos con impacto significativo.",
-            ].map((text) => (
-              <Box>
-                <ListItemIcon>
-                  <CircleIcon />
-                  <ListItemText primary={text} />
-                </ListItemIcon>
-              </Box>
-            ))}
+          <List>
+            <ListItem>
+              <ListItemIcon
+                sx={{
+                  alignSelf: "flex-start",
+                  color: "black",
+                  minWidth: "1.5rem",
+                  height: "1rem",
+                  paddingTop: "0.2rem",
+                }}
+              >
+                <CircleIcon
+                  sx={{ fontSize: "0.8rem", paddingTop: "0.25rem" }}
+                />
+              </ListItemIcon>
+              Facilitar a productores o microemprendedores el acceso a
+              microcréditos que les permitan desarrollar sus iniciativas
+              empresariales.
+            </ListItem>
+            <ListItem>
+              <ListItemIcon
+                sx={{
+                  alignSelf: "flex-start",
+                  color: "black",
+                  minWidth: "1.5rem",
+                  height: "1rem",
+                  paddingTop: "0.2rem",
+                }}
+              >
+                <CircleIcon
+                  sx={{ fontSize: "0.8rem", paddingTop: "0.25rem" }}
+                />
+              </ListItemIcon>
+              Proporcionar financiación a empresas y organizaciones que ejecutan
+              proyectos con objetivos sociales, ambientales y culturales.
+            </ListItem>
+            <ListItem>
+              <ListItemIcon
+                sx={{
+                  alignSelf: "flex-start",
+                  color: "black",
+                  minWidth: "1.5rem",
+                  height: "1rem",
+                  paddingTop: "0.2rem",
+                }}
+              >
+                <CircleIcon
+                  sx={{ fontSize: "0.8rem", paddingTop: "0.25rem" }}
+                />
+              </ListItemIcon>
+              Ofrecer a potenciales inversores la oportunidad de participar en
+              proyectos con impacto significativo.
+            </ListItem>
           </List>
         </Box>
       </Box>
