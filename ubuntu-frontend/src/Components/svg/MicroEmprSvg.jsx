@@ -20,7 +20,7 @@ const SvgMicroemp = () => {
         preserveAspectRatio="none" 
         style={{
           width: "100%",
-          height: "100%",
+          height: "60%",
         }}
       >
         <path d="M361 183C189.669 191.629 104.632 167.382 0 0V550H361V183Z" fill="#226516" />

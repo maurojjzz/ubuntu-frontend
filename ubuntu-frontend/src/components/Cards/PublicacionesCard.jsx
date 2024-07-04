@@ -26,6 +26,7 @@ const PublicacionesCard = ({ title, images, date, text }) => {
             paddingBottom: '8px',
             borderRadius: '16px',
             backgroundColor: theme.palette.primary.grisClaro,
+            boxShadow: 'none',
         }}>
             <CardContent >
                 <Box className='publicacionesCard__container__title'>
