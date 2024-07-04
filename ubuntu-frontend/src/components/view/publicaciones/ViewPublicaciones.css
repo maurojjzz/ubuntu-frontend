@@ -1,0 +1,9 @@
+.publicaciones__container__title, .publicaciones__container__subTitle, .publicaciones__container__texto{
+    color: white;
+    margin-top: 2vh;
+    margin-right: 30%;
+}
+
+.publicaciones__container__title{
+    margin-top: 5vh;
+}
