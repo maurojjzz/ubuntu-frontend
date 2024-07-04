@@ -1,8 +1,9 @@
-import { Typography, Box, useTheme, Button } from "@mui/material";
+import { Typography, Box, useTheme, Button,List,ListItemText,ListItemIcon} from "@mui/material";
 import SearchBar from "../../SearchBar/SearchBar";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
 import CategoryItem from "../../CategoryItem";
 import Navbar from "../../Navbar/Navbar";
+import CircleIcon from "@mui/icons-material/Circle";
 
 const LandingPage = () => {
   const theme = useTheme();
@@ -62,20 +63,71 @@ const LandingPage = () => {
               ml: "16px",
               minWidth: "240px",
               width: "55vw",
-              mt: "16px",             
+              mt: "16px",
             }}
           >
             Impulsamos el desarrollo de finanzas de impacto, liderando
             transición hacia un modelo financiero sostenible
           </Typography>
-
         </Box>
       </Box>
       {/* inicio objetivos ubuntu */}
-      <Box>
-
+      <Box
+        sx={{
+          padding: "0.5rem 0 1rem 0",
+          margin: "2rem 2rem 0rem",
+          with: "20.5rem",
+          heigt: "15rem",
+          borderTop: "1px solid #226516",
+          borderBottom: "1px solid #226516",
+          gap: "0.5rem",
+        }}
+      >
+        <Typography
+          sx={{
+            paddingTop: "0.5rem",
+            paddingBottom: "0.5rem",
+            textAlign: "center",
+            color: "#093C59",
+            fontFamily: "Lato",
+            fontWeight: "700",
+            fontSize: "22px",
+            lineHeight: "25px",
+            minWidth: "240px",
+            width: "90vw",
+          }}
+        >
+          Objetivos de Ubuntu
+        </Typography>
+        <Box>
+          <List
+            sx={{
+              color: "#090909",
+              fontFamily: "Lato",
+              fontWeight: "400",
+              fontSize: "1rem",
+              lineHeight: "1.25rem",
+              heigt: "15rem",
+              width: "20.5rem",
+            }}
+          >
+            {[
+              "Facilitar a productores o microemprendedores el acceso a microcréditos que les permitandesarrollar sus iniciativas empresariales.",
+              "Proporcionar financiación a empresas y organizaciones que  ejecutan proyectos con objetivos sociales, ambientales y culturales.",
+              "Ofrecer a potenciales inversores la oportunidad de participar en proyectos con impacto significativo.",
+            ].map((text) => (
+              <Box>
+                <ListItemIcon>
+                  <CircleIcon />
+                  <ListItemText primary={text} />
+                </ListItemIcon>
+              </Box>
+            ))}
+          </List>
+        </Box>
       </Box>
       {/* fin objetivos ubuntu */}
+      {/* inicio Microemprendimientos*/}
       <Box
         sx={{
           display: "flex",
@@ -129,50 +181,53 @@ const LandingPage = () => {
             picUrl="Economia social.png"
             contentText="Economía social/Desarrollo local/ Inclusión financiera"
           />
-          <CategoryItem 
-            picUrl="Agroecologia.png" 
-            contentText="Agroecología/Orgánicos/ Alimentación saludable" 
+          <CategoryItem
+            picUrl="Agroecologia.png"
+            contentText="Agroecología/Orgánicos/ Alimentación saludable"
           />
-          <CategoryItem 
-            picUrl="Conservacion.png" 
-            contentText="Conservación/Regeneración/ Servicios ecosistémicos" 
+          <CategoryItem
+            picUrl="Conservacion.png"
+            contentText="Conservación/Regeneración/ Servicios ecosistémicos"
           />
-          <CategoryItem 
-            picUrl="Empresas.png" 
-            contentText="Empresas/Organismos de impacto/Economía circular" 
+          <CategoryItem
+            picUrl="Empresas.png"
+            contentText="Empresas/Organismos de impacto/Economía circular"
           />
         </Box>
-          <Button 
-            variant="contained" 
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: theme.palette.primary.azul,
+            width: "184px",
+            height: "40px",
+            borderRadius: "100px",
+            mb: "40px",
+            "&:hover": {
+              backgroundColor: "#0E537B",
+            },
+          }}
+          onClick={() => {
+            console.log("Ver más categorias");
+          }}
+        >
+          <Typography
+            variant="p"
             sx={{
-              backgroundColor: theme.palette.primary.azul,
-              width: "184px",
-              height: "40px",
-              borderRadius: "100px",
-              mb: "40px",
-              "&:hover": {
-                  backgroundColor: "#0E537B",
-              }
-            }} 
-            onClick={() => {console.log("Ver más categorias")}}
+              textTransform: "none",
+              color: theme.palette.primary.main,
+              fontFamily: "Lato",
+              fontWeight: "700",
+              fontSize: "16px",
+            }}
           >
-            <Typography 
-              variant="p"
-              sx={{
-                textTransform: "none",
-                color: theme.palette.primary.main,
-                fontFamily: "Lato",
-                fontWeight: "700",
-                fontSize: "16px",
-                
-              }}
-            >
-              Ver más categorias
-            </Typography>
-            
-          </Button>
+            Ver más categorias
+          </Typography>
+        </Button>
       </Box>
+      {/* inicio Microemprendimientos*/}
+      {/* inicio publicaciones */}
       <Box></Box>
+      {/* inicio publicaciones */}
     </Box>
   );
 };
