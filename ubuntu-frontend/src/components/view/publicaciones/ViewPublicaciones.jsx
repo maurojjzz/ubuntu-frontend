@@ -1,11 +1,12 @@
 import React from 'react';
-import { Box , Typography, useTheme} from '@mui/material';
+import { Box , Typography, useTheme, Grid} from '@mui/material';
 import PublicacionesCard from '../../Cards/PublicacionesCard';
 import SearchBar from '../../SearchBar/SearchBar';
 import NavBar from '../../Navbar/Navbar';
 import imagenPublicaciones from '../../../assets/img/imagen publicaciones.jpg'
 import './ViewPublicaciones.css'
 import data from "../../../../publicaciones.json";
+import SvgMicroemp from '../../svg/MicroEmprSvg';
 
 
 const ViewPublicaciones = () => {
@@ -61,7 +62,9 @@ const ViewPublicaciones = () => {
                     </Box>
                 </Box>
             </Box>
-            <Box>
+            <Box sx={{ position: "relative", zIndex: 10, marginTop: 5 }}>
+             <SvgMicroemp/>
+             <Grid  sx={{ position: "relative", zIndex: 2}}>
                 {data.map((publicacion, index) => (
                     <PublicacionesCard
                         key={index}
@@ -70,7 +73,9 @@ const ViewPublicaciones = () => {
                         date={publicacion.date}
                         text={publicacion.text}
                     />
+                    
                 ))}
+                </Grid>
             </Box>
         </>
     );
