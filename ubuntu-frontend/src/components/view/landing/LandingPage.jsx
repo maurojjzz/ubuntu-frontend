@@ -1,7 +1,7 @@
 import { Typography, Box, useTheme, Button } from "@mui/material";
 import SearchBar from "../../SearchBar/SearchBar";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
-import CategoryItem from "../../CategoryItem";
+import CategoryItem from "../../CategoryItem/CategoryItem";
 import Navbar from "../../Navbar/Navbar";
 import SvgStyle from "../../svg/CategoriesSvg";
 
@@ -126,6 +126,7 @@ const LandingPage = () => {
             gap: "16px",
             mb: "24px",
             zIndex: 1,
+
           }}
         >
           <CategoryItem
