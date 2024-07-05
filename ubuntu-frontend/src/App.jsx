@@ -4,15 +4,13 @@ import LandingPage from "./components/view/landing/LandingPage";
 import ViewPublicaciones from "./components/view/publicaciones/ViewPublicaciones";
 import Login from "../src/components/view/login/Login";
 
+
 function App() {
   return (
     <Router>
       <div>
-          <Routes>
-          <Route
-            path="/"
-            element={<LandingPage />}
-          />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
           <Route
             path="/microemprendimientos"
             element={<ViewMicroEmprendimientos />}
