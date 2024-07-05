@@ -6,7 +6,7 @@ import NavBar from '../../Navbar/Navbar';
 import imagenPublicaciones from '../../../assets/img/imagen publicaciones.jpg';
 import './ViewPublicaciones.css';
 import jsonData from '../../../assets/json/publicaciones.json';
-import SvgMicroemp from '../../svg/MicroEmprSvg';
+import SvgPublic from '../../svg/PublicSvg';
 
 const ViewPublicaciones = () => {
     const theme = useTheme();
@@ -67,7 +67,7 @@ const ViewPublicaciones = () => {
                 </Box>
             </Box>
             <Box sx={{ position: "relative", zIndex: 10, marginTop: 5 }}>
-                <SvgMicroemp />
+                <SvgPublic />
                 <Grid container spacing={2} sx={{ position: "relative", zIndex: 2 }}>
                     {data.map((publicacion, index) => (
                         <Grid item xs={12} sm={6} md={4} key={index}>
