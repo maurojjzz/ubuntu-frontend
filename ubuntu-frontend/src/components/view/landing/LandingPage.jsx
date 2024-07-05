@@ -284,7 +284,6 @@ const LandingPage = () => {
           btnText="Ir a Publicaciones" 
           btnAction={() => console.log("ver mas publicaciones clicked")} 
         />
-
       </Box>
     </Box>
   );
