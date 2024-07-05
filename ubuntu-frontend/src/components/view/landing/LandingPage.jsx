@@ -1,8 +1,8 @@
-import { Typography, Box, useTheme, Button,List,ListItemText, ListItem, ListItemIcon} from "@mui/material";
-import SearchBar from "../../SearchBar/SearchBar";
+import { Typography, Box, useTheme, Button,List, ListItem, ListItemIcon} from "@mui/material";
+import SearchBar from "../../searchBar/SearchBar";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
-import CategoryItem from "../../CategoryItem/CategoryItem";
-import Navbar from "../../Navbar/Navbar";
+import Navbar from "../../navbar/Navbar";
+import CategoryItem from "../../categoryItem/CategoryItem";
 import SvgStyle from "../../svg/CategoriesSvg";
 import CircleIcon from "@mui/icons-material/Circle"
 

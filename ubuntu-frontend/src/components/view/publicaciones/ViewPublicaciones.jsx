@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Typography, useTheme, Grid } from '@mui/material';
-import PublicacionesCard from '../../Cards/PublicacionesCard';
-import SearchBar from '../../SearchBar/SearchBar';
-import NavBar from '../../Navbar/Navbar';
+import PublicacionesCard from '../../cards/PublicacionesCard';
+import SearchBar from '../../searchBar/SearchBar';
+import NavBar from '../../navbar/Navbar';
 import imagenPublicaciones from '../../../assets/img/imagen publicaciones.jpg';
 import './ViewPublicaciones.css';
 import jsonData from '../../../assets/json/publicaciones.json';
 import SvgPublic from '../../svg/PublicSvg';
 
 const ViewPublicaciones = () => {
+    // eslint-disable-next-line no-unused-vars
     const theme = useTheme();
     const [data, setData] = useState([]);
 

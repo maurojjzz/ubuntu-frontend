@@ -1,6 +1,6 @@
 import "./Navbar.css";
 import { Box } from '@mui/material';
-import DrawerComponent from "../DrawerComponent/DrawerComponent";
+import DrawerComponent from "../drawerComponent/DrawerComponent";
 
 function Navbar() {
     return (
