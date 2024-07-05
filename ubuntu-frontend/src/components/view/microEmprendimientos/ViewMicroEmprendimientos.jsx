@@ -3,7 +3,7 @@ import { Box, Typography, Container, Grid } from "@mui/material";
 import data from "../../../../data.json";
 import CustomCard from "../../cards/MicroEmpCard";
 import imagenmicro from "../../../assets/img/imagen microemprendimientos.jpg";
-import SearchBar from "../../dearchBar/SearchBar";
+import SearchBar from "../../searchBar/SearchBar";
 import Navbar from "../../navbar/Navbar";
 import SvgMicroemp from "../../svg/MicroEmprSvg";
 
