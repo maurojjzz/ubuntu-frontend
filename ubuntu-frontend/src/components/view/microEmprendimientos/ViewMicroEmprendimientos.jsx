@@ -1,9 +1,9 @@
 import { useTheme } from "@mui/material/styles";
 import { Box, Typography, Container, Grid } from "@mui/material";
 import data from "../../../../data.json";
-import CustomCard from "../../cards/microEmpCard";
+import CustomCard from "../../cards/MicroEmpCard";
 import imagenmicro from "../../../assets/img/imagen microemprendimientos.jpg";
-import SearchBar from "../../searchBar/SearchBar";
+import SearchBar from "../../dearchBar/SearchBar";
 import Navbar from "../../navbar/Navbar";
 import SvgMicroemp from "../../svg/MicroEmprSvg";
 

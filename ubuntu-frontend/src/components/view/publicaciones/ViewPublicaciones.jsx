@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Box, Typography, useTheme, Grid } from '@mui/material';
 import PublicacionesCard from '../../cards/PublicacionesCard';
-import SearchBar from '../../searchBar/SearchBar';
+import SearchBar from '../../dearchBar/SearchBar';
 import NavBar from '../../navbar/Navbar';
 import imagenPublicaciones from '../../../assets/img/imagen publicaciones.jpg';
 import './ViewPublicaciones.css';
