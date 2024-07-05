@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Typography, Box, useTheme, Button, List, ListItem, ListItemIcon } from "@mui/material";
+import { Typography, Box, useTheme, List, ListItem, ListItemIcon } from "@mui/material";
+import { ButtonShowMore } from "../../shared";
 import SearchBar from "../../searchBar/SearchBar";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
 import Navbar from "../../navbar/Navbar";
@@ -218,41 +219,15 @@ const LandingPage = () => {
           <CategoryItem picUrl="Conservacion.png" contentText="Conservación/Regeneración/ Servicios ecosistémicos" />
           <CategoryItem picUrl="Empresas.png" contentText="Empresas/Organismos de impacto/Economía circular" />
         </Box>
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: theme.palette.primary.azul,
-            width: "184px",
-            height: "40px",
-            borderRadius: "100px",
-            mb: "40px",
-            zIndex: 1,
-            "&:hover": {
-              backgroundColor: "#0E537B",
-            },
-          }}
-          onClick={() => {
-            console.log("Ver más categorias");
-          }}
-        >
-          <Typography
-            variant="p"
-            sx={{
-              textTransform: "none",
-              color: theme.palette.primary.main,
-              fontFamily: "Lato",
-              fontWeight: "700",
-              fontSize: "16px",
-            }}
-          >
-            Ver más categorias
-          </Typography>
-        </Button>
+
+        <ButtonShowMore 
+          btnText="Ver mas categorías" 
+          btnAction={() => console.log("ver mas categorias clicked")} 
+        />
       </Box>
 
       <Box
         sx={{
-          // border: "1px solid red",
           width: "100%",
           zIndex: 10,
           position: "relative",
@@ -305,6 +280,11 @@ const LandingPage = () => {
             text={item.text}
           />
         ))}
+        <ButtonShowMore 
+          btnText="Ir a Publicaciones" 
+          btnAction={() => console.log("ver mas publicaciones clicked")} 
+        />
+
       </Box>
     </Box>
   );
