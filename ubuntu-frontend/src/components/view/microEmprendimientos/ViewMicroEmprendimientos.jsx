@@ -1,10 +1,10 @@
 import { useTheme } from "@mui/material/styles";
 import { Box, Typography, Container, Grid } from "@mui/material";
 import data from "../../../../data.json";
-import CustomCard from "../../Cards/microEmpCard";
+import CustomCard from "../../cards/microEmpCard";
 import imagenmicro from "../../../assets/img/imagen microemprendimientos.jpg";
-import SearchBar from "../../SearchBar/SearchBar";
-import Navbar from "../../Navbar/Navbar";
+import SearchBar from "../../searchBar/SearchBar";
+import Navbar from "../../navbar/Navbar";
 import SvgMicroemp from "../../svg/MicroEmprSvg";
 
 const ViewMicroEmprendimientos = () => {
