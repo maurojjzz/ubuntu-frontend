@@ -1,18 +1,11 @@
-import Navbar from "../../Navbar/Navbar";
-import SearchBar from "../../SearchBar/SearchBar";
-import {
-  Typography,
-  Box,
-  useTheme,
-  Button,
-  List,
-  ListItemText,
-  ListItem,
-  ListItemIcon,
+import Navbar from "../../navbar/Navbar";
+import SearchBar from "../../searchBar/SearchBar";
+import { 
+  Box,  
 } from "@mui/material";
 
 const ViewSearchBar = () => {
-  const theme = useTheme();
+  
 
   return (
     <Box>

@@ -1,5 +1,5 @@
 import { Typography, Box, useTheme, Button,List, ListItem, ListItemIcon} from "@mui/material";
-import SearchBar from "../../searchBar/SearchBar";
+import SearchBar from "../../dearchBar/SearchBar";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
 import Navbar from "../../navbar/Navbar";
 import CategoryItem from "../../categoryItem/CategoryItem";
