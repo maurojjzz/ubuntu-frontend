@@ -1,9 +1,10 @@
-import { Typography, Box, useTheme, Button } from "@mui/material";
-import SearchBar from "../../SearchBar/SearchBar";
+import { Typography, Box, useTheme, Button,List, ListItem, ListItemIcon} from "@mui/material";
+import SearchBar from "../../searchBar/SearchBar";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
-import CategoryItem from "../../CategoryItem";
-import Navbar from "../../Navbar/Navbar";
+import Navbar from "../../navbar/Navbar";
+import CategoryItem from "../../categoryItem/CategoryItem";
 import SvgStyle from "../../svg/CategoriesSvg";
+import CircleIcon from "@mui/icons-material/Circle"
 
 const LandingPage = () => {
   const theme = useTheme();
@@ -72,8 +73,92 @@ const LandingPage = () => {
         </Box>
       </Box>
       {/* inicio objetivos ubuntu */}
-      <Box></Box>
+      <Box
+        sx={{
+          padding: "0.5rem 0 1rem 0",
+          margin: "1rem 1rem 0rem",
+          with: "20.5rem",
+          heigt: "15rem",
+          borderTop: "1px solid #226516",
+          borderBottom: "1px solid #226516",
+          gap: "0.5rem",
+        }}
+      >
+        <Typography
+          sx={{
+            paddingTop: "0.5rem",
+            paddingBottom: "0.5rem",
+            textAlign: "center",
+            color: "#093C59",
+            fontFamily: "Lato",
+            fontWeight: "700",
+            fontSize: "22px",
+            lineHeight: "25px",
+            minWidth: "240px",
+            width: "90vw",
+          }}
+        >
+          Objetivos de Ubuntu
+        </Typography>
+        <Box>
+          <List>
+            <ListItem>
+              <ListItemIcon
+                sx={{
+                  alignSelf: "flex-start",
+                  color: "black",
+                  minWidth: "1.5rem",
+                  height: "1rem",
+                  paddingTop: "0.2rem",
+                }}
+              >
+                <CircleIcon
+                  sx={{ fontSize: "0.8rem", paddingTop: "0.25rem" }}
+                />
+              </ListItemIcon>
+              Facilitar a productores o microemprendedores el acceso a
+              microcréditos que les permitan desarrollar sus iniciativas
+              empresariales.
+            </ListItem>
+            <ListItem>
+              <ListItemIcon
+                sx={{
+                  alignSelf: "flex-start",
+                  color: "black",
+                  minWidth: "1.5rem",
+                  height: "1rem",
+                  paddingTop: "0.2rem",
+                }}
+              >
+                <CircleIcon
+                  sx={{ fontSize: "0.8rem", paddingTop: "0.25rem" }}
+                />
+              </ListItemIcon>
+              Proporcionar financiación a empresas y organizaciones que ejecutan
+              proyectos con objetivos sociales, ambientales y culturales.
+            </ListItem>
+            <ListItem>
+              <ListItemIcon
+                sx={{
+                  alignSelf: "flex-start",
+                  color: "black",
+                  minWidth: "1.5rem",
+                  height: "1rem",
+                  paddingTop: "0.2rem",
+                }}
+              >
+                <CircleIcon
+                  sx={{ fontSize: "0.8rem", paddingTop: "0.25rem" }}
+                />
+              </ListItemIcon>
+              Ofrecer a potenciales inversores la oportunidad de participar en
+              proyectos con impacto significativo.
+            </ListItem>
+          </List>
+        </Box>
+      </Box>
       {/* fin objetivos ubuntu */}
+      {/* inicio Microemprendimientos*/}
       <Box
         sx={{
           position: "relative",
@@ -126,27 +211,28 @@ const LandingPage = () => {
             gap: "16px",
             mb: "24px",
             zIndex: 1,
+
           }}
         >
           <CategoryItem
             picUrl="Economia social.png"
             contentText="Economía social/Desarrollo local/ Inclusión financiera"
           />
-          <CategoryItem 
-            picUrl="Agroecologia.png" 
-            contentText="Agroecología/Orgánicos/ Alimentación saludable" 
+          <CategoryItem
+            picUrl="Agroecologia.png"
+            contentText="Agroecología/Orgánicos/ Alimentación saludable"
           />
-          <CategoryItem 
-            picUrl="Conservacion.png" 
-            contentText="Conservación/Regeneración/ Servicios ecosistémicos" 
+          <CategoryItem
+            picUrl="Conservacion.png"
+            contentText="Conservación/Regeneración/ Servicios ecosistémicos"
           />
-          <CategoryItem 
-            picUrl="Empresas.png" 
-            contentText="Empresas/Organismos de impacto/Economía circular" 
+          <CategoryItem
+            picUrl="Empresas.png"
+            contentText="Empresas/Organismos de impacto/Economía circular"
           />
         </Box>
-        <Button 
-          variant="contained" 
+        <Button
+          variant="contained"
           sx={{
             backgroundColor: theme.palette.primary.azul,
             width: "184px",
@@ -174,7 +260,10 @@ const LandingPage = () => {
           </Typography>
         </Button>
       </Box>
+      {/* inicio Microemprendimientos*/}
+      {/* inicio publicaciones */}
       <Box></Box>
+      {/* inicio publicaciones */}
     </Box>
   );
 };

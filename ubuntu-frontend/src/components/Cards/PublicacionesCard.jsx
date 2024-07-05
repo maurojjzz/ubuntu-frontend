@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Card, CardContent, Typography, Button, Box } from '@mui/material';
-import ImageCarousel from '../shared/ImageCarousel';
-import { useTheme } from '@mui/material/styles';
-import './PublicacionesCard.css'
+import { useState } from "react";
+import PropTypes from "prop-types";
+import { Card, CardContent, Button, Box } from "@mui/material";
+import { ImageCarousel } from "../shared";
+import { useTheme } from "@mui/material/styles";
+import "./PublicacionesCard.css";
 
 const PublicacionesCard = ({ title, images, date, text }) => {
-    const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
-    const theme = useTheme();
+  const theme = useTheme();
 
-    const paragraphs = text.split('\n\n');
-    const firstParagraph = paragraphs[0];
-    const remainingParagraphs = paragraphs.slice(1);
+  const paragraphs = text.split("\n\n");
+  const firstParagraph = paragraphs[0];
+  const remainingParagraphs = paragraphs.slice(1);
 
     return (
         <Card sx={{
@@ -61,10 +61,10 @@ const PublicacionesCard = ({ title, images, date, text }) => {
 };
 
 PublicacionesCard.propTypes = {
-    title: PropTypes.string.isRequired,
-    images: PropTypes.arrayOf(PropTypes.string).isRequired,
-    date: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  images: PropTypes.arrayOf(PropTypes.string).isRequired,
+  date: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
 };
 
 export default PublicacionesCard;

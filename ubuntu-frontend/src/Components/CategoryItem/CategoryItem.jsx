@@ -1,6 +1,6 @@
 import { Box, styled, useTheme, Typography } from "@mui/material";
 
-const CategoryItem = ({picUrl, contentText}) => {
+const CategoryItem = ({picUrl, contentText, bgColor}) => {
   const theme = useTheme();
 
   const Img = styled("img")({
@@ -13,14 +13,17 @@ const CategoryItem = ({picUrl, contentText}) => {
   return (
     <Box
       sx={{
-        width: 328,
+        width: "94vw",
+        maxWidth: 450,
         height: 64,
-        backgroundColor: theme.palette.primary.grisClaro,
+        backgroundColor: bgColor || theme.palette.primary.grisClaro   ,
         borderRadius: "16px",
         display: "flex",
         justifyContent: "between",
         alignItems: "center",
         cursor: "pointer",
+        mx:"4vw",
+        overflow: "hidden",
       }}
       onClick={() => console.log("category clicked")}
     >

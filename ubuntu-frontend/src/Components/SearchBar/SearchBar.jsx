@@ -2,9 +2,11 @@ import { useState } from "react";
 import { TextField, InputAdornment, IconButton, Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import theme from "../../theme/theme.js";
+import { Link } from "react-router-dom";
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  
 
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
@@ -12,18 +14,19 @@ const SearchBar = () => {
 
   const handleSearch = () => {
     console.log("Search term:", searchTerm);
+
   };
 
   return (
     <Box
       sx={{
-        backgroundColor: theme.palette.primary.main, 
-        borderRadius: "20px", 
+        backgroundColor: theme.palette.primary.main,
+        borderRadius: "20px",
         padding: "1px",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", 
-        width:"90vw",
-        border:"0",
-        zIndex:"100"
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+        width: "90vw",
+        border: "0",
+        zIndex: "100",
       }}
     >
       <TextField
@@ -34,15 +37,21 @@ const SearchBar = () => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <IconButton onClick={handleSearch}>
+              <IconButton
+                onClick={handleSearch}
+                component={Link}
+                to={`/buscar`}
+                key={"buscar"}
+              >
                 <SearchIcon />
               </IconButton>
             </InputAdornment>
           ),
           sx: {
-            '& .MuiOutlinedInput-notchedOutline': {
-              border: 'none',
-            }}
+            "& .MuiOutlinedInput-notchedOutline": {
+              border: "none",
+            },
+          },
         }}
         fullWidth
       />
