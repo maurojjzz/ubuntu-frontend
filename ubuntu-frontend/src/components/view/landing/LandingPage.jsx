@@ -271,7 +271,7 @@ const LandingPage = () => {
           Finanzas con impacto
         </Typography>
 
-        {data.map((item) => (
+        {data.slice(0, 3).map((item) => (
           <PublicacionesCard
             key={item.title}
             title={item.title}
