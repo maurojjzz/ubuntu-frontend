@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import logoRegistro from '../../../assets/img/logo card ingreso registro.png'
 import ButtonLogin from './ButtonLogin';
 import "./Login.css";
-import Navbar from '../../Navbar/Navbar.jsx';
+import Navbar from '../../navbar/Navbar';
 
 function Login() {
     return (
