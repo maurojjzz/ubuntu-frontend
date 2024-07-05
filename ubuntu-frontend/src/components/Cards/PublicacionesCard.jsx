@@ -20,13 +20,15 @@ const PublicacionesCard = ({ title, images, date, text }) => {
 
     return (
         <Card sx={{
+            width: '96vw',
             maxWidth: 340,
-            margin: '16px auto',
+            margin: '2vw auto',
             paddingTop: '16px',
             paddingBottom: '8px',
             borderRadius: '16px',
             backgroundColor: theme.palette.primary.grisClaro,
             boxShadow: 'none',
+            justifySelf:'center'
         }}>
             <CardContent >
                 <Box className='publicacionesCard__container__title'>

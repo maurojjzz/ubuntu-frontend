@@ -66,7 +66,7 @@ const ViewPublicaciones = () => {
                     </Box>
                 </Box>
             </Box>
-            <Box sx={{ position: "relative", zIndex: 10, marginTop: 5 }}>
+            <Box sx={{ position: "relative", zIndex: 10, marginTop: 5, }}>
                 <SvgMicroemp />
                 <Grid container spacing={2} sx={{ position: "relative", zIndex: 2 }}>
                     {data.map((publicacion, index) => (
