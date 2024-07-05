@@ -1,13 +1,25 @@
+import { useState, useEffect } from "react";
 import { Typography, Box, useTheme, Button,List, ListItem, ListItemIcon} from "@mui/material";
-import SearchBar from "../../dearchBar/SearchBar";
+import SearchBar from "../../searchBar/SearchBar";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
 import Navbar from "../../navbar/Navbar";
 import CategoryItem from "../../categoryItem/CategoryItem";
 import SvgStyle from "../../svg/CategoriesSvg";
-import CircleIcon from "@mui/icons-material/Circle"
+import CircleIcon from "@mui/icons-material/Circle";
+import jsonData from '../../../assets/json/publicaciones.json';
+import PublicacionesCard from "../../cards/PublicacionesCard.jsx";
+
 
 const LandingPage = () => {
+  const [data, setData] = useState([]);
+
   const theme = useTheme();
+  
+  useEffect(() => {
+    setData(jsonData);
+  }, []);
+  
+  console.log(data);
 
   return (
     <Box>
@@ -72,7 +84,6 @@ const LandingPage = () => {
           </Typography>
         </Box>
       </Box>
-      {/* inicio objetivos ubuntu */}
       <Box
         sx={{
           padding: "0.5rem 0 1rem 0",
@@ -157,8 +168,6 @@ const LandingPage = () => {
           </List>
         </Box>
       </Box>
-      {/* fin objetivos ubuntu */}
-      {/* inicio Microemprendimientos*/}
       <Box
         sx={{
           position: "relative",
@@ -260,10 +269,32 @@ const LandingPage = () => {
           </Typography>
         </Button>
       </Box>
-      {/* inicio Microemprendimientos*/}
-      {/* inicio publicaciones */}
-      <Box></Box>
-      {/* inicio publicaciones */}
+
+      <Box 
+        sx={{
+          // border: "1px solid red",
+          width: "100%",
+          zIndex: 10,
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          px:"3vw",
+        }}
+      >
+        {data.map((item) => (
+          <PublicacionesCard
+            key={item.title}
+            title={item.title}
+            images={item.images}
+            date={item.date}
+            text={item.text}
+          />
+        ))}
+        
+      </Box>
+      
     </Box>
   );
 };
