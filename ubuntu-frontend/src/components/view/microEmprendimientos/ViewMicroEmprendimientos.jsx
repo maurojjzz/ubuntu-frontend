@@ -7,14 +7,26 @@ import SearchBar from "../../searchBar/SearchBar";
 import Navbar from "../../navbar/Navbar";
 import SvgMicroemp from "../../svg/MicroEmprSvg";
 import CategoryItem from "../../categoryItem/CategoryItem"
+import { useState } from 'react';
+import SvgStyle from "../../svg/CategoriesSvg";
 
-import SvgStyle  from "../../svg/CategoriesSvg"
 const ViewMicroEmprendimientos = () => {
   const theme = useTheme();
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+  };
+
+  const filteredData = selectedCategory
+    ? data.filter((cardData) => cardData.category === selectedCategory)
+    : data;
 
   return (
     <Container sx={{ padding: "0px" }}>
       <Navbar />
+
+      
       <Box
         sx={{
           position: "relative",
@@ -58,8 +70,8 @@ const ViewMicroEmprendimientos = () => {
               lineHeight: "24px",
               textAlign: "left",
               color: "white",
-              marginTop:4,
-              marginBottom:2,
+              marginTop: 4,
+              marginBottom: 2,
             }}
           >
             MICROEMPRENDIMIENTOS
@@ -92,7 +104,7 @@ const ViewMicroEmprendimientos = () => {
           </Typography>
         </Box>
       </Box>
-
+      {!selectedCategory && (
       <Box
         sx={{
           position: "relative",
@@ -103,71 +115,147 @@ const ViewMicroEmprendimientos = () => {
         }}
       >
         <SvgStyle />
-      <Box sx={{ textAlign: "center", marginBottom: 4, zIndex: 1  }}>
-        
+        <Box sx={{ textAlign: "center", marginBottom: 4, zIndex: 1 }}>
+          <Typography
+            sx={{
+              fontFamily: "'Lato' ",
+              fontWeight: "600",
+              fontSize: "24px",
+              lineHeight: "25px",
+              textAlign: "center",
+              color: "black",
+              marginTop: "6vh",
+              marginBottom: "32px",
+            }}
+          >
+            Categorías
+          </Typography>
+
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "16px",
+              mb: "24px",
+              zIndex: 1,
+              ".hovertiza": {
+                borderBottom: "none !important",
+              },
+            }}
+          >
+            <CategoryItem
+              picUrl="Economia social.png"
+              contentText="Economía social/Desarrollo local/ Inclusión financiera"
+              bgColor="white"
+              onClick={() => handleCategoryClick("Economía social/Desarrollo local/Inclusión financiera")}
+            />
+            <CategoryItem
+              picUrl="Agroecologia.png"
+              contentText="Agroecología/Orgánicos/ Alimentación saludable"
+              bgColor="white"
+              onClick={() => handleCategoryClick("Agroecología/Orgánicos/Alimentación saludable")}
+            />
+            <CategoryItem
+              picUrl="Conservacion.png"
+              contentText="Conservación/Regeneración/ Servicios ecosistémicos"
+              bgColor="white"
+              onClick={() => handleCategoryClick("Conservación/Regeneración/Servicios ecosistémicos")}
+            />
+            <CategoryItem
+              picUrl="Empresas.png"
+              contentText="Empresas/Organismos de impacto/Economía circular"
+              bgColor="white"
+              onClick={() => handleCategoryClick("Empresas/Organismos de impacto/Economía circular")}
+            />
+          </Box>
+        </Box>
+      </Box>
+)}
+{selectedCategory && (
+      <Box sx={{ position: "relative", zIndex: 1 }}>
+        <Box sx={{}}>
+
+        <Typography
+            sx={{
+              fontFamily: "'Lato' ",
+              fontWeight: "600",
+              fontSize: "24px",
+              lineHeight: "25px",
+              textAlign: "center",
+              color: "black",
+              marginTop: "6vh",
+              marginBottom: "32px",
+            }}
+          >
+            Categorías
+          </Typography>
+          
+
         <Typography
           sx={{
             fontFamily: "'Lato' ",
-            fontWeight: "600",
-            fontSize: "24px",
+            fontWeight: "500",
+            fontSize: "20px",
+            lineHeight: "30px",
+            textAlign: "center",
+            marginTop: "3vh",
+            marginLeft: "6vh",
+            marginRight: "6vh",
+            color: theme.palette.primary.azul,
+          }}
+        >
+          Agroecología/ Orgánicos/ Alimentación saludable
+        </Typography>
+        
+
+        <SvgMicroemp  />
+        
+
+        <Typography
+          sx={{
+            fontFamily: "'Lato' ",
+            fontWeight: "400",
+            fontSize: "16px",
             lineHeight: "25px",
             textAlign: "center",
-            color: "black",
-            marginTop: "6vh",
-            marginBottom: "32px",
+            marginTop: "2vh",
+            marginLeft: "7vh",
+            marginRight: "7vh",
+            color: theme.palette.primary.negro,
           }}
         >
-          Categorías
+          Conectate con Microemprendimientos que respetan la tierra y priorizan
+          la salud, a través de prácticas agrícolas limpias y alimentos
+          nutritivos.
         </Typography>
 
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "16px",
-            mb: "24px",
-            zIndex: 1,
-            ".hovertiza": {
-              borderBottom: "none !important",
-              
-            
-            },
-          }}
-        >
-          <CategoryItem
-            picUrl="Economia social.png"
-            contentText="Economía social/Desarrollo local/ Inclusión financiera"
-            bgColor="white"
-          />
-          <CategoryItem
-            picUrl="Agroecologia.png"
-            contentText="Agroecología/Orgánicos/ Alimentación saludable"
-            bgColor="white"
-          />
-          <CategoryItem
-            picUrl="Conservacion.png"
-            contentText="Conservación/Regeneración/ Servicios ecosistémicos"
-            bgColor="white"
-          />
-          <CategoryItem
-            picUrl="Empresas.png"
-            contentText="Empresas/Organismos de impacto/Economía circular"
-            bgColor="white"
 
-          />
         </Box>
-        </Box>
-
-        
+        <Grid container spacing={3} sx={{ position: "relative", zIndex: 2, mt:"1vh" }}>
+          {filteredData.map((cardData, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <CustomCard
+                images={cardData.images}
+                title={cardData.title}
+                subtitle={cardData.subtitle}
+                category={cardData.category}
+                location={cardData.location}
+                details={cardData.descriptions}
+                moreInf={cardData.moreInformation}
+              />
+            </Grid>
+          ))}
+        </Grid>
       </Box>
-      
+)}
     </Container>
   );
 };
 
 export default ViewMicroEmprendimientos;
+
 
 
 
