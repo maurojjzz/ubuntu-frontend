@@ -6,7 +6,9 @@ import imagenmicro from "../../../assets/img/imagen microemprendimientos.jpg";
 import SearchBar from "../../searchBar/SearchBar";
 import Navbar from "../../navbar/Navbar";
 import SvgMicroemp from "../../svg/MicroEmprSvg";
+import CategoryItem from "../../categoryItem/CategoryItem"
 
+import SvgStyle  from "../../svg/CategoriesSvg"
 const ViewMicroEmprendimientos = () => {
   const theme = useTheme();
 
@@ -18,11 +20,11 @@ const ViewMicroEmprendimientos = () => {
           position: "relative",
           textAlign: "center",
           color: "white",
-          mb: 4,
+          mb: 1,
           backgroundImage: `url(${imagenmicro})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "60vh",
+          height: "70vh",
           display: "flex",
           flexDirection: "column",
           pl: 2,
@@ -90,7 +92,19 @@ const ViewMicroEmprendimientos = () => {
           </Typography>
         </Box>
       </Box>
-      <Box sx={{ textAlign: "center", marginBottom: 4 }}>
+
+      <Box
+        sx={{
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <SvgStyle />
+      <Box sx={{ textAlign: "center", marginBottom: 4, zIndex: 1  }}>
+        
         <Typography
           sx={{
             fontFamily: "'Lato' ",
@@ -99,44 +113,69 @@ const ViewMicroEmprendimientos = () => {
             lineHeight: "25px",
             textAlign: "center",
             color: "black",
+            marginTop: "6vh",
+            marginBottom: "32px",
           }}
         >
           Categorías
         </Typography>
-        <Typography
+
+        <Box
           sx={{
-            fontFamily: "'Lato' ",
-            fontWeight: "500",
-            fontSize: "20px",
-            lineHeight: "30px",
-            textAlign: "center",
-            marginTop: "3vh",
-            marginLeft: "6vh",
-            marginRight: "6vh",
-            color: theme.palette.primary.azul,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "16px",
+            mb: "24px",
+            zIndex: 1,
+            ".hovertiza": {
+              borderBottom: "none !important",
+              
+            
+            },
           }}
         >
-          Agroecología/ Orgánicos/ Alimentación saludable
-        </Typography>
-        <Typography
-          sx={{
-            fontFamily: "'Lato' ",
-            fontWeight: "400",
-            fontSize: "16px",
-            lineHeight: "25px",
-            textAlign: "center",
-            marginTop: "2vh",
-            marginLeft: "7vh",
-            marginRight: "7vh",
-            color: theme.palette.primary.negro,
-          }}
-        >
-          Conectate con Microemprendimientos que respetan la tierra y priorizan
-          la salud, a través de prácticas agrícolas limpias y alimentos
-          nutritivos.
-        </Typography>
+          <CategoryItem
+            picUrl="Economia social.png"
+            contentText="Economía social/Desarrollo local/ Inclusión financiera"
+            bgColor="white"
+          />
+          <CategoryItem
+            picUrl="Agroecologia.png"
+            contentText="Agroecología/Orgánicos/ Alimentación saludable"
+            bgColor="white"
+          />
+          <CategoryItem
+            picUrl="Conservacion.png"
+            contentText="Conservación/Regeneración/ Servicios ecosistémicos"
+            bgColor="white"
+          />
+          <CategoryItem
+            picUrl="Empresas.png"
+            contentText="Empresas/Organismos de impacto/Economía circular"
+            bgColor="white"
+
+          />
+        </Box>
+        </Box>
+
+        
       </Box>
-      <Box sx={{ position: "relative", zIndex: 1 }}>
+      
+    </Container>
+  );
+};
+
+export default ViewMicroEmprendimientos;
+
+
+
+
+
+
+
+{/* <Box sx={{ position: "relative", zIndex: 1 }}>
         <SvgMicroemp />
         <Grid container spacing={3} sx={{ position: "relative", zIndex: 2}}>
           {data.map((cardData, index) => (
@@ -153,9 +192,39 @@ const ViewMicroEmprendimientos = () => {
             </Grid>
           ))}
         </Grid>
-      </Box>
-    </Container>
-  );
-};
+      </Box> */}
 
-export default ViewMicroEmprendimientos;
+
+
+      // <Typography
+      //     sx={{
+      //       fontFamily: "'Lato' ",
+      //       fontWeight: "500",
+      //       fontSize: "20px",
+      //       lineHeight: "30px",
+      //       textAlign: "center",
+      //       marginTop: "3vh",
+      //       marginLeft: "6vh",
+      //       marginRight: "6vh",
+      //       color: theme.palette.primary.azul,
+      //     }}
+      //   >
+      //     Agroecología/ Orgánicos/ Alimentación saludable
+      //   </Typography>
+      //   <Typography
+      //     sx={{
+      //       fontFamily: "'Lato' ",
+      //       fontWeight: "400",
+      //       fontSize: "16px",
+      //       lineHeight: "25px",
+      //       textAlign: "center",
+      //       marginTop: "2vh",
+      //       marginLeft: "7vh",
+      //       marginRight: "7vh",
+      //       color: theme.palette.primary.negro,
+      //     }}
+      //   >
+      //     Conectate con Microemprendimientos que respetan la tierra y priorizan
+      //     la salud, a través de prácticas agrícolas limpias y alimentos
+      //     nutritivos.
+      //   </Typography>
