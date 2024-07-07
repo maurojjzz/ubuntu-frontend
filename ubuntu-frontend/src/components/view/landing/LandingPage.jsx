@@ -1,13 +1,23 @@
-import { Typography, Box, useTheme, Button,List, ListItem, ListItemIcon} from "@mui/material";
+import { useState, useEffect } from "react";
+import { Typography, Box, useTheme, List, ListItem, ListItemIcon } from "@mui/material";
+import { ButtonShowMore } from "../../shared";
 import SearchBar from "../../searchBar/SearchBar";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
 import Navbar from "../../navbar/Navbar";
 import CategoryItem from "../../categoryItem/CategoryItem";
 import SvgStyle from "../../svg/CategoriesSvg";
-import CircleIcon from "@mui/icons-material/Circle"
+import CircleIcon from "@mui/icons-material/Circle";
+import jsonData from "../../../assets/json/publicaciones.json";
+import PublicacionesCard from "../../cards/PublicacionesCard.jsx";
 
 const LandingPage = () => {
+  const [data, setData] = useState([]);
+
   const theme = useTheme();
+
+  useEffect(() => {
+    setData(jsonData);
+  }, []);
 
   return (
     <Box>
@@ -67,12 +77,10 @@ const LandingPage = () => {
               mt: "16px",
             }}
           >
-            Impulsamos el desarrollo de finanzas de impacto, liderando
-            transición hacia un modelo financiero sostenible
+            Impulsamos el desarrollo de finanzas de impacto, liderando transición hacia un modelo financiero sostenible
           </Typography>
         </Box>
       </Box>
-      {/* inicio objetivos ubuntu */}
       <Box
         sx={{
           padding: "0.5rem 0 1rem 0",
@@ -112,13 +120,10 @@ const LandingPage = () => {
                   paddingTop: "0.2rem",
                 }}
               >
-                <CircleIcon
-                  sx={{ fontSize: "0.8rem", paddingTop: "0.25rem" }}
-                />
+                <CircleIcon sx={{ fontSize: "0.8rem", paddingTop: "0.25rem" }} />
               </ListItemIcon>
-              Facilitar a productores o microemprendedores el acceso a
-              microcréditos que les permitan desarrollar sus iniciativas
-              empresariales.
+              Facilitar a productores o microemprendedores el acceso a microcréditos que les permitan desarrollar sus
+              iniciativas empresariales.
             </ListItem>
             <ListItem>
               <ListItemIcon
@@ -130,12 +135,10 @@ const LandingPage = () => {
                   paddingTop: "0.2rem",
                 }}
               >
-                <CircleIcon
-                  sx={{ fontSize: "0.8rem", paddingTop: "0.25rem" }}
-                />
+                <CircleIcon sx={{ fontSize: "0.8rem", paddingTop: "0.25rem" }} />
               </ListItemIcon>
-              Proporcionar financiación a empresas y organizaciones que ejecutan
-              proyectos con objetivos sociales, ambientales y culturales.
+              Proporcionar financiación a empresas y organizaciones que ejecutan proyectos con objetivos sociales,
+              ambientales y culturales.
             </ListItem>
             <ListItem>
               <ListItemIcon
@@ -147,18 +150,13 @@ const LandingPage = () => {
                   paddingTop: "0.2rem",
                 }}
               >
-                <CircleIcon
-                  sx={{ fontSize: "0.8rem", paddingTop: "0.25rem" }}
-                />
+                <CircleIcon sx={{ fontSize: "0.8rem", paddingTop: "0.25rem" }} />
               </ListItemIcon>
-              Ofrecer a potenciales inversores la oportunidad de participar en
-              proyectos con impacto significativo.
+              Ofrecer a potenciales inversores la oportunidad de participar en proyectos con impacto significativo.
             </ListItem>
           </List>
         </Box>
       </Box>
-      {/* fin objetivos ubuntu */}
-      {/* inicio Microemprendimientos*/}
       <Box
         sx={{
           position: "relative",
@@ -168,7 +166,7 @@ const LandingPage = () => {
           alignItems: "center",
         }}
       >
-        <SvgStyle/>
+        <SvgStyle />
         <Typography
           variant="body1"
           align="center"
@@ -211,59 +209,82 @@ const LandingPage = () => {
             gap: "16px",
             mb: "24px",
             zIndex: 1,
-
           }}
         >
           <CategoryItem
             picUrl="Economia social.png"
             contentText="Economía social/Desarrollo local/ Inclusión financiera"
           />
-          <CategoryItem
-            picUrl="Agroecologia.png"
-            contentText="Agroecología/Orgánicos/ Alimentación saludable"
-          />
-          <CategoryItem
-            picUrl="Conservacion.png"
-            contentText="Conservación/Regeneración/ Servicios ecosistémicos"
-          />
-          <CategoryItem
-            picUrl="Empresas.png"
-            contentText="Empresas/Organismos de impacto/Economía circular"
-          />
+          <CategoryItem picUrl="Agroecologia.png" contentText="Agroecología/Orgánicos/ Alimentación saludable" />
+          <CategoryItem picUrl="Conservacion.png" contentText="Conservación/Regeneración/ Servicios ecosistémicos" />
+          <CategoryItem picUrl="Empresas.png" contentText="Empresas/Organismos de impacto/Economía circular" />
         </Box>
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: theme.palette.primary.azul,
-            width: "184px",
-            height: "40px",
-            borderRadius: "100px",
-            mb: "40px",
-            zIndex: 1,
-            "&:hover": {
-              backgroundColor: "#0E537B",
-            }
-          }} 
-          onClick={() => {console.log("Ver más categorias")}}
-        >
-          <Typography 
-            variant="p"
-            sx={{
-              textTransform: "none",
-              color: theme.palette.primary.main,
-              fontFamily: "Lato",
-              fontWeight: "700",
-              fontSize: "16px",
-            }}
-          >
-            Ver más categorias
-          </Typography>
-        </Button>
+
+        <ButtonShowMore 
+          btnText="Ver mas categorías" 
+          btnAction={() => console.log("ver mas categorias clicked")} 
+        />
       </Box>
-      {/* inicio Microemprendimientos*/}
-      {/* inicio publicaciones */}
-      <Box></Box>
-      {/* inicio publicaciones */}
+
+      <Box
+        sx={{
+          width: "100%",
+          zIndex: 10,
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          px: "3vw",
+        }}
+      >
+        <Typography
+          variant="body1"
+          align="center"
+          sx={{
+            color: theme.palette.primary.negro,
+            fontFamily: "Lato",
+            fontWeight: "600",
+            fontSize: "16px",
+            lineHeight: "25px",
+            mt: "32px",
+            letterSpacing: "0.5px",
+            zIndex: 1,
+          }}
+        >
+          Publicaciones
+        </Typography>
+        <Typography
+          variant="h4"
+          align="center"
+          sx={{
+            color: theme.palette.primary.negro,
+            fontFamily: "Lato",
+            fontWeight: "600",
+            fontSize: "22px",
+            lineHeight: "25px",
+            mt: "10px",
+            mb: "16px",
+            zIndex: 1,
+          }}
+        >
+          Finanzas con impacto
+        </Typography>
+
+        {data.slice(0, 3).map((item) => (
+          <PublicacionesCard
+            key={item.title}
+            title={item.title}
+            images={item.images}
+            date={item.date}
+            text={item.text}
+          />
+        ))}
+        <ButtonShowMore 
+          btnText="Ir a Publicaciones" 
+          btnAction={() => console.log("ver mas publicaciones clicked")} 
+        />
+      </Box>
     </Box>
   );
 };

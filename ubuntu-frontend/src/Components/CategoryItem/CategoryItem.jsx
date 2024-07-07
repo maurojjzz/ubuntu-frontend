@@ -13,7 +13,7 @@ const CategoryItem = ({picUrl, contentText, bgColor}) => {
   return (
     <Box
       sx={{
-        width: "94vw",
+        width: "95vw",
         maxWidth: 450,
         height: 64,
         backgroundColor: bgColor || theme.palette.primary.grisClaro   ,
@@ -22,7 +22,6 @@ const CategoryItem = ({picUrl, contentText, bgColor}) => {
         justifyContent: "between",
         alignItems: "center",
         cursor: "pointer",
-        mx:"4vw",
         overflow: "hidden",
       }}
       onClick={() => console.log("category clicked")}
@@ -43,7 +42,6 @@ const CategoryItem = ({picUrl, contentText, bgColor}) => {
         <Img src={`src/assets/img/${picUrl}`} alt={`icon ${contentText}`} />
       </Box>
       <Box
-        className={"hovertiza"}
         sx={{
           width: 235,
           height: 48,
