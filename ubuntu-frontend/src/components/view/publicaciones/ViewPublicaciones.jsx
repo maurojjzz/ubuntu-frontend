@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Box, Typography, useTheme, Grid } from '@mui/material';
+import { Box, Typography, Grid } from '@mui/material';
 import PublicacionesCard from '../../cards/PublicacionesCard';
 import SearchBar from '../../searchBar/SearchBar';
 import NavBar from '../../navbar/Navbar';
@@ -9,8 +9,7 @@ import jsonData from '../../../assets/json/publicaciones.json';
 import SvgMicroemp from '../../../components/svg/MicroEmprSvg';
 
 const ViewPublicaciones = () => {
-    // eslint-disable-next-line no-unused-vars
-    const theme = useTheme();
+
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -57,13 +56,13 @@ const ViewPublicaciones = () => {
                 }}>
                     <SearchBar />
                     <Box className='publicaciones__container__title'>
-                        <Typography sx={{ fontFamily: 'Lato', fontSize: '14px', lineHeight: '24px' }}>PUBLICACIONES</Typography>
+                        <Typography sx={{ fontFamily: 'Lato', fontSize: '18px', lineHeight: '24px', fontWeight: 600 }}>PUBLICACIONES</Typography>
                     </Box>
                     <Box className='publicaciones__container__subTitle'>
-                        <Typography sx={{ fontFamily: 'Lato', fontSize: '24px', lineHeight: '32px' }}>Explorando finanzas de impacto</Typography>
+                        <Typography sx={{ fontFamily: 'Lato', fontSize: '28px', lineHeight: '32px', fontWeight: 500 }}>Explorando finanzas de impacto</Typography>
                     </Box>
                     <Box className='publicaciones__container__texto'>
-                        <Typography sx={{ fontFamily: 'Lato', fontSize: '20px', lineHeight: '32px' }}>Conocé cómo decisiones financieras pueden impactar positivamente en la sociedad y el medio ambiente</Typography>
+                        <Typography sx={{ fontFamily: 'Lato', fontSize: '24px', lineHeight: '32px', fontWeight: 400 }}>Conocé cómo decisiones financieras pueden impactar positivamente en la sociedad y el medio ambiente</Typography>
                     </Box>
                 </Box>
             </Box>
