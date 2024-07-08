@@ -6,7 +6,7 @@ import NavBar from '../../navbar/Navbar';
 import imagenPublicaciones from '../../../assets/img/imagen publicaciones.jpg';
 import './ViewPublicaciones.css';
 import jsonData from '../../../assets/json/publicaciones.json';
-import SvgPublic from '../../svg/PublicSvg';
+import SvgMicroemp from '../../../components/svg/MicroEmprSvg';
 
 const ViewPublicaciones = () => {
     // eslint-disable-next-line no-unused-vars
