@@ -14,7 +14,7 @@ const SvgStyle = () => {
     >
       <svg
         className="svg-microemprendimientos"
-        viewBox="0 0 361 430"
+        viewBox="0 0 361 480"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="xMinYMin meet"
