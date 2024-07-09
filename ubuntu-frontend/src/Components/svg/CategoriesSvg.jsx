@@ -8,7 +8,6 @@ const SvgStyle = () => {
          width:"100%",
         //  height:"10vh",
          height:"10vh",
-
          top:0
     }}
     >

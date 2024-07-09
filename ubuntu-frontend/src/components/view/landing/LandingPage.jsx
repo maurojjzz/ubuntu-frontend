@@ -166,6 +166,7 @@ const LandingPage = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          overflow: "hidden",
         }}
       >
         <SvgStyle />
