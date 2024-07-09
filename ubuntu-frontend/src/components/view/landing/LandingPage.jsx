@@ -216,16 +216,42 @@ const LandingPage = () => {
           <CategoryItem
             picUrl="Economia social.png"
             contentText="Economía social/Desarrollo local/ Inclusión financiera"
+            onClick={() =>
+              navigate("/microemprendimientos", {
+                state: { category: "Economía social/Desarrollo local/Inclusión financiera" },
+              })
+            }
           />
-          <CategoryItem picUrl="Agroecologia.png" contentText="Agroecología/Orgánicos/ Alimentación saludable" />
-          <CategoryItem picUrl="Conservacion.png" contentText="Conservación/Regeneración/ Servicios ecosistémicos" />
-          <CategoryItem picUrl="Empresas.png" contentText="Empresas/Organismos de impacto/Economía circular" />
+          <CategoryItem
+            picUrl="Agroecologia.png"
+            contentText="Agroecología/Orgánicos/ Alimentación saludable"
+            onClick={() =>
+              navigate("/microemprendimientos", {
+                state: { category: "Agroecología/Orgánicos/Alimentación saludable" },
+              })
+            }
+          />
+          <CategoryItem
+            picUrl="Conservacion.png"
+            contentText="Conservación/Regeneración/ Servicios ecosistémicos"
+            onClick={() =>
+              navigate("/microemprendimientos", {
+                state: { category: "Conservación/Regeneración/Servicios ecosistémicos" },
+              })
+            }
+          />
+          <CategoryItem
+            picUrl="Empresas.png"
+            contentText="Empresas/Organismos de impacto/Economía circular"
+            onClick={() =>
+              navigate("/microemprendimientos", {
+                state: { category: "Empresas/Organismos de impacto/Economía circular" },
+              })
+            }
+          />
         </Box>
 
-        <ButtonShowMore 
-          btnText="Ver mas categorías" 
-          btnAction={() => navigate("/microemprendimientos")} 
-        />
+        <ButtonShowMore btnText="Ver mas categorías" btnAction={() => navigate("/microemprendimientos")} />
       </Box>
 
       <Box
@@ -282,10 +308,7 @@ const LandingPage = () => {
             text={item.text}
           />
         ))}
-        <ButtonShowMore 
-          btnText="Ir a Publicaciones" 
-          btnAction={() => navigate("/publicaciones")} 
-        />
+        <ButtonShowMore btnText="Ir a Publicaciones" btnAction={() => navigate("/publicaciones")} />
       </Box>
     </Box>
   );

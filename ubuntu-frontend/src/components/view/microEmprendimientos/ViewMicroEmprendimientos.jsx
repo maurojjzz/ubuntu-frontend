@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useTheme } from "@mui/material/styles";
 import { Box, Typography, Container, Grid } from "@mui/material";
 import data from "../../../../data.json";
@@ -7,13 +9,24 @@ import SearchBar from "../../searchBar/SearchBar";
 import Navbar from "../../navbar/Navbar";
 import SvgMicroemp from "../../svg/MicroEmprSvg";
 import CategoryItem from "../../categoryItem/CategoryItem"
-import { useState } from 'react';
 import SvgStyle from "../../svg/CategoriesSvg";
 
 const ViewMicroEmprendimientos = () => {
-  const theme = useTheme();
   const [selectedCategory, setSelectedCategory] = useState('');
+  
+  const theme = useTheme();
 
+  const location = useLocation();
+  const category  = location.state?.category;
+
+  
+  useEffect(() => {
+    if (category) {
+      setSelectedCategory(category);
+    }
+  }, [category]);
+
+  
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
@@ -25,8 +38,6 @@ const ViewMicroEmprendimientos = () => {
   return (
     <Container sx={{ padding: "0px" }}>
       <Navbar />
-
-      
       <Box
         sx={{
           position: "relative",
