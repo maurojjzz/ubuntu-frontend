@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Typography, Box, useTheme, List, ListItem, ListItemIcon } from "@mui/material";
 import { ButtonShowMore } from "../../shared";
 import SearchBar from "../../searchBar/SearchBar";
@@ -14,6 +15,7 @@ const LandingPage = () => {
   const [data, setData] = useState([]);
 
   const theme = useTheme();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setData(jsonData);
@@ -222,7 +224,7 @@ const LandingPage = () => {
 
         <ButtonShowMore 
           btnText="Ver mas categorías" 
-          btnAction={() => console.log("ver mas categorias clicked")} 
+          btnAction={() => navigate("/microemprendimientos")} 
         />
       </Box>
 
@@ -282,7 +284,7 @@ const LandingPage = () => {
         ))}
         <ButtonShowMore 
           btnText="Ir a Publicaciones" 
-          btnAction={() => console.log("ver mas publicaciones clicked")} 
+          btnAction={() => navigate("/publicaciones")} 
         />
       </Box>
     </Box>
