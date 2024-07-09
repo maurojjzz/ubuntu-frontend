@@ -4,11 +4,15 @@ export class ServiceHttp {
   constructor(subRoute) {
     this._route = import.meta.env.VITE_API_BASE_URL;
     this._subRoute = subRoute;
+
   }
 
-  async get() {
+  async get(queryParams = {}) {
     try {
-      const response = await axios.get(`${this._route}${this._subRoute}`);
+      const query = new URLSearchParams(queryParams).toString();
+      const url = `${this._route}${this._subRoute}?${query}`; 
+  
+      const response = await axios.get(url); 
       return response.data;
     } catch (error) {
       return this.handleError(error);
