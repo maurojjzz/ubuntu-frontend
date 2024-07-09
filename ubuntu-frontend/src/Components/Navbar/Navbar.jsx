@@ -7,7 +7,7 @@ function Navbar() {
         <Box sx={{ height: '7vh', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 20px' }} className='navBar__container'>
             <DrawerComponent />
             <img src='../../src/assets/img/logoubuntu.png' alt="Ubuntu Logo" className='navBar__logo'/>
-            <div style={{ width: '40px' }}></div> {/* Espaciador para mantener el logo centrado */}
+            <div style={{ width: '40px' }}></div>
         </Box>
     );
 }

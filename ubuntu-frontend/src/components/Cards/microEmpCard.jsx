@@ -10,7 +10,7 @@ import {
   Button,
   useTheme,
   Divider,
-  Box, // Importar Box
+  Box, 
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -39,8 +39,7 @@ const CustomCard = ({
 }) => {
   const [expanded, setExpanded] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const theme = useTheme(); // Accede al tema
-
+  const theme = useTheme(); 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
