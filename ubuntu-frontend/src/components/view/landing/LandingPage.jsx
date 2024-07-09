@@ -79,7 +79,7 @@ const LandingPage = () => {
               mt: "16px",
             }}
           >
-            Impulsamos el desarrollo de finanzas de impacto, liderando transición hacia un modelo financiero sostenible
+            Impulsamos el desarrollo de finanzas de impacto, liderando la transición hacia un modelo financiero sostenible
           </Typography>
         </Box>
       </Box>
