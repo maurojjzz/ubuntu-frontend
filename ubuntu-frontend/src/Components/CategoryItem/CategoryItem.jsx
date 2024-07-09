@@ -41,6 +41,7 @@ const CategoryItem = ({ picUrl, contentText, bgColor, onClick }) => {
           alignItems: "center",
           marginLeft: "22.5px",
           marginRight: "8px",
+          
         }}
       >
         <Img src={`src/assets/img/${picUrl}`} alt={`icon ${contentText}`} />
