@@ -1,20 +1,54 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { TextField, InputAdornment, IconButton, Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import theme from "../../theme/theme.js";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { SearchContext } from "../shared/SearchContext.jsx";
+import { ServiceHttp } from "../../utils/services/serviceHttp.js"
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  
+  const { setSearchResults } = useContext(SearchContext);
+  const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleSearch = () => {
-    console.log("Search term:", searchTerm);
 
+  // async function main() {
+  //   const service = new ServiceHttp('/microbusiness/'); 
+  //   const parametrosDeBusqueda = { search: 'imp' }; 
+  //   try {
+  //     const resultado = await service.get(parametrosDeBusqueda);
+  //     console.log('Resultado:', resultado);
+  //   } catch (error) {
+  //     console.error('Error al obtener los datos:', error);
+  //   }
+  // }
+
+  // const handleSearch = () => {main()}
+
+  const handleSearch = async () => {
+    try {
+      const service = new ServiceHttp('/microbusiness/');
+      const parametrosDeBusqueda = { search: `${searchTerm}` };
+      const resultado = await service.get(parametrosDeBusqueda);
+
+      if (Array.isArray(resultado)) {
+        setSearchResults(resultado);
+      } else {
+        console.error('API response is not an array:', resultado);
+        setSearchResults([]);
+      }
+  
+      // setSearchResults(resultado);
+      navigate('/buscar');
+    } catch (error) {
+      console.error('Error al obtener los datos:', error);
+      setSearchResults([]);
+      navigate('/buscar');
+    }
   };
 
   return (
@@ -37,12 +71,7 @@ const SearchBar = () => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <IconButton
-                onClick={handleSearch}
-                component={Link}
-                to={`/buscar`}
-                key={"buscar"}
-              >
+              <IconButton onClick={handleSearch}>
                 <SearchIcon />
               </IconButton>
             </InputAdornment>
