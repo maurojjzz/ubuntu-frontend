@@ -20,7 +20,7 @@ const SearchBar = ({ customStyles }) => {
       const service = new ServiceHttp('/microbusiness/');
       const parametrosDeBusqueda = { search: `${searchTerm}` };
       const resultado = await service.get(parametrosDeBusqueda);
-
+      console.log(resultado);
       if (Array.isArray(resultado)) {
         setSearchResults(resultado);
       } else {

@@ -25,7 +25,8 @@ const SearchResults = () => {
                 <SearchBar 
                     customStyles={{
                         boxShadow: 'none', 
-                        backgroundColor: `${theme.palette.primary.grisClaro}`
+                        backgroundColor: `${theme.palette.primary.grisClaro}`,
+                        borderRadius: '100px',
                     }}/>
                 <Typography 
                     sx={{
@@ -51,7 +52,7 @@ const SearchResults = () => {
                                     title={result.name}
                                     subtitle={result.name}
                                     category={result.category}
-                                    location={"Buenos Aires"}
+                                    location={result.provinceName.concat(", ", result.provinceCountryName)}
                                     details={result.description}
                                     moreInf={result.moreInformation}
                                 />

@@ -11,14 +11,16 @@ const NoResultsCard = () => {
             width: '96vw',
             maxWidth: 340,
             margin: '8vh auto',
-            paddingTop: '16px',
-            paddingBottom: '8px',
+            paddingTop: '24px',
+            paddingBottom: '24px',
             borderRadius: '8px',
             backgroundColor: theme.palette.primary.grisClaro,
             boxShadow: 'none',
             justifySelf: 'center'
         }}>
-            <CardContent >
+            <CardContent sx={{
+                padding: '0'
+            }} >
                 <Box 
                     sx={{ 
                         display: 'flex', 
@@ -26,7 +28,7 @@ const NoResultsCard = () => {
                         alignItems: 'center',
                         flexDirection: 'column',
                         gap: '16px',
-                        padding: '24px 0px 24px 0px',
+                        padding: '0',
 
                     }}>
                     <SearchOffIcon 
