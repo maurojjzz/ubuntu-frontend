@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Typography, Box, useTheme, List, ListItem, ListItemIcon } from "@mui/material";
 import { ButtonShowMore } from "../../shared";
 import SearchBar from "../../searchBar/SearchBar";
@@ -13,6 +14,7 @@ const LandingPage = () => {
   const [data, setData] = useState([]);
 
   const theme = useTheme();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setData(jsonData);
@@ -76,7 +78,7 @@ const LandingPage = () => {
               mt: "16px",
             }}
           >
-            Impulsamos el desarrollo de finanzas de impacto, liderando transición hacia un modelo financiero sostenible
+            Impulsamos el desarrollo de finanzas de impacto, liderando la transición hacia un modelo financiero sostenible
           </Typography>
         </Box>
       </Box>
@@ -163,6 +165,7 @@ const LandingPage = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          overflow: "hidden",
         }}
       >
         <Typography
@@ -212,16 +215,42 @@ const LandingPage = () => {
           <CategoryItem
             picUrl="Economia social.png"
             contentText="Economía social/Desarrollo local/ Inclusión financiera"
+            onClick={() =>
+              navigate("/microemprendimientos", {
+                state: { category: "Economía social/Desarrollo local/Inclusión financiera" },
+              })
+            }
           />
-          <CategoryItem picUrl="Agroecologia.png" contentText="Agroecología/Orgánicos/ Alimentación saludable" />
-          <CategoryItem picUrl="Conservacion.png" contentText="Conservación/Regeneración/ Servicios ecosistémicos" />
-          <CategoryItem picUrl="Empresas.png" contentText="Empresas/Organismos de impacto/Economía circular" />
+          <CategoryItem
+            picUrl="Agroecologia.png"
+            contentText="Agroecología/Orgánicos/ Alimentación saludable"
+            onClick={() =>
+              navigate("/microemprendimientos", {
+                state: { category: "Agroecología/Orgánicos/Alimentación saludable" },
+              })
+            }
+          />
+          <CategoryItem
+            picUrl="Conservacion.png"
+            contentText="Conservación/Regeneración/ Servicios ecosistémicos"
+            onClick={() =>
+              navigate("/microemprendimientos", {
+                state: { category: "Conservación/Regeneración/Servicios ecosistémicos" },
+              })
+            }
+          />
+          <CategoryItem
+            picUrl="Empresas.png"
+            contentText="Empresas/Organismos de impacto/Economía circular"
+            onClick={() =>
+              navigate("/microemprendimientos", {
+                state: { category: "Empresas/Organismos de impacto/Economía circular" },
+              })
+            }
+          />
         </Box>
 
-        <ButtonShowMore 
-          btnText="Ver mas categorías" 
-          btnAction={() => console.log("ver mas categorias clicked")} 
-        />
+        <ButtonShowMore btnText="Ver mas categorías" btnAction={() => navigate("/microemprendimientos")} />
       </Box>
 
       <Box
@@ -278,10 +307,7 @@ const LandingPage = () => {
             text={item.text}
           />
         ))}
-        <ButtonShowMore 
-          btnText="Ir a Publicaciones" 
-          btnAction={() => console.log("ver mas publicaciones clicked")} 
-        />
+        <ButtonShowMore btnText="Ir a Publicaciones" btnAction={() => navigate("/publicaciones")} />
       </Box>
     </Box>
   );

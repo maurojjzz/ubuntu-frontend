@@ -1,5 +1,5 @@
 .login__container{
-    height: 93vh; /* menos el navbar */
+    height: 93vh; 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
