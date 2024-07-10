@@ -6,7 +6,6 @@ import SearchBar from "../../searchBar/SearchBar";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
 import Navbar from "../../navbar/Navbar";
 import CategoryItem from "../../categoryItem/CategoryItem";
-import SvgStyle from "../../svg/CategoriesSvg";
 import CircleIcon from "@mui/icons-material/Circle";
 import jsonData from "../../../assets/json/publicaciones.json";
 import PublicacionesCard from "../../cards/PublicacionesCard.jsx";
@@ -169,7 +168,6 @@ const LandingPage = () => {
           overflow: "hidden",
         }}
       >
-        <SvgStyle />
         <Typography
           variant="body1"
           align="center"
