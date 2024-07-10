@@ -4,9 +4,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import theme from "../../theme/theme.js";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../shared/SearchContext.jsx";
-import { ServiceHttp } from "../../utils/services/serviceHttp.js"
+import { ServiceHttp } from "../../utils/services/serviceHttp.js";
 
-const SearchBar = () => {
+const SearchBar = ({ customStyles }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const { setSearchResults } = useContext(SearchContext);
   const navigate = useNavigate();
@@ -14,20 +14,6 @@ const SearchBar = () => {
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
   };
-
-
-  // async function main() {
-  //   const service = new ServiceHttp('/microbusiness/'); 
-  //   const parametrosDeBusqueda = { search: 'imp' }; 
-  //   try {
-  //     const resultado = await service.get(parametrosDeBusqueda);
-  //     console.log('Resultado:', resultado);
-  //   } catch (error) {
-  //     console.error('Error al obtener los datos:', error);
-  //   }
-  // }
-
-  // const handleSearch = () => {main()}
 
   const handleSearch = async () => {
     try {
@@ -41,13 +27,19 @@ const SearchBar = () => {
         console.error('API response is not an array:', resultado);
         setSearchResults([]);
       }
-  
-      // setSearchResults(resultado);
+
+      setSearchResults(resultado);
       navigate('/buscar');
     } catch (error) {
       console.error('Error al obtener los datos:', error);
       setSearchResults([]);
       navigate('/buscar');
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
     }
   };
 
@@ -61,12 +53,14 @@ const SearchBar = () => {
         width: "90vw",
         border: "0",
         zIndex: "100",
+        ...customStyles,
       }}
     >
       <TextField
         variant="outlined"
         value={searchTerm}
         onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
         placeholder="Buscar Microemprendimiento"
         InputProps={{
           startAdornment: (

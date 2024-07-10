@@ -4,6 +4,8 @@ import CustomCard from '../../cards/MicroEmpCard';
 import { SearchContext } from '../../shared/SearchContext';
 import Navbar from '../../navbar/Navbar';
 import SearchBar from '../../searchBar/SearchBar';
+import NoResultsCard from '../../cards/NoResultsCard';
+import theme from '../../../theme/theme';
 
 
 const SearchResults = () => {
@@ -12,27 +14,52 @@ const SearchResults = () => {
     return (
         <>
             <Navbar />
-                <Box sx={{ marginTop: '2vh', display: 'flex', flexDirection: 'column', justifyContent:'center', alignItems:'center'}}>
-                <SearchBar />
-                    <Typography variant='h6'>Resultados de tu búsqueda</Typography>
+                <Box 
+                    sx={{ 
+                        marginTop: '2vh', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        justifyContent:'center', 
+                        alignItems:'center'
+                    }}>
+                <SearchBar 
+                    customStyles={{
+                        boxShadow: 'none', 
+                        backgroundColor: `${theme.palette.primary.grisClaro}`
+                    }}/>
+                <Typography 
+                    sx={{
+                        fontFamily: 'Lato',
+                        fontWeight: 700,
+                        fontSize: 24,
+                        lineHeight: '30px',
+                        marginTop: '5vh',
+                        marginBottom: '3vh'
+                    }}>
+                    Resultados de tu búsqueda
+                </Typography>
                 {searchResults.length > 0 ? (
                     <Grid container spacing={2}>
                         {searchResults.map((result, index) => (
                             <Grid item xs={12} sm={6} md={4} key={index}>
                                 <CustomCard
-                                    images={result.images}
-                                    title={result.title}
-                                    subtitle={result.subtitle}
+                                    images={[
+                                        "https://res.cloudinary.com/dnkaxvkr9/image/upload/v1719576387/jkwmzyleauq1q7udo7ry.jpg",
+                                        "https://res.cloudinary.com/dnkaxvkr9/image/upload/v1719576387/rwdiwne8x5u4abh4s7ol.jpg",
+                                        "https://res.cloudinary.com/dnkaxvkr9/image/upload/v1719576387/l1oddcketqyp98imd28p.jpg"
+                                        ]}
+                                    title={result.name}
+                                    subtitle={result.name}
                                     category={result.category}
-                                    location={result.location}
-                                    details={result.descriptions}
+                                    location={"Buenos Aires"}
+                                    details={result.description}
                                     moreInf={result.moreInformation}
                                 />
                             </Grid>
                         ))}
                     </Grid>
                 ) : (
-                    <Typography variant="h6">No results found</Typography>
+                    <NoResultsCard />
                 )}
             </Box>
         </>
