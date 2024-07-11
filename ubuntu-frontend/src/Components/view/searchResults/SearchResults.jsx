@@ -10,7 +10,7 @@ import theme from '../../../theme/theme';
 
 const SearchResults = () => {
     const { searchResults } = useContext(SearchContext);
-
+    
     return (
         <>
             <Navbar />
@@ -50,8 +50,8 @@ const SearchResults = () => {
                                         "https://res.cloudinary.com/dnkaxvkr9/image/upload/v1719576387/l1oddcketqyp98imd28p.jpg"
                                         ]}
                                     title={result.name}
-                                    subtitle={result.name}
-                                    category={result.category}
+                                    subtitle={result.subTitle}
+                                    category={result.categoryDescription}
                                     location={result.provinceName.concat(", ", result.provinceCountryName)}
                                     details={result.description}
                                     moreInf={result.moreInformation}
