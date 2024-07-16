@@ -3,7 +3,7 @@ import { TextField, InputAdornment, IconButton, Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import theme from "../../theme/theme.js";
 import { useNavigate } from "react-router-dom";
-import { SearchContext } from "../shared/SearchContext.jsx";
+import { SearchContext } from "../shared/searchContext/SearchContext.jsx";
 import { ServiceHttp } from "../../utils/services/serviceHttp.js";
 
 const SearchBar = ({ customStyles }) => {

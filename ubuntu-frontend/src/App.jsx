@@ -4,25 +4,32 @@ import LandingPage from "./components/view/landing/LandingPage";
 import ViewPublicaciones from "./components/view/publicaciones/ViewPublicaciones";
 import SearchResults from "./components/view/searchResults/SearchResults";
 import Login from "../src/components/view/login/Login";
-import { SearchProvider } from "./components/shared/SearchContext";
+import { SearchProvider } from "./components/shared/searchContext/SearchContext";
+import { AuthProvider } from "./components/shared/authContext/AuthContext";
+import { GoogleOAuthProvider } from '@react-oauth/google'; 
 import Navbar from "../src/components/navbar/Navbar";
 
 function App() {
   return (
-    <SearchProvider>
-      <Router>
-        <div>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/microemprendimientos" element={<ViewMicroEmprendimientos />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/publicaciones" element={<ViewPublicaciones />} />
-            <Route path="/buscar" element={<SearchResults />} />
-          </Routes>
-        </div>
-      </Router>
-    </SearchProvider>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <AuthProvider>
+        <SearchProvider>
+          <Router>
+            <div>
+              <Navbar />
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/microemprendimientos" element={<ViewMicroEmprendimientos />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/publicaciones" element={<ViewPublicaciones />} />
+                <Route path="/buscar" element={<SearchResults />} />
+              </Routes>
+            </div>
+          </Router>
+        </SearchProvider>
+      </AuthProvider>
+    </GoogleOAuthProvider>
   );
 }
+
 export default App;
