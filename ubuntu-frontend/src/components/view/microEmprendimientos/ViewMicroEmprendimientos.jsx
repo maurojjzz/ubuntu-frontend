@@ -6,7 +6,6 @@ import data from "../../../../data.json";
 import CustomCard from "../../cards/microEmpCard";
 import imagenmicro from "../../../assets/img/imagen microemprendimientos.jpg";
 import SearchBar from "../../searchBar/SearchBar";
-import Navbar from "../../navbar/Navbar";
 import SvgMicroemp from "../../svg/MicroEmprSvg";
 import CategoryItem from "../../categoryItem/CategoryItem";
 import SvgStyle from "../../svg/CategoriesSvg";
@@ -33,7 +32,6 @@ const ViewMicroEmprendimientos = () => {
 
   return (
     <Container sx={{ padding: "0px" }}>
-      <Navbar />
       <Box
         sx={{
           position: "relative",

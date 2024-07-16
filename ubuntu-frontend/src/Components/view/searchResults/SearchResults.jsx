@@ -13,7 +13,6 @@ const SearchResults = () => {
     
     return (
         <>
-            <Navbar />
                 <Box 
                     sx={{ 
                         marginTop: '2vh', 

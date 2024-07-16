@@ -4,7 +4,6 @@ import { Typography, Box, useTheme, List, ListItem, ListItemIcon } from "@mui/ma
 import { ButtonShowMore } from "../../shared";
 import SearchBar from "../../searchBar/SearchBar";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
-import Navbar from "../../navbar/Navbar";
 import CategoryItem from "../../categoryItem/CategoryItem";
 import CircleIcon from "@mui/icons-material/Circle";
 import jsonData from "../../../assets/json/publicaciones.json";
@@ -22,7 +21,6 @@ const LandingPage = () => {
 
   return (
     <Box>
-      <Navbar />
       <Box
         sx={{
           backgroundImage: `url(${backgroundImage})`,
