@@ -9,7 +9,7 @@ import "./Login.css";
 function Login() {
   const { handleLoginSuccess } = useAuth();
 
-  const login = useGoogleLogin({
+  const googleLogin = useGoogleLogin({
     onSuccess: handleLoginSuccess,
     onError: (error) => console.error(error),
   });
@@ -21,7 +21,7 @@ function Login() {
         <Box className="login__container__card__logoContainer">
           <img src={logoRegistro} alt="logo registro" />
         </Box>
-        <ButtonLogin onClick={() => login()} />
+        <ButtonLogin onClick={() => googleLogin()} />
       </Card>
     </Box>
   );

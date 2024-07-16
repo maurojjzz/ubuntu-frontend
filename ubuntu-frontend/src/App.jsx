@@ -20,7 +20,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/microemprendimientos" element={<ViewMicroEmprendimientos />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/acceder" element={<Login />} />
                 <Route path="/publicaciones" element={<ViewPublicaciones />} />
                 <Route path="/buscar" element={<SearchResults />} />
               </Routes>

@@ -1,6 +1,6 @@
 import "./Navbar.css";
 import { Box } from "@mui/material";
-import DrawerComponent from "../drawerComponent/drawerComponent";
+import DrawerComponent from "../drawerComponent/DrawerComponent";
 import { useNavigate } from "react-router-dom";
 
 function Navbar() {
