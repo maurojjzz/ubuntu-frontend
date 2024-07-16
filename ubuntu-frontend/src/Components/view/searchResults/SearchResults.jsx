@@ -5,6 +5,7 @@ import { SearchContext } from '../../shared/searchContext/SearchContext';
 import SearchBar from '../../searchBar/SearchBar';
 import NoResultsCard from '../../cards/NoResultsCard';
 import theme from '../../../theme/theme';
+import Navbar from '../../navbar/Navbar';
 
 
 const SearchResults = () => {
