@@ -1,4 +1,3 @@
-import Navbar from "../../navbar/Navbar";
 import SearchBar from "../../searchBar/SearchBar";
 import { 
   Box,  
@@ -9,7 +8,6 @@ const ViewSearchBar = () => {
 
   return (
     <Box>
-      <Navbar />
       <Box
         sx={{
           backgroundSize: "cover",
