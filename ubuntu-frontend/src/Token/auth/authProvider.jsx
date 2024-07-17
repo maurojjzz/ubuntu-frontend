@@ -1,49 +1,57 @@
 import axios from 'axios';
 import { 
-    Children,
     createContext,
-    useContext,
     useEffect,
     useMemo,
     useState 
 } from 'react';
-
+import jwtDecode from 'jwt-decode';
 
 const AuthContext = createContext();
 
-const AuthProvider = ( { Children } ) => {
+const AuthProvider = ({ children }) => {
     const [token, setToken_] = useState(localStorage.getItem('token'));
+    const [user, setUser] = useState(null);
 
     const setToken = (newToken) => {
         setToken_(newToken);
+        if (newToken) {
+            const decodedToken = jwtDecode(newToken);
+            setUser({
+                username: decodedToken.sub,
+                roles: decodedToken.roles,
+            });
+        } else {
+            setUser(null);
+        }
     };
 
-    useEffect(()=> {
+    useEffect(() => {
         if (token) {
-            axios.defaults.headers.common['Authorization'] = 'Bearer' + token;
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
             localStorage.setItem('token', token);
-        }else {
+        } else {
             delete axios.defaults.headers.common['Authorization'];
             localStorage.removeItem('token');
         }
     }, [token]);
 
     const contextValue = useMemo(
-        ()=> ({
+        () => ({
             token,
+            user,
             setToken,
         }),
-        [token]
+        [token, user]
     );
 
     return (
-        <AuthContext.Provider value={contextValue}>{Children}</AuthContext.Provider>
+        <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
     );
 };
 
+// const useAuth = () => {
+//     return useContext(AuthContext);
+// };
 
-export const useAuth = () => {
-    return useContext(AuthContext);
- };
-  
- export default AuthProvider;
+export default AuthProvider;
