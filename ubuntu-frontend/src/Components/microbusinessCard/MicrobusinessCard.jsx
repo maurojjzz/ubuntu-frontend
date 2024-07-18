@@ -1,6 +1,7 @@
 import { Box, useTheme, Typography, IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import OptionBox from "./optionBox/OptionBox";
 
 const MicrobusinessCard = () => {
   const theme = useTheme();
@@ -30,10 +31,11 @@ const MicrobusinessCard = () => {
           pr: "16px",
           minWidth: "136px",
           width: "95%",
+          position: "relative",
         }}
       >
+        <OptionBox />
         <Box
-          className="Descripcion Box"
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -97,7 +99,6 @@ const MicrobusinessCard = () => {
           </Box>
         </Box>
         <Box
-          className="IconBox Box"
           sx={{
             display: "flex",
             flexDirection: "column",
