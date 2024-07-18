@@ -1,4 +1,4 @@
-import { Box, useTheme, Typography } from "@mui/material";
+import { Box, useTheme, Typography, IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
@@ -111,12 +111,25 @@ const MicrobusinessCard = () => {
               pt: "4px",
             }}
           >
-            <MoreVertIcon
+            <IconButton
               sx={{
-                cursor: "pointer",
                 height: "24px",
+                width: "24px",
+                "&:focus": {
+                  backgroundColor: theme.palette.primary.azul,
+                  "& .MuiSvgIcon-root": {
+                    color: theme.palette.primary.main,
+                  },
+                },
               }}
-            />
+            >
+              <MoreVertIcon
+                sx={{
+                  height: "20px",
+                  color: theme.palette.primary.negro,
+                }}
+              />
+            </IconButton>
           </Box>
           <Box
             sx={{
@@ -126,11 +139,19 @@ const MicrobusinessCard = () => {
               alignItems: "center",
             }}
           >
-            <NavigateNextIcon
+            <IconButton
               sx={{
-                cursor: "pointer",
+                height: "24px",
+                width: "24px",
               }}
-            />
+            >
+              <NavigateNextIcon
+                sx={{
+                  height: "20px",
+                  color: theme.palette.primary.negro,
+                }}
+              />
+            </IconButton>
           </Box>
         </Box>
       </Box>
