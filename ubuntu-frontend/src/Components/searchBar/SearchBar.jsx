@@ -51,7 +51,7 @@ const SearchBar = ({ customStyles }) => {
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
         width: "90vw",
         border: "0",
-        zIndex: "100",
+        zIndex: "10",
         ...customStyles,
       }}
     >

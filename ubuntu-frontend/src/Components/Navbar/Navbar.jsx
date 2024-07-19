@@ -2,6 +2,7 @@ import "./Navbar.css";
 import { Box } from "@mui/material";
 import DrawerComponent from "../drawerComponent/DrawerComponent";
 import { useNavigate } from "react-router-dom";
+import ShowMyGoogleUserName from "./showUser";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ function Navbar() {
         style={{ cursor: "pointer" }}
         onClick={() => navigate("/")}
       />
+      <ShowMyGoogleUserName/>
     </Box>
   );
 }
