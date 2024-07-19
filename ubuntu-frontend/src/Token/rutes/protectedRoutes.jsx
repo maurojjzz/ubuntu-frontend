@@ -1,8 +1,8 @@
 import { Route, Redirect } from 'react-router-dom';
-import { useAuth } from '../auth/authProvider';
+import { UseAuth } from '../auth/authProvider';
 
 const ProtectedRoute = ({ component: Component, roles, ...rest }) => {
-    const { user } = useAuth();
+    const { user } = UseAuth();
 
     return (
         <Route
