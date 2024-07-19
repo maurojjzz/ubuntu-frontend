@@ -1,19 +1,15 @@
 import { useState } from "react";
-import { Box, useTheme, Typography, IconButton, Grow} from "@mui/material";
+import { Box, useTheme, Typography, IconButton, Grow } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import OptionBox from "./optionBox/OptionBox";
 
-const MicrobusinessCard = () => {
+const MicrobusinessCard = ({ title, category }) => {
   const [focused, setFocused] = useState(false);
 
   const handleFocus = () => {
     setFocused(!focused);
   };
-
-  // const handleBlur = () => {
-  //   setFocused(false);
-  // };
 
   const theme = useTheme();
   return (
@@ -47,7 +43,7 @@ const MicrobusinessCard = () => {
       >
         <Grow in={focused} timeout={10}>
           <Box>
-            <OptionBox setFocused={setFocused}/>
+            <OptionBox setFocused={setFocused} />
           </Box>
         </Grow>
 
@@ -78,7 +74,7 @@ const MicrobusinessCard = () => {
                 mt: "6px",
               }}
             >
-              EcoSenda
+              {title}
             </Typography>
             <Box
               sx={{
@@ -110,7 +106,7 @@ const MicrobusinessCard = () => {
                 height: "fit-content",
               }}
             >
-              Agroecología/ Orgánicos/ Alimentación saludable
+              {category}
             </Typography>
           </Box>
         </Box>
@@ -125,7 +121,7 @@ const MicrobusinessCard = () => {
           <Box
             sx={{
               height: "48px",
-              pt: "4px",
+              pt: "10px",
             }}
           >
             <IconButton

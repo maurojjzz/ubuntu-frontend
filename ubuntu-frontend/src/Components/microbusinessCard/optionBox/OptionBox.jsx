@@ -8,7 +8,7 @@ const OptionBox = ({setFocused}) => {
         display: "flex",
         flexDirection: "column",
         position: "absolute",
-        top: "40px",
+        top: "46px",
         right: "18px",
         width: "120px",
         height: "80px",
