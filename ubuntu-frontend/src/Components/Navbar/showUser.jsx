@@ -21,7 +21,7 @@ const ShowMyGoogleUserName = () => {
 
 
     const handleLogout = () => {
-        logout();
+        logout;
         setShowLogoutButton(false);
     };
         

@@ -8,6 +8,14 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken_] = useState(localStorage.getItem('token'));
     const [user, setUser] = useState(null);
 
+    const handleLoginSuccess = (response) => {
+        setUser(response);
+    };
+
+    const handleLogout = () => {
+        setUser(null);
+    };
+
     const setToken = (newToken) => {
         setToken_(newToken);
         if (newToken) {
@@ -41,7 +49,7 @@ export const AuthProvider = ({ children }) => {
     );
 
     return (
-        <AuthContext.Provider value={contextValue}>
+        <AuthContext.Provider value={[ contextValue, handleLoginSuccess, handleLogout ]}>
             {children}
         </AuthContext.Provider>
     );
