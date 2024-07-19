@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import MicrobusinessCard from "../../../microbusinessCard/MicrobusinessCard";
 import { ServiceHttp } from "../../../../utils/services/serviceHttp";
+import { ButtonLoad } from "../../../shared";
 
 const Microemprendimiento = () => {
   const [microBusiness, setMicroBusiness] = useState([]);
@@ -27,15 +28,30 @@ const Microemprendimiento = () => {
   }, []);
 
   return (
-    <Box>
-      <Typography variant="h4">Microemprendimientos</Typography>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <Typography 
+        variant="h4"
+        sx={{
+          fontFamily: "Lato",
+          fontWeight: "500",
+          fontSize: "28px",
+          lineHeight: "35px",
+          mt: "40px",
+          mb: "24px",
+        }}  
+        align="center"
+      >
+        Microemprendimientos
+      </Typography>
+
+      <ButtonLoad btnText="Cargar Microemprendimiento" />
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
-          border: "1px solid red",
           alignItems: "center",
           gap: "16px",
+          pb: "41px",
         }}
       >
         {microBusiness.map((micro) => (
