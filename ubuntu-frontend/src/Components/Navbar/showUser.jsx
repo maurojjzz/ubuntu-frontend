@@ -53,6 +53,7 @@ const ShowMyGoogleUserName = () => {
                                 color: "#090909",
                                 width:"100px",
                                 height:"40px",
+                                cursor:"pointer",
                             }} 
                             className="cerrarS-button"
                         >
@@ -61,6 +62,9 @@ const ShowMyGoogleUserName = () => {
                     </div>
                 )}
             </div>
+            {/* Falta realizar renderizado condicional mediante autenticacion 
+            de rutas con token para no mostrar opcion de usuario a los usuarios que cierran sesion y a 
+            aquellos que visitan la pagina */}
         </Box>
     );
 }
