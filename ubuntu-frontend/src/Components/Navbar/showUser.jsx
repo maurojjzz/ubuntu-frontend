@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
+import UseAuth from "../../token/jwt/useAuth";
 
 const ShowMyGoogleUserName = () => {
     const [showLogoutButton, setShowLogoutButton] = useState(false);
@@ -8,6 +9,22 @@ const ShowMyGoogleUserName = () => {
         setShowLogoutButton(!showLogoutButton);
     };
 
+    const { user, logout } = UseAuth(); 
+    
+    // if (!user) {
+    //     return null; 
+    // } para que no se muestre el boton de logout si no hay usuario
+
+    if (user) {
+        return null;
+    }
+
+
+    const handleLogout = () => {
+        logout();
+        setShowLogoutButton(false);
+    };
+        
     return (
         <Box className="nav__User">
             <div className="show-datauser" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -26,7 +43,7 @@ const ShowMyGoogleUserName = () => {
                     }}
                     onClick={handlePersonButtonClick}
                 >
-                    AD
+                   AD {/* {user.username.charAt(0).toUpperCase() | 'AD'} */}
                 </button>
                 {showLogoutButton && (
                     <div 
@@ -47,6 +64,7 @@ const ShowMyGoogleUserName = () => {
                         className="cerrar-sesion"
                     >
                         <button 
+                            onClick={handleLogout}
                             style={{ 
                                 border: "none", 
                                 backgroundColor: "transparent", 

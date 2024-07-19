@@ -1,15 +1,10 @@
 import axios from 'axios';
-import { 
-    createContext,
-    useEffect,
-    useMemo,
-    useState 
-} from 'react';
-import jwtDecode from 'jwt-decode';
+import { createContext, useEffect, useMemo, useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
 const AuthContext = createContext();
 
-const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
     const [token, setToken_] = useState(localStorage.getItem('token'));
     const [user, setUser] = useState(null);
 
@@ -46,12 +41,10 @@ const AuthProvider = ({ children }) => {
     );
 
     return (
-        <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={contextValue}>
+            {children}
+        </AuthContext.Provider>
     );
 };
 
-// const useAuth = () => {
-//     return useContext(AuthContext);
-// };
-
-export default AuthProvider;
+export default AuthContext;

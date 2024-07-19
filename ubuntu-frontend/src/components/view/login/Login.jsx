@@ -2,12 +2,12 @@ import Card from "@mui/material/Card";
 import { Box } from "@mui/material";
 import logoRegistro from "../../../assets/img/logo card ingreso registro.png";
 import { useGoogleLogin } from '@react-oauth/google';
-import { useAuth } from '../../shared/authContext/AuthContext';
 import ButtonLogin from "./ButtonLogin";
 import "./Login.css";
+import UseAuth from "../../../token/jwt/useAuth";
 
 function Login() {
-  const { handleLoginSuccess } = useAuth();
+  const { handleLoginSuccess } = UseAuth();
 
   const googleLogin = useGoogleLogin({
     onSuccess: handleLoginSuccess,

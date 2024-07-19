@@ -5,9 +5,9 @@ import ViewPublicaciones from "./components/view/publicaciones/ViewPublicaciones
 import SearchResults from "./components/view/searchResults/SearchResults";
 import Login from "../src/components/view/login/Login";
 import { SearchProvider } from "./components/shared/searchContext/SearchContext";
-import { AuthProvider } from "./components/shared/authContext/AuthContext";
 import { GoogleOAuthProvider } from '@react-oauth/google'; 
 import Navbar from "../src/components/navbar/Navbar";
+import { AuthProvider } from "./token/auth/authProvider";
 
 function App() {
   return (
