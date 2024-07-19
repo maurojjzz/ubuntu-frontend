@@ -20,7 +20,7 @@ const DrawerComponent = () => {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-      {["Inicio", "Microemprendimientos", "Publicaciones", "Login"].map((text) => (
+      {["Inicio", "Microemprendimientos", "Publicaciones", "Acceder"].map((text) => (
   <ListItemButton 
     component={Link} 
     to={text === "Inicio" ? "/" : `/${text.toLowerCase()}`} 
