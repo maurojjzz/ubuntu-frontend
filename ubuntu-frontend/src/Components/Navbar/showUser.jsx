@@ -4,24 +4,18 @@ import UseAuth from "../../token/jwt/useAuth";
 
 const ShowMyGoogleUserName = () => {
     const [showLogoutButton, setShowLogoutButton] = useState(false);
+    const { user, logout } = UseAuth(); 
 
     const handlePersonButtonClick = () => {
         setShowLogoutButton(!showLogoutButton);
     };
 
-    const { user, logout } = UseAuth(); 
-    
-    // if (!user) {
-    //     return null; 
-    // } para que no se muestre el boton de logout si no hay usuario
-
-    if (user) {
-        return null;
+    if (!user) {
+        return null; // No mostrar el componente si no hay usuario
     }
 
-
     const handleLogout = () => {
-        logout;
+        logout();
         setShowLogoutButton(false);
     };
         
@@ -43,7 +37,7 @@ const ShowMyGoogleUserName = () => {
                     }}
                     onClick={handlePersonButtonClick}
                 >
-                   AD {/* {user.username.charAt(0).toUpperCase() | 'AD'} */}
+                     {user ? user.username.charAt(0).toUpperCase() : 'AD'}
                 </button>
                 {showLogoutButton && (
                     <div 
@@ -80,9 +74,6 @@ const ShowMyGoogleUserName = () => {
                     </div>
                 )}
             </div>
-            {/* Falta realizar renderizado condicional mediante autenticacion 
-            de rutas con token para no mostrar opcion de usuario a los usuarios que cierran sesion y a 
-            aquellos que visitan la pagina */}
         </Box>
     );
 }
