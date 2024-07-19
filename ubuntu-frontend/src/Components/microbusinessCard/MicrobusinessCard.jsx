@@ -1,9 +1,20 @@
-import { Box, useTheme, Typography, IconButton } from "@mui/material";
+import { useState } from "react";
+import { Box, useTheme, Typography, IconButton, Grow} from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import OptionBox from "./optionBox/OptionBox";
 
 const MicrobusinessCard = () => {
+  const [focused, setFocused] = useState(false);
+
+  const handleFocus = () => {
+    setFocused(!focused);
+  };
+
+  // const handleBlur = () => {
+  //   setFocused(false);
+  // };
+
   const theme = useTheme();
   return (
     <Box
@@ -34,7 +45,12 @@ const MicrobusinessCard = () => {
           position: "relative",
         }}
       >
-        <OptionBox />
+        <Grow in={focused} timeout={10}>
+          <Box>
+            <OptionBox setFocused={setFocused}/>
+          </Box>
+        </Grow>
+
         <Box
           sx={{
             display: "flex",
@@ -116,13 +132,15 @@ const MicrobusinessCard = () => {
               sx={{
                 height: "24px",
                 width: "24px",
-                "&:focus": {
-                  backgroundColor: theme.palette.primary.azul,
-                  "& .MuiSvgIcon-root": {
-                    color: theme.palette.primary.main,
-                  },
+                backgroundColor: focused ? theme.palette.primary.azul : "transparent",
+                "&:hover": {
+                  backgroundColor: focused ? theme.palette.primary.azul : theme.palette.primary.grisMedio,
+                },
+                "& .MuiSvgIcon-root": {
+                  color: focused ? theme.palette.primary.main : theme.palette.primary.negro,
                 },
               }}
+              onClick={handleFocus}
             >
               <MoreVertIcon
                 sx={{
