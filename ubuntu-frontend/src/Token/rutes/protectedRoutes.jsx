@@ -1,4 +1,4 @@
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Navigate } from 'react-router-dom';
 import { UseAuth } from '../auth/authProvider';
 
 const ProtectedRoute = ({ component: Component, roles, ...rest }) => {
@@ -10,12 +10,12 @@ const ProtectedRoute = ({ component: Component, roles, ...rest }) => {
             render={props => {
                 if (!user) {
                   //si no esta autenticado se redirige al login
-                    return <Redirect to="/login" />;
+                    return <Navigate to="/login" />;
                 }
 
                 if (roles && !roles.includes(user.roles)) {
                     // Usuario autenticado pero sin permisos necesarios, redirigir a pagina de visitante
-                    return <Redirect to="/home" />;
+                    return <Navigate to="/home" />;
                 }
                // Usuario autenticado y con permisos necesarios, renderizar el contenido de adminitrador
                 return <Component {...props} />;

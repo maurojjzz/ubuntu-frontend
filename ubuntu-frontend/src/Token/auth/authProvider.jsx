@@ -1,20 +1,12 @@
-import axios from 'axios';
-import { createContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useMemo, useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import axios from 'axios';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [token, setToken_] = useState(localStorage.getItem('token'));
     const [user, setUser] = useState(null);
-
-    const handleLoginSuccess = (response) => {
-        setUser(response);
-    };
-
-    const handleLogout = () => {
-        setUser(null);
-    };
 
     const setToken = (newToken) => {
         setToken_(newToken);
@@ -27,6 +19,10 @@ export const AuthProvider = ({ children }) => {
         } else {
             setUser(null);
         }
+    };
+
+    const logout = () => {
+        setToken(null);
     };
 
     useEffect(() => {
@@ -44,12 +40,13 @@ export const AuthProvider = ({ children }) => {
             token,
             user,
             setToken,
+            logout,
         }),
         [token, user]
     );
 
     return (
-        <AuthContext.Provider value={[ contextValue, handleLoginSuccess, handleLogout ]}>
+        <AuthContext.Provider value={contextValue}>
             {children}
         </AuthContext.Provider>
     );

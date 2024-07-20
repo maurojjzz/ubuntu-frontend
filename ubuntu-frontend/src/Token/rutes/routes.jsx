@@ -10,37 +10,14 @@ const Routes = () => {
     const { token } = useAuth();
 
     const routesForPublic = [
-        {
-            path: "/home",
-            element: <LandingPage />,
-        },
-        {
-            path: "/login",
-            element: <Login />,
-        },
-        {
-            path: "/microemprendimientos",
-            element: <ViewMicroEmprendimientos />,
-        },
-        {
-            path: "/publicaciones",
-            element: <ViewPublicaciones />,
-        },
-        // Faltaría la sección del formulario de contacto
-        // {
-        //     path: "/contacto",
-        //     element: <Contacto />,
-        // },
+        { path: "/home", element: <LandingPage /> },
+        { path: "/login", element: <Login /> },
+        { path: "/microemprendimientos", element: <ViewMicroEmprendimientos /> },
+        { path: "/publicaciones", element: <ViewPublicaciones /> },
     ];
 
     const routesForAdmins = [
-        {
-            path: "/admin",
-            element: <ProtectedRoute component={'componete o ruta de admin log'} roles={['ADMIN']} />,
-            // Aquí irán las rutas de los admins
-            // children: [
-            // ],
-        },
+        { path: "/admin", element: <ProtectedRoute component={"admincomp"} roles={['ADMIN']} /> },
     ];
 
     const router = createBrowserRouter([
@@ -48,7 +25,7 @@ const Routes = () => {
         ...(token ? routesForAdmins : []),
     ]);
 
-    return <RouterProvider router={router}/>;
+    return <RouterProvider router={router} />;
 };
 
 export default Routes;
