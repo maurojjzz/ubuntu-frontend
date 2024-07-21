@@ -16,7 +16,6 @@ const DrawerComponent = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  console.log(token);
 
   const list = () => (
     <Box

@@ -20,8 +20,11 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/publicaciones" element={<ViewPublicaciones />} />
             <Route path="/buscar" element={<SearchResults />} />
-            {/* Solo para poder acceder a ellas ahora luego se modifica */}
+            {/* Solo para poder acceder a ellas ahora luego se modifica en proximo sprint */}
+            <Route path="/admin/dashboard" element={<div> En desarrollo </div>} />
             <Route path="/admin/microemprendimientos" element={<Microemprendimiento />} />
+            <Route path="/admin/solicitudes" element={<div> En desarrollo </div>} />
+            <Route path="/admin/publicaciones" element={<div> En desarrollo </div>} />
           </Routes>
         </div>
       </Router>
