@@ -6,6 +6,7 @@ import SearchResults from "./components/view/searchResults/SearchResults";
 import Login from "../src/components/view/login/Login";
 import { SearchProvider } from "./components/shared/SearchContext";
 import Navbar from "../src/components/navbar/Navbar";
+import Microemprendimiento from "./components/view/admin/microemprendimiento/Microemprendimiento";
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/publicaciones" element={<ViewPublicaciones />} />
             <Route path="/buscar" element={<SearchResults />} />
+            {/* Solo para poder acceder a ellas ahora luego se modifica */}
+            <Route path="/admin/microemprendimientos" element={<Microemprendimiento />} />
           </Routes>
         </div>
       </Router>
