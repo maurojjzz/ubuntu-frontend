@@ -7,7 +7,7 @@ import Login from "../src/components/view/login/Login";
 import { SearchProvider } from "./components/shared/searchContext/SearchContext";
 import { GoogleOAuthProvider } from '@react-oauth/google'; 
 import Navbar from "../src/components/navbar/Navbar";
-import { AuthProvider } from "./token/auth/authProvider";
+import { AuthProvider } from "./token/auth/AuthProvider";
 import Microemprendimiento from "./components/view/admin/microemprendimiento/Microemprendimiento";
 
 function App() {
