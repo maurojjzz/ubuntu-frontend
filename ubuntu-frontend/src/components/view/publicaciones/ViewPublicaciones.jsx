@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Box, Typography, Grid } from '@mui/material';
 import PublicacionesCard from '../../cards/PublicacionesCard';
 import SearchBar from '../../searchBar/SearchBar';
-import NavBar from '../../navbar/Navbar';
 import imagenPublicaciones from '../../../assets/img/imagen publicaciones.jpg';
 import './ViewPublicaciones.css';
 import jsonData from '../../../assets/json/publicaciones.json';
@@ -18,7 +17,6 @@ const ViewPublicaciones = () => {
 
     return (
         <>
-            <NavBar />
             <Box sx={{
                 position: 'relative',
                 width: '100%',
