@@ -3,7 +3,7 @@ import { useTheme } from '@mui/material/styles';
 import { FcGoogle } from "react-icons/fc";
 import './ButtonLogin.css'
 
-function ButtonLogin() {
+function ButtonLogin({ onClick }) {
     const theme = useTheme();
 
     return (
@@ -17,6 +17,7 @@ function ButtonLogin() {
                 borderRadius: '15px',
                 textTransform: 'none',
             }}
+            onClick={onClick}
         >
             Continua con Google
         </Button>

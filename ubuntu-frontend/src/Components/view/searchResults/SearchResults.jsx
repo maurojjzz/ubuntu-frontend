@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
-import CustomCard from '../../cards/MicroEmpCard';
-import { SearchContext } from '../../shared/SearchContext';
+import CustomCard from "../../cards/microEmpCard";
+import { SearchContext } from '../../shared/searchContext/SearchContext';
 import SearchBar from '../../searchBar/SearchBar';
 import NoResultsCard from '../../cards/NoResultsCard';
 import theme from '../../../theme/theme';

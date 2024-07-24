@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import { Box, Typography, Container, Grid } from "@mui/material";
 import data from "../../../../data.json";
-import CustomCard from "../../cards/MicroEmpCard";
+import CustomCard from "../../cards/microEmpCard";
 import imagenmicro from "../../../assets/img/imagen microemprendimientos.jpg";
 import SearchBar from "../../searchBar/SearchBar";
 import SvgMicroemp from "../../svg/MicroEmprSvg";

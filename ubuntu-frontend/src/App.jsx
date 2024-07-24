@@ -4,8 +4,10 @@ import LandingPage from "./components/view/landing/LandingPage";
 import ViewPublicaciones from "./components/view/publicaciones/ViewPublicaciones";
 import SearchResults from "./components/view/searchResults/SearchResults";
 import Login from "../src/components/view/login/Login";
-import { SearchProvider } from "./components/shared/SearchContext";
+import { SearchProvider } from "./components/shared/searchContext/SearchContext";
+import { GoogleOAuthProvider } from '@react-oauth/google'; 
 import Navbar from "../src/components/navbar/Navbar";
+import { AuthProvider } from "./token/auth/authProvider";
 import Microemprendimiento from "./components/view/admin/microemprendimiento/Microemprendimiento";
 
 function App() {
@@ -31,4 +33,5 @@ function App() {
     </SearchProvider>
   );
 }
+
 export default App;
