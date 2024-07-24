@@ -14,9 +14,8 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { ImageCarousel } from "../shared";
 
 const ExpandMoreButton = styled((props) => {
   const { expand, ...other } = props;
@@ -45,40 +44,6 @@ const CustomCard = ({
     setExpanded(!expanded);
   };
 
-  const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
-
-  const handlePrevImage = () => {
-    setCurrentImageIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
-    );
-  };
-
-  const renderDots = () => {
-    return (
-      <Box
-        sx={{ display: "flex", justifyContent: "center", marginTop: "8px" }}
-      >
-        {images.map((_, index) => (
-          <Box
-            key={index}
-            sx={{
-              height: "6px",
-              width: "6px",
-              borderRadius: "50%",
-              margin: "0 2px",
-              backgroundColor:
-                currentImageIndex === index
-                  ? theme.palette.primary.azul
-                  : "white",
-            }}
-          />
-        ))}
-      </Box>
-    );
-  };
-
   return (
     <Card
       sx={{
@@ -88,64 +53,9 @@ const CustomCard = ({
         margin:"2vw"
       }}
     >
-      <Box
-        sx={{
-          position: "relative",
-        }}
-      >
-        <Box
-          sx={{
-            margin: "16px",
-            position: "relative",
-          }}
-        >
-          {currentImageIndex > 0 && (
-            <IconButton
-              onClick={handlePrevImage}
-              sx={{
-                position: "absolute",
-                top: "50%",
-                left: 0,
-                transform: "translateY(-50%)",
-                zIndex: 1,
-                color: "white",
-                padding: "10px",
-              }}
-            >
-              <ArrowBackIosNewIcon sx={{ fontSize: "20px" }} />
-            </IconButton>
-          )}
-
-          <CardMedia
-            component="img"
-            height="144"
-            width="304"
-            image={images[currentImageIndex]}
-            alt="Image"
-            sx={{
-              borderRadius: "16px",
-            }}
-          />
-
-          <IconButton
-            onClick={handleNextImage}
-            sx={{
-              position: "absolute",
-              top: "50%",
-              right: 0,
-              transform: "translateY(-50%)",
-              zIndex: 1,
-              color: "white",
-              padding: "10px",
-            }}
-          >
-            <ArrowForwardIosIcon sx={{ fontSize: "20px" }} />
-          </IconButton>
-        </Box>
-        {renderDots()}
-      </Box>
 
       <CardContent>
+      <ImageCarousel images={images} />
         <Typography
           color={theme.palette.primary.negro}
           sx={{
