@@ -37,7 +37,6 @@ const CustomCard = ({
   moreInf,
 }) => {
   const [expanded, setExpanded] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const theme = useTheme(); 
   const handleExpandClick = () => {
     setExpanded(!expanded);
