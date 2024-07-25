@@ -2,8 +2,8 @@ import "./Navbar.css";
 import { Box, Grid } from "@mui/material";
 import DrawerComponent from "../drawerComponent/DrawerComponent";
 import { useNavigate } from "react-router-dom";
-import ShowMyGoogleUserName from "../showUser/showUser";
-import UseAuth from "../../token/jwt/useAuth";
+import ShowMyGoogleUserName from "../showUser/ShowUser";
+import UseAuth from "../../token/jwt/UseAuth";
 
 function Navbar() {
   const navigate = useNavigate();

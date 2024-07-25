@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
-import UseAuth from "../../token/jwt/useAuth";
+import UseAuth from "../../token/jwt/UseAuth";
 import { useNavigate } from "react-router-dom";
 
 const ShowMyGoogleUserName = () => {

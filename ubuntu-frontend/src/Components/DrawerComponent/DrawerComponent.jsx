@@ -3,13 +3,13 @@ import { Drawer, IconButton, List, ListItemButton, ListItemText, Box, useTheme, 
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
-import UseAuth from '../../token/jwt/useAuth'
+import UseAuth from '../../token/jwt/UseAuth'
 
 const DrawerComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const { token } = UseAuth();  // Use UseAuth hook to get the token
+  const { token } = UseAuth();
 
   const theme = useTheme();
 
@@ -18,10 +18,8 @@ const DrawerComponent = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  // Separate list for always visible items
   const alwaysVisibleItems = ["Inicio", "Microemprendimientos", "Publicaciones", "Acceder"];
 
-  // Separate list for conditionally visible items
   const conditionalItems = ["Dashboard Administrador", "Microemprendimientos", "Publicaciones", "Solicitudes de Contacto"];
 
   const list = () => (
@@ -30,7 +28,6 @@ const DrawerComponent = () => {
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-      {/* Always visible items */}
       <List>
         {alwaysVisibleItems.map((text) => (
           <ListItemButton component={Link} to={text === "Inicio" ? "/" : `/${text.toLowerCase()}`} key={text}>
@@ -41,8 +38,6 @@ const DrawerComponent = () => {
           </ListItemButton>
         ))}
       </List>
-
-      {/* Conditionally visible items */}
       {token && (
         <Box>
           <Typography
