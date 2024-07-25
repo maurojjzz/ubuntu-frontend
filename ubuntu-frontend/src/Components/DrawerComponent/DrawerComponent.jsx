@@ -1,13 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Drawer, IconButton, List, ListItemButton, ListItemText, Box, useTheme, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
+import UseAuth from '../../token/jwt/useAuth'
 
 const DrawerComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [token, setToken] = useState("");
+
+  const { token } = UseAuth();  // Use UseAuth hook to get the token
 
   const theme = useTheme();
 
@@ -16,6 +18,11 @@ const DrawerComponent = () => {
     setAnchorEl(event.currentTarget);
   };
 
+  // Separate list for always visible items
+  const alwaysVisibleItems = ["Inicio", "Microemprendimientos", "Publicaciones", "Acceder"];
+
+  // Separate list for conditionally visible items
+  const conditionalItems = ["Dashboard Administrador", "Microemprendimientos", "Publicaciones", "Solicitudes de Contacto"];
 
   const list = () => (
     <Box
@@ -23,53 +30,49 @@ const DrawerComponent = () => {
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-      {token && (
-        <Typography
-          variant="h5"
-          color={theme.palette.primary.main}
-          fontFamily={"Lato"}
-          sx={{
-            mt: "30px",
-            ml: "16px",
-            fontWeight: "700",
-            fontSize: "20px",
-            lineHeight: "20px",
-          }}
-        >
-          Administrador
-        </Typography>
-      )}
-
+      {/* Always visible items */}
       <List>
-        {!token
-          ? ["Inicio", "Microemprendimientos", "Publicaciones", "Login"].map((text) => (
-              <ListItemButton component={Link} to={text === "Inicio" ? "/" : `/${text.toLowerCase()}`} key={text}>
+        {alwaysVisibleItems.map((text) => (
+          <ListItemButton component={Link} to={text === "Inicio" ? "/" : `/${text.toLowerCase()}`} key={text}>
+            <ListItemText
+              primary={text}
+              sx={{ fontSize: "18px", fontWeight: "700", lineHeight: "20px", fontFamily: "Lato" }}
+            />
+          </ListItemButton>
+        ))}
+      </List>
+
+      {/* Conditionally visible items */}
+      {token && (
+        <Box>
+          <Typography
+            variant="h5"
+            color={theme.palette.primary.main}
+            fontFamily={"Lato"}
+            sx={{
+              mt: "30px",
+              ml: "16px",
+              fontWeight: "700",
+              fontSize: "20px",
+              lineHeight: "20px",
+            }}
+          >
+            Administrador
+          </Typography>
+          <List>
+            {conditionalItems.map((text) => (
+              <ListItemButton component={Link} to={`/admin/${text.toLowerCase().split(" ")[0]}`} key={text}>
                 <ListItemText
                   primary={text}
                   sx={{ fontSize: "18px", fontWeight: "700", lineHeight: "20px", fontFamily: "Lato" }}
                 />
               </ListItemButton>
-            ))
-          : ["Dashboard Administrador", "Microemprendimientos", "Solicitudes de Contacto", "Publicaciones"].map(
-              (text) => (
-                <ListItemButton component={Link} to={`/admin/${text.toLowerCase().split(" ")[0]}`} key={text}>
-                  <ListItemText
-                    primary={text}
-                    sx={{ fontSize: "18px", fontWeight: "700", lineHeight: "20px", fontFamily: "Lato" }}
-                  />
-                </ListItemButton>
-              )
-            )}
-      </List>
+            ))}
+          </List>
+        </Box>
+      )}
     </Box>
   );
-
-  useEffect(() => {
-    const saveToken = localStorage.getItem("token");
-    if (saveToken) {
-      setToken(saveToken);
-    }
-  }, []);
 
   return (
     <Box>

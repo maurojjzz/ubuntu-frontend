@@ -1,5 +1,5 @@
 import { createContext, useMemo, useState, useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode'; 
 import axios from 'axios';
 
 const AuthContext = createContext();
@@ -12,17 +12,24 @@ export const AuthProvider = ({ children }) => {
         setToken_(newToken);
         if (newToken) {
             const decodedToken = jwtDecode(newToken);
-            setUser({
+            const userData = {
                 username: decodedToken.sub,
-                roles: decodedToken.roles,
-            });
+                firstName: decodedToken.first_name || '',
+                lastName: decodedToken.last_name || '',
+                role: decodedToken.role || 'user',
+            };
+            setUser(userData);
+            console.log('User loaded successfully:', userData);
         } else {
             setUser(null);
         }
     };
 
     const logout = () => {
+        console.log('Logging out user:', user);
         setToken(null);
+        setUser(null);
+        console.log('User logged out successfully. Token:', token);
     };
 
     useEffect(() => {

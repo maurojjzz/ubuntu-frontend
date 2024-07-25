@@ -1,89 +1,91 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
 import UseAuth from "../../token/jwt/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const ShowMyGoogleUserName = () => {
-//     const [showLogoutButton, setShowLogoutButton] = useState(false);
+    const [showLogoutButton, setShowLogoutButton] = useState(false);
+    const navigate = useNavigate();
 
-//     const handlePersonButtonClick = () => {
-//         setShowLogoutButton(!showLogoutButton);
-//     };
+    const handlePersonButtonClick = () => {
+        setShowLogoutButton(!showLogoutButton);
+    };
 
-//     const { user, logout } = UseAuth(); 
-    
-//     // if (!user) {
-//     //     return null; 
-//     // } para solo mostrar el botón de cerrar sesión si hay un usuario autenticado
+    const { user, logout } = UseAuth();
 
-//     if(user) {
-//         return null;
-//     }
+    if (!user) {
+        return null;
+    }
 
-//     const handleLogout = () => {
-//         logout();
-//         setShowLogoutButton(false);
-//     };
-        
-//     return (
-//         <Box className="nav__User">
-//             <div className="show-datauser" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-//                 <button 
-//                     className="button-person" 
-//                     style={{ 
-//                         backgroundColor: "black", 
-//                         border: "none", 
-//                         color: "white", 
-//                         padding: "4px", 
-//                         cursor: "pointer", 
-//                         width: "40px", 
-//                         height: "40px", 
-//                         borderRadius: "100px", 
-//                         margin: "2px" 
-//                     }}
-//                     onClick={handlePersonButtonClick}
-//                 >
-//                    AD   {/* {user ? user.username.charAt(0).toUpperCase() : "AD"} */}
-//                 </button>
-//                 {showLogoutButton && (
-//                     <div 
-//                         style={{ 
-//                             backgroundColor: "#D2D2D2", 
-//                             textAlign: "center", 
-//                             display: "flex", 
-//                             justifyContent: "center", 
-//                             borderRadius: "5px", 
-//                             marginTop: "5px", 
-//                             position:"fixed",
-//                             top:"57px",
-//                             padding:"10px",
-//                             right:"20px",
-//                             zIndex:"30",
-//                             gap:"10px"
-//                         }} 
-//                         className="cerrar-sesion"
-//                     >
-//                         <button 
-//                             onClick={handleLogout}
-//                             style={{ 
-//                                 border: "none", 
-//                                 backgroundColor: "transparent", 
-//                                 color: "#090909",
-//                                 width:"100px",
-//                                 height:"40px",
-//                                 cursor:"pointer",
-//                             }} 
-//                             className="cerrarS-button"
-//                         >
-//                             cerrar sesión
-//                         </button>
-//                     </div>
-//                 )}
-//             </div>
-//             {/* Falta realizar renderizado condicional mediante autenticacion 
-//             de rutas con token para no mostrar opcion de usuario a los usuarios que cierran sesion y a 
-//             aquellos que visitan la pagina */}
-//         </Box>
-//     );
-}
+    const handleLogout = () => {
+        logout();
+        setShowLogoutButton(false);
+        navigate('/');
+    };
+
+    return (
+        <Box className="nav__User" style={{ position: "relative" }}>
+            <div className="show-datauser" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <button
+                    className="button-person"
+                    style={{
+                        backgroundColor: "black",
+                        border: "none",
+                        color: "white",
+                        padding: "4px",
+                        cursor: "pointer",
+                        width: "40px",
+                        height: "40px",
+                        borderRadius: "100px",
+                        margin: "2px"
+                    }}
+                    onClick={handlePersonButtonClick}
+                >
+                    {user ? user.firstName.charAt(0).toUpperCase().concat(user.lastName.charAt(0).toUpperCase()) : user.username.charAt(0).toUpperCase().concat(user.username.charAt(1).toUpperCase())}
+                </button>
+                {showLogoutButton && (
+                    <div
+                        style={{
+                            backgroundColor: "#D2D2D2",
+                            textAlign: "center",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            borderRadius: "0px 0px 4px 4px",
+                            marginTop: "5px",
+                            position: "absolute",
+                            top: "50px", 
+                            padding: "10px",
+                            right: "0px",
+                            zIndex: "30",
+                            gap: "10px",
+                            width: "115px",
+                            height: "40px",
+                        }}
+                        className="cerrar-sesion"
+                    >
+                        <button
+                            onClick={handleLogout}
+                            style={{
+                                border: "none",
+                                backgroundColor: "transparent",
+                                color: "#090909",
+                                width: "100px",
+                                height: "40px",
+                                cursor: "pointer",
+                                fontWeight: "600",
+                                fontSize: "14px",
+                                fontFamily: "Nunito"
+                            }}
+                            className="cerrarS-button"
+                        >
+                            Cerrar sesión
+                        </button>
+                    </div>
+                )}
+            </div>
+        </Box>
+    );
+};
 
 export default ShowMyGoogleUserName;
