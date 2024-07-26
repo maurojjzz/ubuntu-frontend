@@ -9,7 +9,7 @@ const DrawerComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const { token } = UseAuth();
+  const { user } = UseAuth();
 
   const theme = useTheme();
 
@@ -38,7 +38,7 @@ const DrawerComponent = () => {
           </ListItemButton>
         ))}
       </List>
-      {token && (
+      {user && (
         <Box>
           <Typography
             variant="h5"

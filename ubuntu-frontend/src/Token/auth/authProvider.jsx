@@ -5,7 +5,7 @@ import axios from 'axios';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [token, setToken_] = useState(localStorage.getItem('token'));
+    const [token, setToken_] = useState(sessionStorage.getItem('token'));
     const [user, setUser] = useState(null);
 
     const setToken = (newToken) => {
@@ -29,16 +29,15 @@ export const AuthProvider = ({ children }) => {
         console.log('Logging out user:', user);
         setToken(null);
         setUser(null);
-        console.log('User logged out successfully. Token:', token);
     };
 
     useEffect(() => {
         if (token) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-            localStorage.setItem('token', token);
+            sessionStorage.setItem('token', token);
         } else {
             delete axios.defaults.headers.common['Authorization'];
-            localStorage.removeItem('token');
+            sessionStorage.removeItem('token');
         }
     }, [token]);
 
