@@ -49,7 +49,9 @@ const SolicitudesCard = ({ title, date, status }) => {
                     </Box>
                     <Divider sx={{ 
                         borderColor: theme.palette.primary.azul,
-                        width: '75%'
+                        width: '75%',
+                        borderBottomWidth: '2px', // Makes the bottom border thicker
+                        borderStyle: 'solid', // Ensures the border is solid
                     }} />
                     <Box sx={{ 
                         fontFamily: 'Lato',
