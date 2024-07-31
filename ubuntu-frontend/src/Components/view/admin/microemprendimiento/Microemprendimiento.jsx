@@ -8,7 +8,7 @@ const Microemprendimiento = () => {
   const [microBusiness, setMicroBusiness] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const microemprendimientos = new ServiceHttp("/microbusiness/");
+  const microemprendimientos = new ServiceHttp("/microbusiness/findAll");
 
   const getMicroEmprendimientos = async () => {
     try {

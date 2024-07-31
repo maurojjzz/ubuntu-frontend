@@ -11,6 +11,7 @@ import { AuthProvider } from "./token/auth/AuthProvider";
 import Microemprendimiento from "./components/view/admin/microemprendimiento/Microemprendimiento";
 import LoginSuccess from "./components/view/loginSuccess/LoginSucess"
 import Unauthorized from "./components/view/unauthorized/Unauthorized";
+import Error from "./components/view/404/404";
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/admin/solicitudes" element={<div> En desarrollo </div>} />
                 <Route path="/admin/publicaciones" element={<div> En desarrollo </div>} />
                 <Route path="/admin/dashboard" element={<div> En desarrollo </div>} />
+                <Route path="/*" element={<Error/>}/>
               </Routes>
             </div>
           </Router>
