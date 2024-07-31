@@ -1,9 +1,19 @@
 import { Box, Typography } from "@mui/material";
 import theme from "../../../../theme/theme";
 import { useState } from "react";
+import SolicitudesCard from "../../../cards/SolicitudesCard";
+import jsonData from '../../../../assets/json/solicitudes.json';
 
 function SolicitudContacto() {
     const [selectedOption, setSelectedOption] = useState("No gestionadas");
+
+    const filteredData = jsonData.filter(item => {
+        if (selectedOption === "No gestionadas") {
+            return item.status === "unprocessed";
+        } else {
+            return item.status === "processed";
+        }
+    });
 
     return (
         <Box sx={{
@@ -26,13 +36,13 @@ function SolicitudContacto() {
             </Box>
             <Box sx={{
                 display: "flex",
-                flexDirection: "row", // Corrected from "rows"
+                flexDirection: "row",
                 borderBottom: "solid 1px",
                 borderColor: theme.palette.primary.azul,
                 width: "100%",
                 padding: '8px 10px 20px 10px',
             }}>
-                <Box 
+                <Box
                     sx={{
                         width: "50%",
                         display: "flex",
@@ -42,19 +52,34 @@ function SolicitudContacto() {
                     }}
                     onClick={() => setSelectedOption("No gestionadas")}
                 >
-                    <Typography 
+                    <Typography
                         sx={{
                             fontFamily: 'Lato',
                             fontWeight: '700',
                             fontSize: '16px',
                             lineHeight: '20px',
-                            color: selectedOption === "No gestionadas" ? theme.palette.primary.azul : "inherit"
+                            color: selectedOption === "No gestionadas" ? theme.palette.primary.azul : theme.palette.primary.grisOscuro,
+                            position: 'relative',
+                            '&::after': {
+                                content: '""',
+                                position: 'absolute',
+                                left: 0,
+                                right: 0,
+                                bottom: '-20px', 
+                                height: '3px', 
+                                backgroundColor: theme.palette.primary.azul, 
+                                borderTopLeftRadius: '3px', 
+                                borderTopRightRadius: '3px', 
+                                borderBottomLeftRadius: '0px', 
+                                borderBottomRightRadius: '0px', 
+                                visibility: selectedOption === "No gestionadas" ? 'visible' : 'hidden' 
+                            }
                         }}
                     >
                         No gestionadas
                     </Typography>
                 </Box>
-                <Box 
+                <Box
                     sx={{
                         width: "50%",
                         display: "flex",
@@ -64,13 +89,28 @@ function SolicitudContacto() {
                     }}
                     onClick={() => setSelectedOption("Gestionadas")}
                 >
-                    <Typography 
+                    <Typography
                         sx={{
                             fontFamily: 'Lato',
                             fontWeight: '700',
                             fontSize: '16px',
                             lineHeight: '20px',
-                            color: selectedOption === "Gestionadas" ? theme.palette.primary.azul : "inherit"
+                            color: selectedOption === "Gestionadas" ? theme.palette.primary.azul : theme.palette.primary.grisOscuro,
+                            position: 'relative',
+                            '&::after': {
+                                content: '""',
+                                position: 'absolute',
+                                left: 0,
+                                right: 0,
+                                bottom: '-20px', 
+                                height: '3px', 
+                                backgroundColor: theme.palette.primary.azul, 
+                                borderTopLeftRadius: '3px', 
+                                borderTopRightRadius: '3px', 
+                                borderBottomLeftRadius: '0px', 
+                                borderBottomRightRadius: '0px', 
+                                visibility: selectedOption === "No gestionadas" ? 'hidden' : 'visible' 
+                            }
                         }}
                     >
                         Gestionadas
@@ -78,15 +118,14 @@ function SolicitudContacto() {
                 </Box>
             </Box>
             <Box>
-                <Typography sx={{
-                    fontFamily: 'Lato',
-                    fontWeight: '500',
-                    fontSize: '20px',
-                    lineHeight: '25px',
-                    paddingTop: '2vh',
-                }}>
-                    {selectedOption === "No gestionadas" ? "Tarjetas no gestionadas" : "Tarjetas gestionadas"}
-                </Typography>
+                {filteredData.map((item, index) => (
+                    <SolicitudesCard
+                        key={index}
+                        title={item.title}
+                        date={item.date}
+                        status={item.status}
+                    />
+                ))}
             </Box>
         </Box>
     );
