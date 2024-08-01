@@ -31,7 +31,7 @@ const theme = createTheme({
     },
 });
 
-const CargarMicroemprendimiento = () => {
+const EditarMicroemprendimiento = () => {
     const [nombre, setNombre] = useState('');
     const [categoria, setCategoria] = useState('');
     const [pais, setPais] = useState('');
@@ -70,7 +70,7 @@ const CargarMicroemprendimiento = () => {
                         }}
                         align="center"
                     >
-                        Carga de Microemprendimientos
+                        Edición de Microemprendimiento
                     </Typography>
 
                     <Typography
@@ -86,7 +86,7 @@ const CargarMicroemprendimiento = () => {
                             color: "black",
                         }}
                     >
-                        Completá el formulario para cargar un Microemprendimiento
+                        Editá el formulario de carga del Microemprendimiento
                     </Typography>
 
                     <Box sx={{ mt: "20px", width: "90%" }}>
@@ -242,7 +242,7 @@ const CargarMicroemprendimiento = () => {
                         <ImageUpload />
                     </Box>
 
-                    <ReusableButton nombre="Guardar cambios" handleClick={handleSubmit} />
+                    <ReusableButton nombre="Cargar Microemprendimiento" handleClick={handleSubmit} />
 
 
                 </Box>
@@ -251,4 +251,4 @@ const CargarMicroemprendimiento = () => {
     );
 };
 
-export default CargarMicroemprendimiento;
+export default EditarMicroemprendimiento;
