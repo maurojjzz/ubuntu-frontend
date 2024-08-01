@@ -1,8 +1,11 @@
+import {ModalAlert} from '../../../shared';
 
 const Dashboard = () => {
   return (
     <div>
-      Dashboard
+      Dashboard en desarrollo
+
+      <ModalAlert  />
     </div>
   )
 }
