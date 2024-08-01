@@ -1,11 +1,18 @@
 import { Box, Typography } from "@mui/material";
 import theme from "../../../../theme/theme";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SolicitudesCard from "../../../cards/SolicitudesCard";
 import jsonData from '../../../../assets/json/solicitudes.json';
+import SolicitudContactoDetail from "../solicitudContactoDetail/SolicitudContactoDetail";
 
 function SolicitudContacto() {
     const [selectedOption, setSelectedOption] = useState("No gestionadas");
+    const [selectedData, setSelectedData] = useState(null);
+
+    useEffect(() => {
+        // Reset selectedData to null on component mount
+        setSelectedData(null);
+    }, []);
 
     const filteredData = jsonData.filter(item => {
         if (selectedOption === "No gestionadas") {
@@ -14,6 +21,15 @@ function SolicitudContacto() {
             return item.status === "processed";
         }
     });
+
+    const handleButtonClick = (data) => {
+        setSelectedData(data); // Set the selected data when a card button is clicked
+    };
+
+    const handleOptionChange = (option) => {
+        setSelectedOption(option);
+        setSelectedData(null); // Reset selectedData to null when option changes
+    };
 
     return (
         <Box sx={{
@@ -50,7 +66,7 @@ function SolicitudContacto() {
                         justifyContent: "center",
                         cursor: "pointer"
                     }}
-                    onClick={() => setSelectedOption("No gestionadas")}
+                    onClick={() => handleOptionChange("No gestionadas")}
                 >
                     <Typography
                         sx={{
@@ -65,14 +81,14 @@ function SolicitudContacto() {
                                 position: 'absolute',
                                 left: 0,
                                 right: 0,
-                                bottom: '-20px', 
-                                height: '3px', 
-                                backgroundColor: theme.palette.primary.azul, 
-                                borderTopLeftRadius: '3px', 
-                                borderTopRightRadius: '3px', 
-                                borderBottomLeftRadius: '0px', 
-                                borderBottomRightRadius: '0px', 
-                                visibility: selectedOption === "No gestionadas" ? 'visible' : 'hidden' 
+                                bottom: '-20px',
+                                height: '3px',
+                                backgroundColor: theme.palette.primary.azul,
+                                borderTopLeftRadius: '3px',
+                                borderTopRightRadius: '3px',
+                                borderBottomLeftRadius: '0px',
+                                borderBottomRightRadius: '0px',
+                                visibility: selectedOption === "No gestionadas" ? 'visible' : 'hidden'
                             }
                         }}
                     >
@@ -87,7 +103,7 @@ function SolicitudContacto() {
                         justifyContent: "center",
                         cursor: "pointer"
                     }}
-                    onClick={() => setSelectedOption("Gestionadas")}
+                    onClick={() => handleOptionChange("Gestionadas")}
                 >
                     <Typography
                         sx={{
@@ -102,14 +118,14 @@ function SolicitudContacto() {
                                 position: 'absolute',
                                 left: 0,
                                 right: 0,
-                                bottom: '-20px', 
-                                height: '3px', 
-                                backgroundColor: theme.palette.primary.azul, 
-                                borderTopLeftRadius: '3px', 
-                                borderTopRightRadius: '3px', 
-                                borderBottomLeftRadius: '0px', 
-                                borderBottomRightRadius: '0px', 
-                                visibility: selectedOption === "No gestionadas" ? 'hidden' : 'visible' 
+                                bottom: '-20px',
+                                height: '3px',
+                                backgroundColor: theme.palette.primary.azul,
+                                borderTopLeftRadius: '3px',
+                                borderTopRightRadius: '3px',
+                                borderBottomLeftRadius: '0px',
+                                borderBottomRightRadius: '0px',
+                                visibility: selectedOption === "No gestionadas" ? 'hidden' : 'visible'
                             }
                         }}
                     >
@@ -118,14 +134,24 @@ function SolicitudContacto() {
                 </Box>
             </Box>
             <Box>
-                {filteredData.map((item, index) => (
-                    <SolicitudesCard
-                        key={index}
-                        title={item.title}
-                        date={item.date}
-                        status={item.status}
-                    />
-                ))}
+                {selectedData ? (
+                    <SolicitudContactoDetail {...selectedData} />
+                ) : (
+                    filteredData.map((item, index) => (
+                        <SolicitudesCard
+                            key={index}
+                            title={item.title}
+                            date={item.date}
+                            status={item.status}
+                            name={item.name}
+                            surname={item.surname}
+                            email={item.email}
+                            phone={item.phone}
+                            text={item.text}
+                            onButtonClick={() => handleButtonClick(item)}
+                        />
+                    ))
+                )}
             </Box>
         </Box>
     );

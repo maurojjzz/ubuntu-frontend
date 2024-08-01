@@ -4,7 +4,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useTheme } from "@mui/material/styles";
 import "./SolicitudesCard.css";
 
-const SolicitudesCard = ({ title, date, status }) => {
+const SolicitudesCard = ({ title, date, status, name, surname, email, phone, text, onButtonClick }) => {
     const theme = useTheme();
     const className = status === "unprocessed" ? "solicitudesCard__orangeDot" : "solicitudesCard__greenDot";
 
@@ -23,7 +23,6 @@ const SolicitudesCard = ({ title, date, status }) => {
             <CardContent sx={{
                 display: 'grid',
                 gridTemplateColumns: '11fr 1fr',
-                alignItems: 'space-between',
                 alignItems: 'center',
                 padding: '8px 8px 8px 16px !important',
             }}>
@@ -66,7 +65,8 @@ const SolicitudesCard = ({ title, date, status }) => {
                         color: theme.palette.primary.azul,
                         textTransform: 'none',
                         minWidth: '24px'
-                    }}>
+                    }}
+                    onClick={() => onButtonClick({ title, date, status, name, surname, email, phone, text })}>
                         <ArrowForwardIosIcon />
                     </Button>
                 </Box>
@@ -79,6 +79,12 @@ SolicitudesCard.propTypes = {
     title: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    surname: PropTypes.string,
+    email: PropTypes.string,
+    phone: PropTypes.string,
+    text: PropTypes.string,
+    onButtonClick: PropTypes.func.isRequired,
 };
 
 export default SolicitudesCard;
