@@ -242,7 +242,7 @@ const CargarMicroemprendimiento = () => {
                         <ImageUpload />
                     </Box>
 
-                    <ReusableButton nombre="Guardar cambios" handleClick={handleSubmit} />
+                    <ReusableButton nombre="Cargar Microemprendimiento" handleClick={handleSubmit} />
 
 
                 </Box>
