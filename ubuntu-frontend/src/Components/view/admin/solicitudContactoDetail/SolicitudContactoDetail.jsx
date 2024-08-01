@@ -6,7 +6,8 @@ function SolicitudContactoDetail({ title, date, status, name, surname, email, ph
 
     const nombreCompleto = `${surname}, ${name}`
     const className = status === "unprocessed" ? "solicitudContactoDetail__orangeDot" : "solicitudContactoDetail__greenDot";
-    const statusText = status === "unprocessed" ? "No gestionada" : "Gestionada"
+    const statusText = status === "unprocessed" ? "No gestionada" : "Gestionada";
+    const fechaText = status === "unprocessed" ? "Fecha de solicitud:" : "Fecha de gestión";
 
     return (
         <Box sx={{
@@ -76,7 +77,7 @@ function SolicitudContactoDetail({ title, date, status, name, surname, email, ph
                     lineHeight: '24px',
                     marginBottom: '2vh',
                 }}>
-                    Fecha de solicitud: {date}
+                    {fechaText} {date}
                 </Typography>
             </Box>
             <Box sx={{
