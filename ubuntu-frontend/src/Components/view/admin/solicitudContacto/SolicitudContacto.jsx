@@ -10,7 +10,6 @@ function SolicitudContacto() {
     const [selectedData, setSelectedData] = useState(null);
 
     useEffect(() => {
-        // Reset selectedData to null on component mount
         setSelectedData(null);
     }, []);
 
@@ -23,12 +22,12 @@ function SolicitudContacto() {
     });
 
     const handleButtonClick = (data) => {
-        setSelectedData(data); // Set the selected data when a card button is clicked
+        setSelectedData(data);
     };
 
     const handleOptionChange = (option) => {
         setSelectedOption(option);
-        setSelectedData(null); // Reset selectedData to null when option changes
+        setSelectedData(null);
     };
 
     return (
