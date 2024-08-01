@@ -2,7 +2,7 @@ import { Box, Modal, useTheme, Typography, Button } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 
-const ModalAlert = ({ status = "error" }) => {
+const ModalAlert = ({ status = "success", title, subTitle, open, onClose, onSuccessAction, onTryAgain }) => {
   const theme = useTheme();
 
   const iconStyle = {
@@ -18,12 +18,12 @@ const ModalAlert = ({ status = "error" }) => {
     lineHeight: "20px",
     textTransform: "none",
     fontFamily: "Lato",
-  }
-
+  };
 
   return (
     <Modal
-      open={true}
+      open={open}
+      onClose={onClose}
       sx={{
         display: "flex",
         alignItems: "center",
@@ -59,9 +59,24 @@ const ModalAlert = ({ status = "error" }) => {
             lineHeight: "28px",
             mb: "12px",
             width: "80%",
+            textAlign: "center",
           }}
         >
-          Some text that should be here
+          {title}
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            fontWeight: "400",
+            fontFamily: "Lato",
+            fontSize: "14px",
+            lineHeight: "18px",
+            width: "80%",
+            textAlign: "left",
+            mb: "5px",
+          }}
+        >
+          {subTitle}
         </Typography>
         <Box
           sx={{
@@ -70,11 +85,11 @@ const ModalAlert = ({ status = "error" }) => {
             justifyContent: "end",
           }}
         >
-          <Button variant="text" sx={buttonStyle} >
-            {status==="success" ? "Acepar" : "Cancelar"}
+          <Button variant="text" sx={buttonStyle} onClick={onSuccessAction}>
+            {status === "success" ? "Aceptar" : "Cancelar"}
           </Button>
           {status === "error" && (
-            <Button variant="text" sx={buttonStyle} >
+            <Button variant="text" sx={buttonStyle} onClick={onTryAgain}>
               Intentar nuevamente
             </Button>
           )}
