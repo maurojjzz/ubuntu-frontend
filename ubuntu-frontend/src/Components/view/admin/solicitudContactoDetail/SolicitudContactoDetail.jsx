@@ -5,7 +5,7 @@ import theme from "../../../../theme/theme";
 function SolicitudContactoDetail({ title, date, status, name, surname, email, phone, text }) {
 
     const nombreCompleto = `${surname}, ${name}`
-    const classNameName = status === "unprocessed" ? "solicitudContactoDetail__orangeDot" : "solicitudContactoDetail__greenDot";
+    const className = status === "unprocessed" ? "solicitudContactoDetail__orangeDot" : "solicitudContactoDetail__greenDot";
     const statusText = status === "unprocessed" ? "No gestionada" : "Gestionada";
     const fechaText = status === "unprocessed" ? "Fecha de solicitud:" : "Fecha de gestión";
 
@@ -21,7 +21,7 @@ function SolicitudContactoDetail({ title, date, status, name, surname, email, ph
                 gap: '5px',
                 marginBottom: '2vh'
             }}>
-                <Box classNameName={classNameName}>
+                <Box className={className}>
                 </Box>
                 <Box>
                     <Typography sx={{
