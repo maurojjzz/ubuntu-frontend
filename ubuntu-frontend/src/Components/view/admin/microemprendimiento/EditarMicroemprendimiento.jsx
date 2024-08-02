@@ -1,35 +1,8 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Box, Typography, TextField, MenuItem, FormControl, InputLabel, Select, FormHelperText } from "@mui/material";
 import { useState } from "react";
 import { ImageUpload } from '../../../shared';
 import { ReusableButton } from '../../../shared';
-const theme = createTheme({
-    components: {
-        MuiTextField: {
-            styleOverrides: {
-                root: {
-                    '& label.Mui-focused': {
-                        color: 'blue', // Cambia el color según tu preferencia
-                    },
-                    '& .MuiInput-underline:after': {
-                        borderBottomColor: 'blue', // Cambia el color según tu preferencia
-                    },
-                    '& .MuiOutlinedInput-root': {
-                        '& fieldset': {
-                            borderColor: 'gray', // Cambia el color según tu preferencia
-                        },
-                        '&:hover fieldset': {
-                            borderColor: 'gray', // Cambia el color según tu preferencia
-                        },
-                        '&.Mui-focused fieldset': {
-                            borderColor: 'blue', // Cambia el color según tu preferencia
-                        },
-                    },
-                },
-            },
-        },
-    },
-});
+
 
 const EditarMicroemprendimiento = () => {
     const [nombre, setNombre] = useState('');
@@ -55,7 +28,7 @@ const EditarMicroemprendimiento = () => {
     };
 
     return (
-        <ThemeProvider theme={theme}>
+        
             <Box>
                 <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <Typography
@@ -247,7 +220,7 @@ const EditarMicroemprendimiento = () => {
 
                 </Box>
             </Box>
-        </ThemeProvider>
+        
     );
 };
 

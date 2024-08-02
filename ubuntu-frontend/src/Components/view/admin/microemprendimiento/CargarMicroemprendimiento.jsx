@@ -1,35 +1,8 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Box, Typography, TextField, MenuItem, FormControl, InputLabel, Select, FormHelperText } from "@mui/material";
 import { useState } from "react";
 import { ImageUpload } from '../../../shared';
 import { ReusableButton } from '../../../shared';
-const theme = createTheme({
-    components: {
-        MuiTextField: {
-            styleOverrides: {
-                root: {
-                    '& label.Mui-focused': {
-                        color: 'blue', // Cambia el color según tu preferencia
-                    },
-                    '& .MuiInput-underline:after': {
-                        borderBottomColor: 'blue', // Cambia el color según tu preferencia
-                    },
-                    '& .MuiOutlinedInput-root': {
-                        '& fieldset': {
-                            borderColor: 'gray', // Cambia el color según tu preferencia
-                        },
-                        '&:hover fieldset': {
-                            borderColor: 'gray', // Cambia el color según tu preferencia
-                        },
-                        '&.Mui-focused fieldset': {
-                            borderColor: 'blue', // Cambia el color según tu preferencia
-                        },
-                    },
-                },
-            },
-        },
-    },
-});
+
 
 const CargarMicroemprendimiento = () => {
     const [nombre, setNombre] = useState('');
@@ -54,8 +27,7 @@ const CargarMicroemprendimiento = () => {
         console.log("Formulario enviado");
     };
 
-    return (
-        <ThemeProvider theme={theme}>
+    return (        
             <Box>
                 <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <Typography
@@ -137,13 +109,14 @@ const CargarMicroemprendimiento = () => {
                         />
                     </Box>
 
-                    <Box sx={{ mt: "20px", width: "90%" }}>
-                        <FormControl fullWidth variant="outlined">
-                            <InputLabel>País*</InputLabel>
+                    <Box sx={{ mt: "20px", width: "90%"}}>
+                        <FormControl fullWidth variant="outlined" >
+                            <InputLabel >País*</InputLabel>
                             <Select
                                 value={pais}
                                 onChange={handlePaisChange}
                                 label="País*"
+                                sx={{border: "1px solid gray"}}
                                 MenuProps={{
                                     PaperProps: {
                                         style: {
@@ -247,7 +220,7 @@ const CargarMicroemprendimiento = () => {
 
                 </Box>
             </Box>
-        </ThemeProvider>
+        
     );
 };
 
