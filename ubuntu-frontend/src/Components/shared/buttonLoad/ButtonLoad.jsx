@@ -1,12 +1,17 @@
 import { Button, useTheme, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const ButtonLoad = ({
   btnText,
-  btnAction = () => {
-    console.log("clicked");
-  },
+  
+  btnLink = "/",
 }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(btnLink);
+  };
 
   return (
     <Button
@@ -24,7 +29,7 @@ const ButtonLoad = ({
           backgroundColor: theme.palette.primary.azul,
         },
       }}
-      onClick={btnAction}
+      onClick={handleClick}
     >
       <Typography
         variant="p"

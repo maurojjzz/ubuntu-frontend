@@ -30,6 +30,31 @@ const theme = createTheme({
       'sans-serif'
     ]
   },
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& label.Mui-focused': {
+            color: 'blue', 
+          },
+          '& .MuiInput-underline:after': {
+            borderBottomColor: 'blue', 
+          },
+          '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+              borderColor: 'gray', 
+            },
+            '&:hover fieldset': {
+              borderColor: 'gray', 
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: 'blue', 
+            },
+          },
+        },
+      },
+    },
+  },
 });
 
 export default theme;

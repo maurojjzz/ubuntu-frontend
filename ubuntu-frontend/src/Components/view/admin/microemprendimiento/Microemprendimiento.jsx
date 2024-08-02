@@ -42,6 +42,7 @@ const Microemprendimiento = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      
       <Typography
         variant="h4"
         sx={{
@@ -57,7 +58,8 @@ const Microemprendimiento = () => {
         Microemprendimientos
       </Typography>
 
-      <ButtonLoad btnText="Cargar Microemprendimiento" />
+      <ButtonLoad btnText="Cargar Microemprendimiento" btnLink="/admin/microemprendimientos/cargar" />
+
       <Box
         sx={{
           display: "flex",
