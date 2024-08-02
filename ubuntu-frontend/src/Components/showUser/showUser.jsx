@@ -25,7 +25,7 @@ const ShowMyGoogleUserName = () => {
 
     const handlePerfil = () => {
         navigate('/my-profile');
-      };
+    };
 
     return (
         <Box className="nav__User" style={{ position: "relative" }}>
@@ -59,7 +59,7 @@ const ShowMyGoogleUserName = () => {
                             borderRadius: "0px 0px 4px 4px",
                             marginTop: "5px",
                             position: "absolute",
-                            top: "50px", 
+                            top: "50px",
                             padding: "30px",
                             right: "0px",
                             zIndex: "30",
@@ -68,22 +68,22 @@ const ShowMyGoogleUserName = () => {
                             height: "50px",
                         }}
                         className="cerrar-sesion">
-                        <button className="mi-perfil-button" 
-                        style={{
-                            border: "none",
-                            backgroundColor: "transparent",
-                            color: "#090909",
-                            width: "100px",
-                            height: "40px",
-                            cursor: "pointer",
-                            fontWeight: "600",
-                            fontSize: "14px",
-                            fontFamily: "Nunito",
-                            }} 
+                        <button className="mi-perfil-button"
+                            style={{
+                                border: "none",
+                                backgroundColor: "transparent",
+                                color: "#090909",
+                                width: "100px",
+                                height: "40px",
+                                cursor: "pointer",
+                                fontWeight: "600",
+                                fontSize: "14px",
+                                fontFamily: "Nunito",
+                            }}
                             onClick={handlePerfil}
                         >
-                               Mi perfil
-                         </button>
+                            Mi perfil
+                        </button>
                         <button
                             onClick={handleLogout}
                             style={{
