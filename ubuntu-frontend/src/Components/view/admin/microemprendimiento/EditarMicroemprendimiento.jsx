@@ -1,8 +1,7 @@
 import { Box, Typography, TextField, MenuItem, FormControl, InputLabel, Select, FormHelperText } from "@mui/material";
 import { useState } from "react";
-import { ImageUpload } from '../../../shared';
-import { ReusableButton } from '../../../shared';
 
+import { ReusableButton, ImageEdit } from '../../../shared';
 
 const EditarMicroemprendimiento = () => {
     const [nombre, setNombre] = useState('');
@@ -211,9 +210,7 @@ const EditarMicroemprendimiento = () => {
                         />
                     </Box>
 
-                    <Box sx={{ mt: "20px", width: "90%", display: 'flex', justifyContent: 'flex-end' }}>
-                        <ImageUpload />
-                    </Box>
+                    <ImageEdit />
 
                     <ReusableButton nombre="Guardar cambios" handleClick={handleSubmit} />
 
