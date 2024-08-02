@@ -86,13 +86,13 @@ function SolicitudContactoDetail({ title, date, status, name, surname, email, ph
                 marginTop: '2vh',
                 marginBottom: '2vh'
             }}>
-                <label for="field1" class="field__label">Apellido y Nombre</label>
-                <input
+                <label htmlFor="field1" className="field__label">Apellido y Nombre</label>
+                <textarea
                     id="field1"
                     type="text"
                     value={nombreCompleto}
-                    readonly
-                    class="field__input"
+                    readOnly
+                    className="field__input"
                 />
             </Box>
             <Box sx={{
@@ -101,13 +101,13 @@ function SolicitudContactoDetail({ title, date, status, name, surname, email, ph
                 marginTop: '2vh',
                 marginBottom: '2vh'
             }}>
-                <label for="field2" class="field__label">Correo electrónico</label>
-                <input
+                <label htmlFor="field2" className="field__label">Correo electrónico</label>
+                <textarea
                     id="field2"
                     type="text"
                     value={email}
-                    readonly
-                    class="field__input"
+                    readOnly
+                    className="field__input"
                 />
             </Box>
             <Box sx={{
@@ -116,13 +116,13 @@ function SolicitudContactoDetail({ title, date, status, name, surname, email, ph
                 marginTop: '2vh',
                 marginBottom: '2vh'
             }}>
-                <label for="field3" class="field__label">Teléfono</label>
-                <input
+                <label htmlFor="field3" className="field__label">Teléfono</label>
+                <textarea
                     id="field3"
                     type="text"
                     value={phone}
-                    readonly
-                    class="field__input"
+                    readOnly
+                    className="field__input"
                 />
             </Box>
             <Box sx={{
@@ -131,13 +131,12 @@ function SolicitudContactoDetail({ title, date, status, name, surname, email, ph
                 marginTop: '2vh',
                 marginBottom: '2vh'
             }}>
-                <label for="field4" class="field__label">Mensaje</label>
+                <label htmlFor="field4" className="field__label">Mensaje</label>
                 <textarea
                     id="field4"
-                    type="text"
                     value={text}
-                    readonly
-                    class="field__textArea"
+                    readOnly
+                    className="field__textArea"
                 />
             </Box>
         </Box>
