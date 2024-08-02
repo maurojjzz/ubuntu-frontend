@@ -1,20 +1,27 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, Typography, Skeleton, Stack } from "@mui/material";
 import MicrobusinessCard from "../../../microbusinessCard/MicrobusinessCard";
 import { ServiceHttp } from "../../../../utils/services/serviceHttp";
 import { ButtonLoad } from "../../../shared";
+import { ModalAlert } from "../../../shared";
 
 const Microemprendimiento = () => {
   const [microBusiness, setMicroBusiness] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
+
+  const navigate = useNavigate();
 
   const microemprendimientos = new ServiceHttp("/microbusiness/findAll");
 
   const getMicroEmprendimientos = async () => {
     try {
       const data = await microemprendimientos.get("search=");
+      if(data.error) throw data.error
       setMicroBusiness(Array.isArray(data) ? data : []);
     } catch (error) {
+      setOpenModal(true);
       console.error(error);
     } finally {
       setLoading(false);
@@ -24,6 +31,14 @@ const Microemprendimiento = () => {
   useEffect(() => {
     getMicroEmprendimientos();
   }, []);
+
+
+
+  const handleTryAgain = () => {
+    setLoading(true);
+    setOpenModal(false);
+    getMicroEmprendimientos();
+  };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -87,6 +102,18 @@ const Microemprendimiento = () => {
           ))
         )}
       </Box>
+      <ModalAlert
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        status={"error"}
+        onSuccessAction={() => {
+          setOpenModal(false);
+          navigate("/admin/dashboard");
+        }}
+        onTryAgain={handleTryAgain}
+        title={"Error al cargar microemprendimientos"}
+        subTitle={"Intente nuevamente mas tarde"}
+      />
     </Box>
   );
 };

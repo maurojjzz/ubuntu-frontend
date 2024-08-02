@@ -1,10 +1,9 @@
-
 const Dashboard = () => {
   return (
     <div>
-      Dashboard
+      Dashboard en desarrollo
     </div>
-  )
-}
+  );
+};
 
 export default Dashboard;

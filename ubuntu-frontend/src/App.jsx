@@ -13,6 +13,7 @@ import LoginSuccess from "./components/view/loginSuccess/LoginSucess"
 import Unauthorized from "./components/view/unauthorized/Unauthorized";
 import Error from "./components/view/404/404";
 import SolicitudContacto from "./components/view/admin/solicitudContacto/SolicitudContacto";
+import Dashboard from  "./components/view/admin/dashboard/Dashboard";
 
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
                 <Route path="/admin/microemprendimientos" element={<Microemprendimiento />} />
                 <Route path="/admin/solicitudes" element={<SolicitudContacto/>} />
                 <Route path="/admin/publicaciones" element={<div> En desarrollo </div>} />
-                <Route path="/admin/dashboard" element={<div> En desarrollo </div>} />
+                <Route path="/admin/dashboard" element={<Dashboard />} />
                 <Route path="/*" element={<Error/>}/>
               </Routes>
             </div>
