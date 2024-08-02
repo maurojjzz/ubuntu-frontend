@@ -4,6 +4,8 @@ import { Box, Typography, Container } from "@mui/material";
 import imageContact from "../../../assets/img/imagen contacto.jpg";
 import SearchBar from "../../searchBar/SearchBar";
 import './UserContact.css';
+import BadSend from '../../alertsContact/BadSend';
+import GoodSend from '../../alertsContact/GoodSend';
 
 const UserContact = () => {
   const theme = useTheme();
@@ -13,13 +15,56 @@ const UserContact = () => {
     phone: '',
     message: ''
   });
+  const [alertType, setAlertType] = useState(null); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const isValidPhone = (phone) => {
+    return /^[0-9+\s]*$/.test(phone);
+  };
+
   const allFieldsFilled = Object.values(formData).every(field => field.trim() !== '');
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (allFieldsFilled) {
+      if (isValidEmail(formData.email) && isValidPhone(formData.phone)) {
+        setIsSubmitting(true);
+        const isSuccess = true; 
+
+        if (isSuccess) {
+          setAlertType('success');
+        } else {
+          setAlertType('error'); 
+        }
+
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          message: ''
+        });
+
+        setTimeout(() => {
+          setAlertType(null);
+          setIsSubmitting(false);
+        }, 3000); 
+
+      } else {
+        setAlertType('error'); 
+      }
+    } else {
+      setAlertType('error'); 
+    }
+  };
 
   return (
     <Container sx={{ padding: "0px" }}>
@@ -45,7 +90,7 @@ const UserContact = () => {
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
             zIndex: 1,
           }}
         />
@@ -84,9 +129,9 @@ const UserContact = () => {
               whiteSpace: "pre-wrap",
             }}
           >
-            Contactanos para <br /> obtener <br />
-            información <br /> detallada sobre <br /> cómo podés <br />
-            invertir en un <br /> futuro más <br /> sostenible
+            Contactanos para<br/>obtener<br />
+            información<br />detallada sobre<br />cómo podés<br />
+            invertir en un<br />futuro más<br />sostenible
           </Typography>
         </Box>
       </Box>
@@ -149,237 +194,110 @@ const UserContact = () => {
             marginTop: "2vh",
             marginBottom: "2vh",
           }}>
-          <form action="POST" style={{
-            marginTop: "2vh",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}>
-          <div className="input-block">
-            <input  
-                value={formData.name}
-                onChange={handleChange}  
-                type="text" name="name" id="input-text" required />
-             <span className="placeholder">
-             Apellido y Nombre*
-            </span>
-            </div>
-            <div className="input-block">
-            <input
-            onChange={handleChange}  
-            value={formData.email}
-             type="text" name="email" id="input-text" required />
-             <span className="placeholder">
-             Correo Electronico*
-            </span>
-            </div>
-            <div className="input-block">
-            <input
-             onChange={handleChange}  
-             value={formData.phone}
-             type="text" name="phone" id="input-text" required />
-             <span className="placeholder">
-             Telefono*
-            </span>
-            <p style={{
-                fontFamily: "'Lato' ",
-                fontSize: "15px",
-                fontWeight: "400",
-                lineHeight: "16px",
-                marginBottom: "20px",
-              }}>
-                Con el siguiente formato +54 9 261 002 002
-              </p>
-            </div>
-            <div className="input-block">
-            <input
-             value={formData.message}
-             onChange={handleChange}
-             maxLength="300"
-             style={{
-               textAlign: 'left',
-             }}
-             type="text" name="message" id="input-text" required className="input-text" />
-             <span className="placeholder">
-             Mensaje*
-            </span>
-            <div className="p" style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginTop: '2px',
+            <form onSubmit={handleSubmit} style={{
+              marginTop: "2vh",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}>
-            <p style={{
-                  fontFamily: "'Lato' ",
-                  fontSize: "13px",
-                  fontWeight: "400",
-                  lineHeight: "16px",
-                  marginLeft: '8px',
-                }}>
-                  Máximo 300 caracteres.
-                </p>
+              <div className="input-block">
+                <input  
+                    value={formData.name}
+                    onChange={handleChange}  
+                    type="text" name="name" id="input-text" required />
+                <span className="placeholder">
+                  Apellido y Nombre*
+                </span>
+              </div>
+              <div className="input-block">
+                <input
+                  onChange={handleChange}  
+                  value={formData.email}
+                  type="email" name="email" id="email" required />
+                <span className="placeholder">
+                  Correo Electronico*
+                </span>
+              </div>
+              <div className="input-block">
+                <input
+                  onChange={handleChange}  
+                  value={formData.phone}
+                  type="text" name="phone" id="phone" required />
+                <span className="placeholder">
+                  Telefono*
+                </span>
                 <p style={{
-                  fontFamily: "'Lato' ",
-                  fontSize: "13px",
-                  fontWeight: "400",
-                  lineHeight: "16px",
-                  margin: '0',
-                  textAlign: 'right'
+                    fontFamily: "'Lato' ",
+                    fontSize: "15px",
+                    fontWeight: "400",
+                    lineHeight: "16px",
+                    marginBottom: "20px",
+                  }}>
+                    Con el siguiente formato +54 9 261 002 002
+                  </p>
+              </div>
+              <div className="input-block">
+                <input
+                  value={formData.message}
+                  onChange={handleChange}
+                  maxLength="300"
+                  style={{
+                    textAlign: 'left',
+                  }}
+                  type="text" name="message" id="input-text" required className="input-text" />
+                <span className="placeholder">
+                  Mensaje*
+                </span>
+                <div className="p" style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginTop: '2px',
                 }}>
-                  {formData.message.length}/300
-                </p>
+                  <p style={{
+                      fontFamily: "'Lato' ",
+                      fontSize: "13px",
+                      fontWeight: "400",
+                      lineHeight: "16px",
+                      marginLeft: '8px',
+                    }}>
+                      Máximo 300 caracteres.
+                    </p>
+                    <p style={{
+                      fontFamily: "'Lato' ",
+                      fontSize: "13px",
+                      fontWeight: "400",
+                      lineHeight: "16px",
+                      margin: '0',
+                      textAlign: 'right'
+                    }}>
+                      {formData.message.length}/300
+                    </p>
                 </div>
-            </div>
-            <button
-                type="button"
-                style={{
-                  width: "23rem",
-                  height: "56px",
-                  borderRadius: "100px",
-                  backgroundColor: allFieldsFilled ? theme.palette.primary.azul : theme.palette.primary.grisOscuro,
-                  color: theme.palette.primary.main,
-                  border: "none",
-                  fontFamily: "'Lato' ",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  lineHeight: "25px",
-                  marginTop: "2vh",
-                  transition: "background-color 0.3s ease",
-                }}
-                disabled={!allFieldsFilled}
-              >
-                Enviar
-              </button>
-          </form>
-           
-              {/* <input
-                type="text"
-                name="name"
-                placeholder="Apellido y Nombre*"
-                value={formData.name}
-                onChange={handleChange}
-                style={{
-                  width: "24rem",
-                  height: "56px",
-                  borderRadius: "4px 4px 0px 0px",
-                  border: `1px solid ${theme.palette.primary.negro}`,
-                  padding: "8px",
-                  marginBottom: "16px",
-                  transition: "all 0.3s ease",
-                  position: "relative",
-                }}
-                className="input-field"
-              />
-              <input
-                type="text"
-                name="email"
-                placeholder="Correo Electronico*"
-                value={formData.email}
-                onChange={handleChange}
-                style={{
-                  width: "24rem",
-                  height: "56px",
-                  borderRadius: "4px 4px 0px 0px",
-                  border: `1px solid ${theme.palette.primary.negro}`,
-                  padding: "8px",
-                  marginBottom: "16px",
-                  transition: "all 0.3s ease",
-                  position: "relative",
-
-                }}
-                className="input-field"
-              />
-              <input
-                type="text"
-                name="phone"
-                placeholder="Telefono*"
-                value={formData.phone}
-                onChange={handleChange}
-                style={{
-                  width: "24rem",
-                  height: "56px",
-                  borderRadius: "4px 4px 0px 0px",
-                  border: `1px solid ${theme.palette.primary.negro}`,
-                  padding: "8px",
-                  transition: "all 0.3s ease",
-                  position: "relative",
-
-                }}
-                className="input-field"
-              />
-              <p style={{
-                fontFamily: "'Lato' ",
-                fontSize: "15px",
-                fontWeight: "400",
-                lineHeight: "16px",
-                marginBottom: "20px",
-              }}>
-                Con el siguiente formato +54 9 261 002 002
-              </p>
-              <textarea
-                name="message"
-                placeholder="Mensaje*"
-                value={formData.message}
-                onChange={handleChange}
-                maxLength="300"
-                style={{
-                  width: "24rem",
-                  height: "216px",
-                  borderRadius: "4px 4px 0px 0px",
-                  border: `1px solid ${theme.palette.primary.negro}`,
-                  padding: "8px 16px",
-                  transition: "all 0.3s ease",
-                  
-                }}
-                className="input-field"
-              />
-              <div style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
-                alignItems: 'center',
-                marginTop: '8px',
-                width: '24rem'
-              }}>
-                <p style={{
-                  fontFamily: "'Lato' ",
-                  fontSize: "13px",
-                  fontWeight: "400",
-                  lineHeight: "16px",
-                  marginLeft: '18px',
-                }}>
-                  Máximo 300 caracteres.
-                </p>
-                <p style={{
-                  fontFamily: "'Lato' ",
-                  fontSize: "13px",
-                  fontWeight: "400",
-                  lineHeight: "16px",
-                  margin: '0',
-                  textAlign: 'right'
-                }}>
-                  {formData.message.length}/300
-                </p>
               </div>
               <button
-                type="button"
-                style={{
-                  width: "24rem",
-                  height: "56px",
-                  borderRadius: "100px",
-                  backgroundColor: allFieldsFilled ? theme.palette.primary.azul : theme.palette.primary.grisOscuro,
-                  color: theme.palette.primary.main,
-                  border: "none",
-                  fontFamily: "'Lato' ",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  lineHeight: "25px",
-                  marginTop: "2vh",
-                  transition: "background-color 0.3s ease",
-                }}
-                disabled={!allFieldsFilled}
-              >
-                Enviar
-              </button> */}
+                  type="submit"
+                  style={{
+                    width: "23rem",
+                    height: "56px",
+                    borderRadius: "100px",
+                    backgroundColor: allFieldsFilled ? theme.palette.primary.azul : theme.palette.primary.grisOscuro,
+                    color: theme.palette.primary.main,
+                    border: "none",
+                    fontFamily: "'Lato' ",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    lineHeight: "25px",
+                    marginTop: "2vh",
+                    transition: "background-color 0.3s ease",
+                  }}
+                  disabled={!allFieldsFilled || isSubmitting}
+                >
+                  Enviar
+                </button>
+            </form>
+            {alertType === 'success' && <GoodSend />}
+            {alertType === 'error' && <BadSend />}
           </Box>
         </Box>
       </Box>
