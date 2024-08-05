@@ -10,38 +10,42 @@ import {
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import { ImageUpload, ReusableButton } from "../../../shared";
-import { ServiceHttp } from "../../../../utils/services/serviceHttp";
+import { getCountries } from "../../../../utils/services/dashboard/ServiceCountry";
+import { getProvincias } from "../../../../utils/services/dashboard/ServiceProvince";
+import { getCategories } from "../../../../utils/services/dashboard/ServiceCategories";
 
 const CargarMicroemprendimiento = () => {
   const [name, setName] = useState("");
-  
-  const [category, setCategory] = useState("");
   const [subTitle, setSubTitle] = useState("");
-  const [country, setCountry] = useState("");
   const [province, setProvince] = useState("");
   const [ciudad, setCiudad] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [moreInformation, setMoreInformation] = useState("");
-  const [countriess, setCountriess] = useState([]);
   const [provincias, setProvincias] = useState([]);
 
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
+  const [country, setCountry] = useState("");
+  const [countriess, setCountriess] = useState([]);
+
+  const [category, setCategory] = useState("");
+  const [categoriess, setCategoriess] = useState([]);
+
+  const handleCategoriesChange = (event) => {
+    const selectedCategories = event.target.value;
+    setCategory(selectedCategories);
+    // console.log("Categorías seleccionadas:", selectedCategories);
   };
 
   const handleCountryChange = (event) => {
     const selectedPais = event.target.value;
     setCountry(selectedPais);
-    console.log("País seleccionado:", selectedPais);
-    getProvincias(selectedPais); 
+    // console.log("País seleccionado:", selectedPais);
+    fetchProvincias(selectedPais); 
   };
 
   const handleProvinciaChange = (event) => {
     const selectedProvincia = event.target.value;
     setProvince(selectedProvincia);
-    console.log("Provincia seleccionada:", selectedProvincia);
-    setProvince(event.target.value);
-
+    // console.log("Provincia seleccionada:", selectedProvincia);
   };
 
   const handleDescripcionChange = (event) => {
@@ -53,7 +57,6 @@ const CargarMicroemprendimiento = () => {
   };
 
   const handleSubmit = () => {
-    // Lógica para manejar la carga del microemprendimiento
     console.log("Formulario enviado");
 
     const formData = {
@@ -65,47 +68,47 @@ const CargarMicroemprendimiento = () => {
       ciudad,
       descripcion,
       moreInformation
-      
     };
     console.log("Datos a enviar:", formData);
-    console.log("Formulario enviado");
   };
 
-
-  const countries = new ServiceHttp("/countries");
-  const provinces = new ServiceHttp("/provinces/byCountry");
-
-  const getCountries = async () => {
+  const fetchCategories = async () => {
     try {
-      const data = await countries.get();
-      console.log("Datos de countries:", data);
-      if (data.error) throw data.error;
-      setCountriess(Array.isArray(data) ? data : []);
+      const data = await getCategories();
+      setCategoriess(data);
+      // console.log("categorias", data);  
     } catch (error) {
       console.error(error);
     }
   };
 
-  const getProvincias = async (countryId) => {
+  const fetchCountries = async () => {
     try {
-      const data = await provinces.get({ countryId });
-      console.log("Datos de provincias:", data);
-      if (data.error) throw data.error;
-      setProvincias(Array.isArray(data) ? data : []);
+      const data = await getCountries();
+      setCountriess(data);
+      // console.log("countries", data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchProvincias = async (countryId) => {
+    try {
+      const data = await getProvincias(countryId);
+      setProvincias(data);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    getCountries();
+    fetchCountries();
+    fetchCategories();
   }, []);
 
   return (
     <Box>
-      <Box
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-      >
+      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         <Typography
           variant="h4"
           sx={{
@@ -153,7 +156,7 @@ const CargarMicroemprendimiento = () => {
             <InputLabel>Categorías*</InputLabel>
             <Select
               value={category || ""}
-              onChange={handleCategoryChange}
+              onChange={handleCategoriesChange}
               label="Categorías*"
               MenuProps={{
                 PaperProps: {
@@ -165,18 +168,11 @@ const CargarMicroemprendimiento = () => {
                 },
               }}
             >
-              <MenuItem value="categoria1" sx={{ whiteSpace: "normal" }}>
-                Economía social / Desarrollo local / Inclusión financiera
-              </MenuItem>
-              <MenuItem value="categoria2" sx={{ whiteSpace: "normal" }}>
-                Agroecología / Orgánicos / Alimentación saludable
-              </MenuItem>
-              <MenuItem value="categoria3" sx={{ whiteSpace: "normal" }}>
-                Conservación/ Regeneración / Servicios ecosistémicos
-              </MenuItem>
-              <MenuItem value="categoria4" sx={{ whiteSpace: "normal" }}>
-                Empresas / Organismos de impacto / Economía circular
-              </MenuItem>
+              {categoriess.map((category) => (
+                <MenuItem key={category.name} value={category.name}>
+                  {category.description}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText>Seleccione una categoría adecuada</FormHelperText>
           </FormControl>
@@ -287,7 +283,7 @@ const CargarMicroemprendimiento = () => {
             helperText={
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <span>Máximo 300 caracteres</span>
-                <span>{`${descripcion.length}/300`}</span>
+                <span>{`${moreInformation.length}/300`}</span>
               </Box>
             }
             inputProps={{ maxLength: 300 }}
