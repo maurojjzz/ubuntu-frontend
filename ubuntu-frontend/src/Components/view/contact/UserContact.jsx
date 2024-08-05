@@ -4,8 +4,8 @@ import { Box, Typography, Container } from "@mui/material";
 import imageContact from "../../../assets/img/imagen contacto.jpg";
 import SearchBar from "../../searchBar/SearchBar";
 import './UserContact.css';
-import BadSend from '../../alertsContact/BadSend';
-import GoodSend from '../../alertsContact/GoodSend';
+import ModalAlert from '../../shared/modalAlert/ModalAlert';
+
 
 const UserContact = () => {
   const theme = useTheme();
@@ -15,8 +15,11 @@ const UserContact = () => {
     phone: '',
     message: ''
   });
-  const [alertType, setAlertType] = useState(null); 
+  const [alertType, setAlertType] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalSubTitle, setModalSubTitle] = useState('');
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -38,33 +41,46 @@ const UserContact = () => {
     if (allFieldsFilled) {
       if (isValidEmail(formData.email) && isValidPhone(formData.phone)) {
         setIsSubmitting(true);
-        const isSuccess = true; 
-
+        const isSuccess = true; // Simulación de éxito
+  
         if (isSuccess) {
           setAlertType('success');
+          setModalTitle('¡Mensaje enviado con éxito!');
+          setModalSubTitle('Nos pondremos en contacto contigo pronto.');
         } else {
-          setAlertType('error'); 
+          setAlertType('error');
+          setModalTitle('Error al enviar el mensaje');
+          setModalSubTitle('Inténtalo de nuevo más tarde.');
         }
-
+  
         setFormData({
           name: '',
           email: '',
           phone: '',
           message: ''
         });
-
+  
+        setOpenModal(true);
         setTimeout(() => {
           setAlertType(null);
           setIsSubmitting(false);
-        }, 3000); 
-
+          setOpenModal(false);
+        }, 3000); // Duración del modal
+  
       } else {
-        setAlertType('error'); 
+        setAlertType('error');
+        setModalTitle('Error en la validación');
+        setModalSubTitle('Por favor, verifica tu correo electrónico y número de teléfono.');
+        setOpenModal(true);
       }
     } else {
-      setAlertType('error'); 
+      setAlertType('error');
+      setModalTitle('Campos incompletos');
+      setModalSubTitle('Por favor, completa todos los campos del formulario.');
+      setOpenModal(true);
     }
   };
+  
 
   return (
     <Container sx={{ padding: "0px" }}>
@@ -296,8 +312,16 @@ const UserContact = () => {
                   Enviar
                 </button>
             </form>
-            {alertType === 'success' && <GoodSend />}
-            {alertType === 'error' && <BadSend />}
+            <ModalAlert
+              status={alertType}
+              title={modalTitle}
+              subTitle={modalSubTitle}
+              open={openModal}
+              onClose={() => setOpenModal(false)}
+              onSuccessAction={() => setOpenModal(false)}
+              onTryAgain={() => setOpenModal(false)}
+/>
+
           </Box>
         </Box>
       </Box>
