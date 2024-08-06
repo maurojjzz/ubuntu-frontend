@@ -36,7 +36,7 @@ const flow = {
           responseMessage = "Puedes contactarnos a través del correo contacto@empresa.com.";
           break;
         default:
-          responseMessage = "No entiendo esa opción. Por favor elige una opción de la lista.";
+          responseMessage = "No entiendo esa opciones. Por favor elige una opción de la lista.";
           return "show_options";
       }
       await params.injectMessage(responseMessage);
