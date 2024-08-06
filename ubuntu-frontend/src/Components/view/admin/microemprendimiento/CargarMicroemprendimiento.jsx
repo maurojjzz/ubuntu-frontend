@@ -13,6 +13,7 @@ import { ImageUpload, ReusableButton } from "../../../shared";
 import { getCountries } from "../../../../utils/services/dashboard/ServiceCountry";
 import { getProvincias } from "../../../../utils/services/dashboard/ServiceProvince";
 import { getCategories } from "../../../../utils/services/dashboard/ServiceCategories";
+import { postMicroBusiness } from "../../../../utils/services/dashboard/ServiceMicroBusiness";
 
 const CargarMicroemprendimiento = () => {
   const [name, setName] = useState("");
@@ -56,20 +57,35 @@ const CargarMicroemprendimiento = () => {
     setMoreInformation(event.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log("Formulario enviado");
-
+  
     const formData = {
       name,
-      category,
+      description: descripcion,
+      moreInformation,
       subTitle,
-      country,
-      province,
-      ciudad,
-      descripcion,
-      moreInformation
+      category,
+      country: parseInt(country), 
+      province: {
+        id: parseInt(province) 
+      },
+      user: {
+        id: 1
+      }
     };
-    console.log("Datos a enviar:", formData);
+  
+    const token = sessionStorage.getItem('token'); // Obtener el token desde sessionStorage
+  
+    console.log("Datos a enviar:", JSON.stringify(formData, null, 2));
+    console.log("Token:", token);
+  
+    try {
+      const response = await postMicroBusiness(formData, token);
+      console.log("Respuesta del servidor:", response);
+    } catch (error) {
+      console.error("Error al enviar los datos:", error);
+    }
   };
 
   const fetchCategories = async () => {
@@ -292,9 +308,14 @@ const CargarMicroemprendimiento = () => {
           />
         </Box>
 
+        
+
         <Box sx={{ mt: "20px", width: "90%", display: "flex", justifyContent: "flex-end" }}>
           <ImageUpload />
         </Box>
+
+
+
 
         <ReusableButton nombre="Cargar Microemprendimiento" handleClick={handleSubmit} />
       </Box>
