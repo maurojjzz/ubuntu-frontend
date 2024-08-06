@@ -30,23 +30,22 @@ const CargarMicroemprendimiento = () => {
   const [category, setCategory] = useState("");
   const [categoriess, setCategoriess] = useState([]);
 
+  const [microBusinessId, setMicroBusinessId] = useState(null);
+
   const handleCategoriesChange = (event) => {
     const selectedCategories = event.target.value;
     setCategory(selectedCategories);
-    // console.log("Categorías seleccionadas:", selectedCategories);
   };
 
   const handleCountryChange = (event) => {
     const selectedPais = event.target.value;
     setCountry(selectedPais);
-    // console.log("País seleccionado:", selectedPais);
     fetchProvincias(selectedPais); 
   };
 
   const handleProvinciaChange = (event) => {
     const selectedProvincia = event.target.value;
     setProvince(selectedProvincia);
-    // console.log("Provincia seleccionada:", selectedProvincia);
   };
 
   const handleDescripcionChange = (event) => {
@@ -66,9 +65,9 @@ const CargarMicroemprendimiento = () => {
       moreInformation,
       subTitle,
       category,
-      country: parseInt(country), 
+      country: parseInt(country),
       province: {
-        id: parseInt(province) 
+        id: parseInt(province)
       },
       user: {
         id: 1
@@ -83,16 +82,20 @@ const CargarMicroemprendimiento = () => {
     try {
       const response = await postMicroBusiness(formData, token);
       console.log("Respuesta del servidor:", response);
+      // Aquí guardamos el ID del microemprendimiento creado
+      const microBusinessId = response.id;
+      console.log("ID del microemprendimiento creado:", microBusinessId);
+      // Pasamos el ID al componente ImageUpload
+      setMicroBusinessId(microBusinessId);
     } catch (error) {
       console.error("Error al enviar los datos:", error);
     }
   };
-
+  
   const fetchCategories = async () => {
     try {
       const data = await getCategories();
       setCategoriess(data);
-      // console.log("categorias", data);  
     } catch (error) {
       console.error(error);
     }
@@ -102,7 +105,6 @@ const CargarMicroemprendimiento = () => {
     try {
       const data = await getCountries();
       setCountriess(data);
-      // console.log("countries", data);
     } catch (error) {
       console.error(error);
     }
@@ -308,14 +310,9 @@ const CargarMicroemprendimiento = () => {
           />
         </Box>
 
-        
-
         <Box sx={{ mt: "20px", width: "90%", display: "flex", justifyContent: "flex-end" }}>
-          <ImageUpload />
+          <ImageUpload microBusinessId={microBusinessId} />
         </Box>
-
-
-
 
         <ReusableButton nombre="Cargar Microemprendimiento" handleClick={handleSubmit} />
       </Box>
