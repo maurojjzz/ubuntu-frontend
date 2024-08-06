@@ -18,7 +18,7 @@ const DrawerComponent = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const alwaysVisibleItems = ["Inicio", "Microemprendimientos", "Publicaciones", "Acceder"];
+  const alwaysVisibleItems = ["Inicio", "Microemprendimientos", "Publicaciones", "Contacto", "Acceder"];
 
   const conditionalItems = ["Dashboard Administrador", "Microemprendimientos", "Publicaciones", "Solicitudes de Contacto"];
 
