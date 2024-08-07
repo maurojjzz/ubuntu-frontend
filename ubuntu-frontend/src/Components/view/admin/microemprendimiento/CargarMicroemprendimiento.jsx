@@ -7,13 +7,17 @@ import {
   InputLabel,
   Select,
   FormHelperText,
+  Button
 } from "@mui/material";
 import { useState, useEffect } from "react";
-import { ImageUpload, ReusableButton } from "../../../shared";
+import UploadIcon from '@mui/icons-material/Upload'; // Asegúrate de tener instalado @mui/icons-material
+import { useTheme } from "@mui/material/styles";
+import { ReusableButton } from "../../../shared";
 import { getCountries } from "../../../../utils/services/dashboard/ServiceCountry";
 import { getProvincias } from "../../../../utils/services/dashboard/ServiceProvince";
 import { getCategories } from "../../../../utils/services/dashboard/ServiceCategories";
 import { postMicroBusiness } from "../../../../utils/services/dashboard/ServiceMicroBusiness";
+import { ServiceUploadImage } from '../../../../utils/ServiceImageUploader';
 
 const CargarMicroemprendimiento = () => {
   const [name, setName] = useState("");
@@ -23,14 +27,15 @@ const CargarMicroemprendimiento = () => {
   const [descripcion, setDescripcion] = useState("");
   const [moreInformation, setMoreInformation] = useState("");
   const [provincias, setProvincias] = useState([]);
-
   const [country, setCountry] = useState("");
   const [countriess, setCountriess] = useState([]);
-
   const [category, setCategory] = useState("");
   const [categoriess, setCategoriess] = useState([]);
+  const [base64Images, setBase64Images] = useState([]);
+  const [imageNames, setImageNames] = useState([]);
 
-  const [microBusinessId, setMicroBusinessId] = useState(null);
+  
+  const theme = useTheme();
 
   const handleCategoriesChange = (event) => {
     const selectedCategories = event.target.value;
@@ -56,6 +61,39 @@ const CargarMicroemprendimiento = () => {
     setMoreInformation(event.target.value);
   };
 
+  const handleImageUpload = (event) => {
+    const files = event.target.files;
+    const fileArray = Array.from(files);
+
+    if (fileArray.length > 3) {
+      alert("Puedes subir hasta 3 imágenes.");
+      return;
+    }
+
+    for (let file of fileArray) {
+      if (file.size > 3 * 1024 * 1024) {
+        alert("Cada imagen debe ser menor a 3MB.");
+        return;
+      }
+    }
+
+    setImageNames(fileArray.map(file => file.name));
+
+
+    const base64Array = [];
+    fileArray.forEach(file => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64Image = reader.result;
+        base64Array.push({ file, base64: base64Image });
+        if (base64Array.length === fileArray.length) {
+          setBase64Images(base64Array);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleSubmit = async () => {
     console.log("Formulario enviado");
   
@@ -74,7 +112,7 @@ const CargarMicroemprendimiento = () => {
       }
     };
   
-    const token = sessionStorage.getItem('token'); // Obtener el token desde sessionStorage
+    const token = sessionStorage.getItem('token');
   
     console.log("Datos a enviar:", JSON.stringify(formData, null, 2));
     console.log("Token:", token);
@@ -82,11 +120,15 @@ const CargarMicroemprendimiento = () => {
     try {
       const response = await postMicroBusiness(formData, token);
       console.log("Respuesta del servidor:", response);
-      // Aquí guardamos el ID del microemprendimiento creado
       const microBusinessId = response.id;
       console.log("ID del microemprendimiento creado:", microBusinessId);
-      // Pasamos el ID al componente ImageUpload
-      setMicroBusinessId(microBusinessId);
+
+      for (let image of base64Images) {
+        console.log("Objeto que envío al servidor:", { fileBase64: image.base64, microBusinessId });
+        await ServiceUploadImage(image.base64, microBusinessId, token);
+      }
+
+      console.log("Imágenes subidas con éxito");
     } catch (error) {
       console.error("Error al enviar los datos:", error);
     }
@@ -311,7 +353,54 @@ const CargarMicroemprendimiento = () => {
         </Box>
 
         <Box sx={{ mt: "20px", width: "90%", display: "flex", justifyContent: "flex-end" }}>
-          <ImageUpload microBusinessId={microBusinessId} />
+          <Box>
+
+          <Button
+            variant="contained"
+            startIcon={<UploadIcon />}
+            component="label"
+            sx={{
+              backgroundColor: "#093C59",
+              width: "95%",
+              maxWidth: "152px",
+              minWidth: "152px",
+              height: "40px",
+              borderRadius: "100px",
+              mb: "15px",
+              zIndex: 1,
+              "&:hover": {
+                backgroundColor: theme.palette.primary.azul,
+              },
+              textTransform: "none",
+              color: "white",
+              fontFamily: "Lato",
+              fontWeight: "700",
+              fontSize: "14px",
+            }}
+          >
+            Subir Imágen
+            <input
+              type="file"
+              hidden
+              accept="image/*"
+              multiple
+              onChange={handleImageUpload}
+            />
+          </Button>
+          
+          <Typography sx={{ fontSize: '14px', maxWidth: "152px", minWidth: "152px" }}>
+        *Requerida al menos una imagen<br />
+        Hasta 3 imágenes. Máximo 3Mb cada una
+      </Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 2 }}>
+        {imageNames.map((name, index) => (
+          <Typography key={index} sx={{ fontSize: '14px', wordBreak: 'break-all', color:"red"}} >
+            Archivo:   {name}
+          </Typography>
+        ))}
+      </Box>
+          </Box>
+          
         </Box>
 
         <ReusableButton nombre="Cargar Microemprendimiento" handleClick={handleSubmit} />
