@@ -8,6 +8,7 @@ import CategoryItem from "../../categoryItem/CategoryItem";
 import CircleIcon from "@mui/icons-material/Circle";
 import jsonData from "../../../assets/json/publicaciones.json";
 import PublicacionesCard from "../../cards/PublicacionesCard.jsx";
+import ChatBotLayout from "../../chatBot/ChatBotLayout.jsx";
 
 const LandingPage = () => {
   const [data, setData] = useState([]);
@@ -307,6 +308,8 @@ const LandingPage = () => {
         ))}
         <ButtonShowMore btnText="Ir a Publicaciones" btnAction={() => navigate("/publicaciones")} />
       </Box>
+
+      <ChatBotLayout />
     </Box>
   );
 };
