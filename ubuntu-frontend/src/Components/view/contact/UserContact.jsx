@@ -1,72 +1,103 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTheme } from "@mui/material/styles";
 import { Box, Typography, Container } from "@mui/material";
 import imageContact from "../../../assets/img/imagen contacto.jpg";
 import SearchBar from "../../searchBar/SearchBar";
 import './UserContact.css';
 import ModalAlert from '../../shared/modalAlert/ModalAlert';
-
+import { useParams } from 'react-router-dom';
 
 const UserContact = () => {
   const theme = useTheme();
+  const { id } = useParams();
+  
   const [formData, setFormData] = useState({
-    name: '',
+    fullName: '',
     email: '',
-    phone: '',
-    message: ''
+    phoneNumber: '',
+    message: '',
+    microBusiness: { id: id || '' },
   });
+
   const [alertType, setAlertType] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalSubTitle, setModalSubTitle] = useState('');
 
+  useEffect(() => {
+    setFormData(prevData => ({
+      ...prevData,
+      microBusiness: { id: id || '' },
+    }));
+  }, [id]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData(prevData => {
+      if (name === "microBusinessId") {
+        return { ...prevData, microBusiness: { id: value } };
+      } else {
+        return { ...prevData, [name]: value };
+      }
+    });
   };
 
   const isValidEmail = (email) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-  const isValidPhone = (phone) => {
-    return /^[0-9+\s]*$/.test(phone);
+  const isValidPhone = (phoneNumber) => {
+    return /^[0-9+\s]*$/.test(phoneNumber);
   };
 
-  const allFieldsFilled = Object.values(formData).every(field => field.trim() !== '');
+  const allFieldsFilled = Object.values(formData).every(field =>
+    typeof field === 'string' ? field.trim() !== '' : true
+  );
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
     if (allFieldsFilled) {
-      if (isValidEmail(formData.email) && isValidPhone(formData.phone)) {
+      if (isValidEmail(formData.email) && isValidPhone(formData.phoneNumber)) {
         setIsSubmitting(true);
-        const isSuccess = true; // Simulación de éxito
-  
-        if (isSuccess) {
-          setAlertType('success');
-          setModalTitle('¡Mensaje enviado con éxito!');
-          setModalSubTitle('Nos pondremos en contacto contigo pronto.');
-        } else {
+        try {
+          const response = await fetch('http://localhost:8080/api/v1/contact/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          });
+          if (response.ok) {
+            setAlertType('success');
+            setModalTitle('¡Mensaje enviado con éxito!');
+            setModalSubTitle('Nos pondremos en contacto contigo pronto.');
+            console.log('Respuesta del servidor:', response.status);
+            console.log("Formulario enviado:", formData);
+
+            setFormData({
+              fullName: '',
+              email: '',
+              phoneNumber: '',
+              message: '',
+              microBusiness: { id: id || '' },
+            });
+          } else {
+            throw new Error('Error en la respuesta del servidor');
+          }
+        } catch (error) {
           setAlertType('error');
           setModalTitle('Error al enviar el mensaje');
           setModalSubTitle('Inténtalo de nuevo más tarde.');
-        }
-  
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          message: ''
-        });
-  
-        setOpenModal(true);
-        setTimeout(() => {
-          setAlertType(null);
+        } finally {
           setIsSubmitting(false);
-          setOpenModal(false);
-        }, 3000); // Duración del modal
-  
+          setOpenModal(true);
+          setTimeout(() => {
+            setAlertType(null);
+            setOpenModal(false);
+          }, 3000);
+        }
       } else {
         setAlertType('error');
         setModalTitle('Error en la validación');
@@ -80,7 +111,6 @@ const UserContact = () => {
       setOpenModal(true);
     }
   };
-  
 
   return (
     <Container sx={{ padding: "0px" }}>
@@ -218,9 +248,9 @@ const UserContact = () => {
             }}>
               <div className="input-block">
                 <input  
-                    value={formData.name}
+                    value={formData.fullName}
                     onChange={handleChange}  
-                    type="text" name="name" id="input-text" required />
+                    type="text" name="fullName" id="input-text" required />
                 <span className="placeholder">
                   Apellido y Nombre*
                 </span>
@@ -237,10 +267,10 @@ const UserContact = () => {
               <div className="input-block">
                 <input
                   onChange={handleChange}  
-                  value={formData.phone}
-                  type="text" name="phone" id="phone" required />
+                  value={formData.phoneNumber}
+                  type="text" name="phoneNumber" id="phone" required />
                 <span className="placeholder">
-                  Telefono*
+                  Teléfono*
                 </span>
                 <p style={{
                     fontFamily: "'Lato' ",
@@ -253,7 +283,7 @@ const UserContact = () => {
                   </p>
               </div>
               <div className="input-block">
-                <input
+              <input
                   value={formData.message}
                   onChange={handleChange}
                   maxLength="300"
@@ -312,19 +342,17 @@ const UserContact = () => {
                   Enviar
                 </button>
             </form>
-            <ModalAlert
-              status={alertType}
-              title={modalTitle}
-              subTitle={modalSubTitle}
-              open={openModal}
-              onClose={() => setOpenModal(false)}
-              onSuccessAction={() => setOpenModal(false)}
-              onTryAgain={() => setOpenModal(false)}
-/>
-
           </Box>
         </Box>
       </Box>
+      {alertType && (
+        <ModalAlert
+          open={openModal}
+          alertType={alertType}
+          title={modalTitle}
+          subtitle={modalSubTitle}
+        />
+      )}
     </Container>
   );
 };
