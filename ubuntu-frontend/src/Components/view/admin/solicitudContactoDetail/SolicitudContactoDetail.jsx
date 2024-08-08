@@ -22,7 +22,7 @@ const formatDate = (date) => {
     return d.toISOString().split('T')[0]; 
 };
 
-function SolicitudContactoDetail({ microBusinessName, stateRequest, fullName, email, phoneNumber, message, id, dateCreated, dateUpdated, refreshData }) {
+function SolicitudContactoDetail({ microBusinessName, microBusinessId, stateRequest, fullName, email, phoneNumber, message, id, dateCreated, dateUpdated, refreshData }) {
     const [currentStatus, setCurrentStatus] = useState(stateRequest);
     const [loading, setLoading] = useState(false);
     const [localDateUpdated, setLocalDateUpdated] = useState(dateUpdated);
@@ -41,6 +41,7 @@ function SolicitudContactoDetail({ microBusinessName, stateRequest, fullName, em
         setCurrentStatus(newStatus);
 
         try {
+            const customId = microBusinessId;
             const url = `http://localhost:8080/api/v1/contact/update/${id}`;
             const payload = {
                 stateRequest: newStatus,
@@ -49,7 +50,9 @@ function SolicitudContactoDetail({ microBusinessName, stateRequest, fullName, em
                 phoneNumber,
                 message,
                 microBusinessName,
+                microBusiness: {id: customId},
             };
+            console.log(payload)
             await axios.post(url, payload);
             console.log('State updated successfully');
             setLocalDateUpdated(newStatus ? new Date().toISOString() : localDateUpdated);

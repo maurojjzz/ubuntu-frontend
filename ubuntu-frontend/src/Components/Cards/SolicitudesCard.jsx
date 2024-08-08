@@ -3,7 +3,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useTheme } from "@mui/material/styles";
 import "./SolicitudesCard.css";
 
-const SolicitudesCard = ({ title, dateCreated, dateUpdated, status, name, surname, email, phone, text, onButtonClick }) => {
+const SolicitudesCard = ({ title, microBusinessId, dateCreated, dateUpdated, status, name, surname, email, phone, text, onButtonClick }) => {
     const theme = useTheme();
     const className = status === false ? "solicitudesCard__orangeDot" : "solicitudesCard__greenDot";
     const date = status === false ? dateCreated : dateUpdated
@@ -67,7 +67,7 @@ const SolicitudesCard = ({ title, dateCreated, dateUpdated, status, name, surnam
                         minWidth: '24px'
                     }}
                     onClick={() => 
-                        onButtonClick({ title, dateCreated, dateUpdated, status, name, surname, email, phone, text })
+                        onButtonClick({ title, microBusinessId, dateCreated, dateUpdated, status, name, surname, email, phone, text })
                     }>
                         <ArrowForwardIosIcon />
                     </Button>

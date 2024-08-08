@@ -167,11 +167,11 @@ function SolicitudContacto() {
                         <SolicitudesCard
                             key={index}
                             title={item.microBusinessName}
+                            microBusinessId={item.microBusinessId}
                             dateCreated={item.dateCreated}
                             dateUpdated={item.dateUpdated}
                             status={item.stateRequest}
                             name={item.fullName}
-                            surname={"apellido"}
                             email={item.email}
                             phone={item.phoneNumber}
                             text={item.message}
