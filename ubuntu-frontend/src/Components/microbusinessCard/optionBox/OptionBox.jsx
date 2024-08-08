@@ -1,7 +1,7 @@
 import { Typography, Box } from "@mui/material";
 import theme from "../../../theme/theme.js";
 
-const OptionBox = ({setFocused}) => {
+const OptionBox = ({ setFocused, onEdit, microBusinessId  }) => {
   return (
     <Box
       sx={{
@@ -33,7 +33,7 @@ const OptionBox = ({setFocused}) => {
           cursor: "pointer",
         }}
         onClick={() => {
-          console.log("Editar");
+          onEdit(microBusinessId );
           setFocused(false);
         }}
       >

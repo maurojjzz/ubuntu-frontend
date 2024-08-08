@@ -19,24 +19,34 @@ export class ServiceHttp {
     }
   }
 
-  async getById(id, queryParams = {}) {
+  async getById(id, queryParams = {}, token = null) {
     try {
       const query = new URLSearchParams(queryParams).toString();
       const url = `${this._route}${this._subRoute}/${id}?${query}`; 
-  
-      const response = await axios.get(url); 
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+      const response = await axios.get(url, { headers }); 
       return response.data;
     } catch (error) {
       return this.handleError(error);
     }
   }
 
-  async put(body, id = null, token = null) {
+  async put(id, body, token = null) {
     try {
+      // Generar URL incluyendo el ID si se proporciona
       const url = id ? `${this._route}${this._subRoute}/${id}` : `${this._route}${this._subRoute}`;
-      const response = await axios.put(url, body, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      
+      // Configurar los encabezados, incluyendo Content-Type si se proporciona
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      };
+      
+      // Realizar la solicitud PUT
+      const response = await axios.put(url, body, config);
       return response.data;
     } catch (error) {
       return this.handleError(error);

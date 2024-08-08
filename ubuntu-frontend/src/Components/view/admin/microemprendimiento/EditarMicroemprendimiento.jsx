@@ -1,13 +1,44 @@
 import { Box, Typography, TextField, MenuItem, FormControl, InputLabel, Select, FormHelperText } from "@mui/material";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import { ReusableButton, ImageEdit } from '../../../shared';
+import { putMicrobusiness } from "../../../../utils/services/dashboard/ServiceMicroBusiness";
+import { ServiceHttp } from "../../../../utils/services/serviceHttp";
 
-const EditarMicroemprendimiento = () => {
-    const [nombre, setNombre] = useState('');
+const EditarMicroemprendimiento = ({ microBusinessId }) => {
+    const [name, setName] = useState('');
     const [categoria, setCategoria] = useState('');
     const [pais, setPais] = useState('');
-    const [descripcion, setDescripcion] = useState('');
+    const [provincia, setProvincia] = useState('');
+    const [description, setDescription] = useState('');
+    const [moreInformation, setMoreInformation] = useState('');
+    const [subTitle, setSubTitle] = useState('');
+    const microemprendimientos = new ServiceHttp("/microbusiness");
+
+    const getMicroEmprendimiento = async (microBusinessId) => {
+        try {
+            const data = await microemprendimientos.getById(microBusinessId);
+            if (data.error) throw data.error;
+
+            console.log("Data del microemprendimiento correspondiente al id que llega de card:", data);
+
+            // Actualizar el estado con la información recibida
+            setName(data.name);
+            setCategoria(data.categoryDescription);
+            setPais(data.provinceCountryName);
+            setProvincia(data.provinceName);
+            setDescription(data.description);
+            setMoreInformation(data.moreInformation);
+            setSubTitle(data.subTitle);
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        console.log("id del micro que llega de card", microBusinessId);
+        getMicroEmprendimiento(microBusinessId);
+    }, [microBusinessId]);
 
     const handleCategoriaChange = (event) => {
         setCategoria(event.target.value);
@@ -17,207 +48,234 @@ const EditarMicroemprendimiento = () => {
         setPais(event.target.value);
     };
 
-    const handleDescripcionChange = (event) => {
-        setDescripcion(event.target.value);
+    const handleProvinciaChange = (event) => {
+        setProvincia(event.target.value);
     };
 
-    const handleSubmit = () => {
-        // Lógica para manejar la carga del microemprendimiento
-        console.log("Formulario enviado");
+    const handleDescripcionChange = (event) => {
+        setDescription(event.target.value);
+    };
+
+    const handleMasInformacionChange = (event) => {
+        setMoreInformation(event.target.value);
+    };
+
+    const handleSubmit = async () => {
+        // Construir el objeto con los datos del formulario
+        const updatedMicroBusiness = {
+            name,
+            description,
+            moreInformation,
+            subTitle,
+            // categoryDescription: categoria,
+            // provinceCountryName: pais,
+            // provinceName: provincia,
+        };
+        const token = sessionStorage.getItem('token');
+        
+        console.log("ID del microemprendimiento:", microBusinessId);
+    console.log("Datos del microemprendimiento a actualizar:", updatedMicroBusiness);
+    console.log("Token de autenticación:", token);
+        
+        try {
+            // Llamar al servicio para actualizar el microemprendimiento
+            const data = await putMicrobusiness(microBusinessId, updatedMicroBusiness, token);
+            console.log("Microemprendimiento actualizado:", data);
+        } catch (error) {
+            console.error("Error al actualizar el microemprendimiento:", error);
+        }
     };
 
     return (
-        
-            <Box>
-                <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                    <Typography
-                        variant="h4"
-                        sx={{
-                            fontFamily: "Lato",
-                            fontWeight: "500",
-                            fontSize: "28px",
-                            lineHeight: "35px",
-                            mt: "40px",
-                            mb: "24px",
-                        }}
-                        align="center"
-                    >
-                        Edición de Microemprendimiento
-                    </Typography>
+        <Box>
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <Typography
+                    variant="h4"
+                    sx={{
+                        fontFamily: "Lato",
+                        fontWeight: "500",
+                        fontSize: "28px",
+                        lineHeight: "35px",
+                        mt: "40px",
+                        mb: "24px",
+                    }}
+                    align="center"
+                >
+                    Edición de Microemprendimiento
+                </Typography>
 
-                    <Typography
-                        sx={{
-                            fontFamily: "'Lato'",
-                            fontWeight: "400",
-                            fontSize: "20px",
-                            lineHeight: "25px",
-                            textAlign: "center",
-                            marginTop: "2vh",
-                            marginLeft: "7vh",
-                            marginRight: "7vh",
-                            color: "black",
-                        }}
-                    >
-                        Editá el formulario de carga del Microemprendimiento
-                    </Typography>
+                <Typography
+                    sx={{
+                        fontFamily: "'Lato'",
+                        fontWeight: "400",
+                        fontSize: "20px",
+                        lineHeight: "25px",
+                        textAlign: "center",
+                        marginTop: "2vh",
+                        marginLeft: "7vh",
+                        marginRight: "7vh",
+                        color: "black",
+                    }}
+                >
+                    Editá el formulario de carga del Microemprendimiento
+                </Typography>
 
-                    <Box sx={{ mt: "20px", width: "90%" }}>
-                        <TextField
-                            fullWidth
-                            label="Nombre del Microemprendimiento"
-                            variant="outlined"
-                            value={nombre}
-                            onChange={(e) => setNombre(e.target.value)}
-                            helperText="Se visualizará en el título de la publicación"
-                        />
-                    </Box>
-
-                    <Box sx={{ mt: "20px", width: "90%" }}>
-                        <FormControl fullWidth variant="outlined">
-                            <InputLabel>Categorías*</InputLabel>
-                            <Select
-                                value={categoria}
-                                onChange={handleCategoriaChange}
-                                label="Categorías*"
-                                MenuProps={{
-                                    PaperProps: {
-                                        style: {
-                                            maxHeight: 48 * 4.5 + 8,
-                                            width: 'auto',
-                                            minWidth: '100%',
-                                        },
-                                    },
-                                }}
-                            >
-                                <MenuItem value="categoria1" sx={{ whiteSpace: 'normal' }}>Economía social / Desarrollo local / Inclusión financiera</MenuItem>
-                                <MenuItem value="categoria2" sx={{ whiteSpace: 'normal' }}>Agroecología / Orgánicos / Alimentación saludable</MenuItem>
-                                <MenuItem value="categoria3" sx={{ whiteSpace: 'normal' }}>Conservación/ Regeneración / Servicios ecosistémicos</MenuItem>
-                                <MenuItem value="categoria4" sx={{ whiteSpace: 'normal' }}>Empresas / Organismos de impacto / Economía circular</MenuItem>
-                            </Select>
-                            <FormHelperText>Seleccione una categoría adecuada</FormHelperText>
-                        </FormControl>
-                    </Box>
-
-                    <Box sx={{ mt: "20px", width: "90%" }}>
-                        <TextField
-                            fullWidth
-                            label="Subcategoría"
-                            variant="outlined"
-                            value={nombre}
-                            onChange={(e) => setNombre(e.target.value)}
-                            helperText="Escribi la subcategoría del Microemprendimiento"
-                        />
-                    </Box>
-
-                    <Box sx={{ mt: "20px", width: "90%" }}>
-                        <FormControl fullWidth variant="outlined">
-                            <InputLabel>País*</InputLabel>
-                            <Select
-                                value={pais}
-                                onChange={handlePaisChange}
-                                label="País*"
-                                MenuProps={{
-                                    PaperProps: {
-                                        style: {
-                                            maxHeight: 48 * 4.5 + 8,
-                                            width: 'auto',
-                                            minWidth: '100%',
-                                        },
-                                    },
-                                }}
-                            >
-                                <MenuItem value="argentina">Argentina</MenuItem>
-                                <MenuItem value="brasil">Brasil</MenuItem>
-                                <MenuItem value="chile">Chile</MenuItem>
-                                <MenuItem value="uruguay">Uruguay</MenuItem>
-                            </Select>
-                            <FormHelperText>Seleccione el país</FormHelperText>
-                        </FormControl>
-                    </Box>
-
-                    <Box sx={{ mt: "20px", width: "90%" }}>
-                        <FormControl fullWidth variant="outlined">
-                            <InputLabel>Provincia/Estado*</InputLabel>
-                            <Select
-                                value={pais}
-                                onChange={handlePaisChange}
-                                label="País*"
-                                MenuProps={{
-                                    PaperProps: {
-                                        style: {
-                                            maxHeight: 48 * 4.5 + 8,
-                                            width: 'auto',
-                                            minWidth: '100%',
-                                        },
-                                    },
-                                }}
-                            >
-                                <MenuItem value="argentina">Buenos Aires</MenuItem>
-                                <MenuItem value="brasil">Córdoba</MenuItem>
-                                <MenuItem value="chile">Mendoza</MenuItem>
-                                <MenuItem value="uruguay">San Luis</MenuItem>
-                            </Select>
-                            <FormHelperText>Seleccioná una Provincia/Estado de la lista</FormHelperText>
-                        </FormControl>
-                    </Box>
-
-                    <Box sx={{ mt: "20px", width: "90%" }}>
-                        <TextField
-                            fullWidth
-                            label="Ciudad"
-                            variant="outlined"
-                            value={nombre}
-                            onChange={(e) => setNombre(e.target.value)}
-                            helperText="Sin abreviaturas, nombre completo"
-                        />
-                    </Box>
-
-                    <Box sx={{ mt: "20px", width: "90%" }}>
-                        <TextField
-                            fullWidth
-                            label="Descripción del Microemprendimiento*"
-                            variant="outlined"
-                            value={descripcion}
-                            onChange={handleDescripcionChange}
-                            helperText={
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <span>Máximo 300 caracteres</span>
-                                    <span>{`${descripcion.length}/300`}</span>
-                                </Box>
-                            }
-                            inputProps={{ maxLength: 300 }}
-                            multiline
-                            rows={4}
-                        />
-                    </Box>
-
-                    <Box sx={{ mt: "20px", width: "90%" }}>
-                        <TextField
-                            fullWidth
-                            label="Mas información del Microemprendedor*"
-                            variant="outlined"
-                            value={descripcion}
-                            onChange={handleDescripcionChange}
-                            helperText={
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <span>Máximo 300 caracteres</span>
-                                    <span>{`${descripcion.length}/300`}</span>
-                                </Box>
-                            }
-                            inputProps={{ maxLength: 300 }}
-                            multiline
-                            rows={4}
-                        />
-                    </Box>
-
-                    <ImageEdit />
-
-                    <ReusableButton nombre="Guardar cambios" handleClick={handleSubmit} />
-
-
+                <Box sx={{ mt: "20px", width: "90%" }}>
+                    <TextField
+                        fullWidth
+                        label="Nombre del Microemprendimiento"
+                        variant="outlined"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        helperText="Se visualizará en el título de la publicación"
+                    />
                 </Box>
+
+                <Box sx={{ mt: "20px", width: "90%" }}>
+                    <FormControl fullWidth variant="outlined">
+                        <InputLabel>Categorías*</InputLabel>
+                        <Select
+                            value={categoria}
+                            onChange={handleCategoriaChange}
+                            label="Categorías*"
+                            MenuProps={{
+                                PaperProps: {
+                                    style: {
+                                        maxHeight: 48 * 4.5 + 8,
+                                        width: 'auto',
+                                        minWidth: '100%',
+                                    },
+                                },
+                            }}
+                        >
+                            <MenuItem value="Economía Social/Desarrollo Local/Inclusión financiera" sx={{ whiteSpace: 'normal' }}>Economía social / Desarrollo local / Inclusión financiera</MenuItem>
+                            <MenuItem value="Agroecología/Orgánicos/Alimentación saludable" sx={{ whiteSpace: 'normal' }}>Agroecología / Orgánicos / Alimentación saludable</MenuItem>
+                            <MenuItem value="Conservación/Regeneración/Servicios ecosistémicos" sx={{ whiteSpace: 'normal' }}>Conservación/ Regeneración / Servicios ecosistémicos</MenuItem>
+                            <MenuItem value="Empresas/Organismos de impacto/Economía circular" sx={{ whiteSpace: 'normal' }}>Empresas / Organismos de impacto / Economía circular</MenuItem>
+                        </Select>
+                        <FormHelperText>Seleccione una categoría adecuada</FormHelperText>
+                    </FormControl>
+                </Box>
+
+                <Box sx={{ mt: "20px", width: "90%" }}>
+                    <TextField
+                        fullWidth
+                        label="Subcategoría"
+                        variant="outlined"
+                        value={subTitle}
+                        onChange={(e) => setSubTitle(e.target.value)}
+                        helperText="Escribi la subcategoría del Microemprendimiento"
+                    />
+                </Box>
+
+                <Box sx={{ mt: "20px", width: "90%" }}>
+                    <FormControl fullWidth variant="outlined">
+                        <InputLabel>País*</InputLabel>
+                        <Select
+                            value={pais}
+                            onChange={handlePaisChange}
+                            label="País*"
+                            MenuProps={{
+                                PaperProps: {
+                                    style: {
+                                        maxHeight: 48 * 4.5 + 8,
+                                        width: 'auto',
+                                        minWidth: '100%',
+                                    },
+                                },
+                            }}
+                        >
+                            <MenuItem value="Argentina">Argentina</MenuItem>
+                            <MenuItem value="Brasil">Brasil</MenuItem>
+                            <MenuItem value="Chile">Chile</MenuItem>
+                            <MenuItem value="Uruguay">Uruguay</MenuItem>
+                            <MenuItem value="Colombia">Colombia</MenuItem>
+                        </Select>
+                        <FormHelperText>Seleccione el país</FormHelperText>
+                    </FormControl>
+                </Box>
+
+                <Box sx={{ mt: "20px", width: "90%" }}>
+                    <FormControl fullWidth variant="outlined">
+                        <InputLabel>Provincia/Estado*</InputLabel>
+                        <Select
+                            value={provincia}
+                            onChange={handleProvinciaChange}
+                            label="Provincia/Estado*"
+                            MenuProps={{
+                                PaperProps: {
+                                    style: {
+                                        maxHeight: 48 * 4.5 + 8,
+                                        width: 'auto',
+                                        minWidth: '100%',
+                                    },
+                                },
+                            }}
+                        >
+                            <MenuItem value="Amazonas">Amazonas</MenuItem>
+                            <MenuItem value="Buenos Aires">Buenos Aires</MenuItem>
+                            <MenuItem value="Córdoba">Córdoba</MenuItem>
+                            <MenuItem value="Mendoza">Mendoza</MenuItem>
+                            <MenuItem value="San Luis">San Luis</MenuItem>
+                        </Select>
+                        <FormHelperText>Seleccioná una Provincia/Estado de la lista</FormHelperText>
+                    </FormControl>
+                </Box>
+
+                <Box sx={{ mt: "20px", width: "90%" }}>
+                    <TextField
+                        fullWidth
+                        label="Ciudad"
+                        variant="outlined"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        helperText="Sin abreviaturas, nombre completo"
+                    />
+                </Box>
+
+                <Box sx={{ mt: "20px", width: "90%" }}>
+                    <TextField
+                        fullWidth
+                        label="Descripción del Microemprendimiento*"
+                        variant="outlined"
+                        value={description}
+                        onChange={handleDescripcionChange}
+                        helperText={
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <span>Máximo 300 caracteres</span>
+                                <span>{`${description.length}/300`}</span>
+                            </Box>
+                        }
+                        inputProps={{ maxLength: 300 }}
+                        multiline
+                        rows={4}
+                    />
+                </Box>
+
+                <Box sx={{ mt: "20px", width: "90%" }}>
+                    <TextField
+                        fullWidth
+                        label="Más información del Microemprendedor*"
+                        variant="outlined"
+                        value={moreInformation}
+                        onChange={handleMasInformacionChange}
+                        helperText={
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <span>Máximo 300 caracteres</span>
+                                <span>{`${moreInformation.length}/300`}</span>
+                            </Box>
+                        }
+                        inputProps={{ maxLength: 300 }}
+                        multiline
+                        rows={4}
+                    />
+                </Box>
+
+                <ImageEdit />
+
+                <ReusableButton nombre="Guardar cambios" handleClick={handleSubmit} />
             </Box>
-        
+        </Box>
     );
 };
 
