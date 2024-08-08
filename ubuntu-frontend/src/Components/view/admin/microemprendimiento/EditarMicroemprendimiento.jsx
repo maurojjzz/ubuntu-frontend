@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { ReusableButton, ImageEdit } from '../../../shared';
 import { putMicrobusiness } from "../../../../utils/services/dashboard/ServiceMicroBusiness";
 import { ServiceHttp } from "../../../../utils/services/serviceHttp";
+import { getCategories } from "../../../../utils/services/dashboard/ServiceCategories";
 
 const EditarMicroemprendimiento = ({ microBusinessId }) => {
     const [name, setName] = useState('');
@@ -13,6 +14,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
     const [moreInformation, setMoreInformation] = useState('');
     const [subTitle, setSubTitle] = useState('');
     const microemprendimientos = new ServiceHttp("/microbusiness");
+    const [categories, setCategories] = useState([]);
 
     const getMicroEmprendimiento = async (microBusinessId) => {
         try {
@@ -35,9 +37,22 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
         }
     };
 
+
+    const fetchCategories = async () => {
+        try {
+            const data = await getCategories(); // Usar la función importada
+            console.log("Categorías obtenidas:", data);
+            setCategories(data); // Establecer las categorías en el estado
+        } catch (error) {
+            console.error("Error al obtener categorías:", error);
+        }
+    };
+
+
     useEffect(() => {
         console.log("id del micro que llega de card", microBusinessId);
         getMicroEmprendimiento(microBusinessId);
+        fetchCategories();
     }, [microBusinessId]);
 
     const handleCategoriaChange = (event) => {
@@ -67,7 +82,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
             description,
             moreInformation,
             subTitle,
-            // categoryDescription: categoria,
+            category: categoria,
             // provinceCountryName: pais,
             // provinceName: provincia,
         };
@@ -131,31 +146,38 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
                     />
                 </Box>
 
+
+
                 <Box sx={{ mt: "20px", width: "90%" }}>
-                    <FormControl fullWidth variant="outlined">
-                        <InputLabel>Categorías*</InputLabel>
-                        <Select
-                            value={categoria}
-                            onChange={handleCategoriaChange}
-                            label="Categorías*"
-                            MenuProps={{
-                                PaperProps: {
-                                    style: {
-                                        maxHeight: 48 * 4.5 + 8,
-                                        width: 'auto',
-                                        minWidth: '100%',
-                                    },
+                <FormControl fullWidth variant="outlined">
+                    <InputLabel>Categorías*</InputLabel>
+                    <Select
+                        value={categoria}
+                        onChange={handleCategoriaChange}
+                        label="Categorías*"
+                        MenuProps={{
+                            PaperProps: {
+                                style: {
+                                    maxHeight: 48 * 4.5 + 8,
+                                    width: 'auto',
+                                    minWidth: '100%',
                                 },
-                            }}
-                        >
-                            <MenuItem value="Economía Social/Desarrollo Local/Inclusión financiera" sx={{ whiteSpace: 'normal' }}>Economía social / Desarrollo local / Inclusión financiera</MenuItem>
-                            <MenuItem value="Agroecología/Orgánicos/Alimentación saludable" sx={{ whiteSpace: 'normal' }}>Agroecología / Orgánicos / Alimentación saludable</MenuItem>
-                            <MenuItem value="Conservación/Regeneración/Servicios ecosistémicos" sx={{ whiteSpace: 'normal' }}>Conservación/ Regeneración / Servicios ecosistémicos</MenuItem>
-                            <MenuItem value="Empresas/Organismos de impacto/Economía circular" sx={{ whiteSpace: 'normal' }}>Empresas / Organismos de impacto / Economía circular</MenuItem>
-                        </Select>
-                        <FormHelperText>Seleccione una categoría adecuada</FormHelperText>
-                    </FormControl>
-                </Box>
+                            },
+                        }}
+                    >
+                        {categories.map((cat) => (
+                            <MenuItem key={cat.name} value={cat.name} sx={{ whiteSpace: 'normal' }}>
+                                {cat.description}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                    <FormHelperText>Seleccione una categoría adecuada</FormHelperText>
+                </FormControl>
+            </Box>
+
+
+
+
 
                 <Box sx={{ mt: "20px", width: "90%" }}>
                     <TextField
