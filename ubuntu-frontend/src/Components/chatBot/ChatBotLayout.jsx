@@ -55,6 +55,7 @@ const ChatBotLayout = () => {
       console.error("Expected an array but got:", questions);
       return {}; 
     }
+    
 
     const responses = {};
     questions.forEach((question) => {
