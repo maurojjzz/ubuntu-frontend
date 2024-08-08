@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
-  CardMedia,
   CardContent,
   CardActions,
   Typography,
@@ -18,7 +18,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { ImageCarousel } from "../shared";
 
 const ExpandMoreButton = styled((props) => {
-  const { expand, ...other } = props;
+  const {  ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
@@ -28,19 +28,33 @@ const ExpandMoreButton = styled((props) => {
 }));
 
 const CustomCard = ({
+  id,  
   images,
   title,
   subtitle,
-  category,
+  category ,
   location,
   details,
   moreInf,
 }) => {
   const [expanded, setExpanded] = useState(false);
+  const navigate = useNavigate();
   const theme = useTheme(); 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const handleContactClick = () => {
+    console.log("ID:", id);
+    console.log("Title:", title);
+    
+    if (id) {
+      navigate(`/contacto/${id}`); 
+    } else {
+      console.error("ID es undefined");
+    }
+  };
+  
 
   return (
     <Card
@@ -210,8 +224,8 @@ const CustomCard = ({
         >
           <Button
             size="small"
-            href="mailto:tu-email@ejemplo.com"
-            sx={{
+            onClick={handleContactClick}           
+             sx={{
               fontFamily: "Lato",
               backgroundColor: theme.palette.primary.azul,
               color: theme.palette.primary.blanco,

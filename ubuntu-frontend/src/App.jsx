@@ -3,10 +3,10 @@ import ViewMicroEmprendimientos from "./components/view/microEmprendimientos/Vie
 import LandingPage from "./components/view/landing/LandingPage";
 import ViewPublicaciones from "./components/view/publicaciones/ViewPublicaciones";
 import SearchResults from "./components/view/searchResults/SearchResults";
-import Login from "../src/components/view/login/Login";
+import Login from "./components/view/login/Login";
 import { SearchProvider } from "./components/shared/searchContext/SearchContext";
 import { GoogleOAuthProvider } from '@react-oauth/google'; 
-import Navbar from "../src/components/navbar/Navbar";
+import Navbar from "./components/navbar/Navbar";
 import { AuthProvider } from "./token/auth/AuthProvider";
 import Microemprendimiento from "./components/view/admin/microemprendimiento/Microemprendimiento";
 import LoginSuccess from "./components/view/loginSuccess/LoginSucess";
@@ -17,6 +17,7 @@ import Dashboard from  "./components/view/admin/dashboard/Dashboard";
 import UserContact from "./components/view/contact/UserContact";
 import CargarMicroemprendimiento from "./components/view/admin/microemprendimiento/CargarMicroemprendimiento";
 import EditarMicroemprendimiento from "./components/view/admin/microemprendimiento/EditarMicroemprendimiento";
+
 function App() {
   return (
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
@@ -32,7 +33,7 @@ function App() {
                 <Route path="/loginsuccess" element={<LoginSuccess />} />
                 <Route path="/unauthorized" element={<Unauthorized />} />
                 <Route path="/publicaciones" element={<ViewPublicaciones />} />
-                <Route path="/contacto" element={<UserContact />} />
+                <Route path="/contacto/:id" element={<UserContact />} />
                 <Route path="/buscar" element={<SearchResults />} />
                 {/* Solo para poder acceder a ellas ahora luego se modifica */}
                 <Route path="/admin/microemprendimientos" element={<Microemprendimiento />} />
