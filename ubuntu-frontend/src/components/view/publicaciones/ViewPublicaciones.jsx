@@ -5,7 +5,7 @@ import SearchBar from '../../searchBar/SearchBar';
 import imagenPublicaciones from '../../../assets/img/imagen publicaciones.jpg';
 import './ViewPublicaciones.css';
 import jsonData from '../../../assets/json/publicaciones.json';
-import SvgMicroemp from '../../../components/svg/MicroEmprSvg';
+import SvgMicroemp from '../../svg/MicroEmprSvg';
 
 const ViewPublicaciones = () => {
 

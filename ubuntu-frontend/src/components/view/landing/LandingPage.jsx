@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Typography, Box, useTheme, List, ListItem, ListItemIcon } from "@mui/material";
-import { ButtonShowMore } from "../../shared";
-import SearchBar from "../../searchBar/SearchBar";
+import { ButtonShowMore } from "../../shared/index.js";
+import SearchBar from "../../searchBar/SearchBar.jsx";
 import backgroundImage from "../../../assets/img/imagenlanding.jpg";
-import CategoryItem from "../../categoryItem/CategoryItem";
+import CategoryItem from "../../categoryItem/CategoryItem.jsx";
 import CircleIcon from "@mui/icons-material/Circle";
 import jsonData from "../../../assets/json/publicaciones.json";
 import PublicacionesCard from "../../cards/PublicacionesCard.jsx";
