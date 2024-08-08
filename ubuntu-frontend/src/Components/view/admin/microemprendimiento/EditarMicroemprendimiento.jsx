@@ -20,23 +20,25 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
         try {
             const data = await microemprendimientos.getById(microBusinessId);
             if (data.error) throw data.error;
-
+    
             console.log("Data del microemprendimiento correspondiente al id que llega de card:", data);
-
+    
+            // Buscar el name de la categoría correspondiente al description recibido
+            const matchedCategory = categories.find(cat => cat.description === data.categoryDescription);
+    
             // Actualizar el estado con la información recibida
             setName(data.name);
-            setCategoria(data.categoryDescription);
+            setCategoria(matchedCategory ? matchedCategory.name : '');
             setPais(data.provinceCountryName);
             setProvincia(data.provinceName);
             setDescription(data.description);
             setMoreInformation(data.moreInformation);
             setSubTitle(data.subTitle);
-
+    
         } catch (error) {
             console.error(error);
         }
     };
-
 
     const fetchCategories = async () => {
         try {
@@ -50,13 +52,25 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
 
 
     useEffect(() => {
-        console.log("id del micro que llega de card", microBusinessId);
-        getMicroEmprendimiento(microBusinessId);
-        fetchCategories();
+        const initialize = async () => {
+            await fetchCategories(); // Cargar las categorías primero
+            getMicroEmprendimiento(microBusinessId); // Luego cargar los datos del microemprendimiento
+        };
+    
+        initialize(); // Ejecuta la inicialización
     }, [microBusinessId]);
 
+
+    useEffect(() => {
+        if (categories.length > 0) {
+            getMicroEmprendimiento(microBusinessId);
+        }
+    }, [categories, microBusinessId]);
+
+
+    
     const handleCategoriaChange = (event) => {
-        setCategoria(event.target.value);
+        setCategoria(event.target.value); // Simplemente asignar el valor seleccionado
     };
 
     const handlePaisChange = (event) => {
@@ -149,31 +163,31 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
 
 
                 <Box sx={{ mt: "20px", width: "90%" }}>
-                <FormControl fullWidth variant="outlined">
-                    <InputLabel>Categorías*</InputLabel>
-                    <Select
-                        value={categoria}
-                        onChange={handleCategoriaChange}
-                        label="Categorías*"
-                        MenuProps={{
-                            PaperProps: {
-                                style: {
-                                    maxHeight: 48 * 4.5 + 8,
-                                    width: 'auto',
-                                    minWidth: '100%',
-                                },
+            <FormControl fullWidth variant="outlined">
+                <InputLabel>Categorías*</InputLabel>
+                <Select
+                    value={categoria} // Ahora usamos directamente el estado `categoria`
+                    onChange={handleCategoriaChange}
+                    label="Categorías*"
+                    MenuProps={{
+                        PaperProps: {
+                            style: {
+                                maxHeight: 48 * 4.5 + 8,
+                                width: 'auto',
+                                minWidth: '100%',
                             },
-                        }}
-                    >
-                        {categories.map((cat) => (
-                            <MenuItem key={cat.name} value={cat.name} sx={{ whiteSpace: 'normal' }}>
-                                {cat.description}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                    <FormHelperText>Seleccione una categoría adecuada</FormHelperText>
-                </FormControl>
-            </Box>
+                        },
+                    }}
+                >
+                    {categories.map((cat) => (
+                        <MenuItem key={cat.name} value={cat.name} sx={{ whiteSpace: 'normal' }}>
+                            {cat.description}
+                        </MenuItem>
+                    ))}
+                </Select>
+                <FormHelperText>Seleccione una categoría adecuada</FormHelperText>
+            </FormControl>
+        </Box>
 
 
 
