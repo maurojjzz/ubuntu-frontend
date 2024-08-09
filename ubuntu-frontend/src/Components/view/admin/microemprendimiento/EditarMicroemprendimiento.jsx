@@ -7,17 +7,19 @@ import { getCategories } from "../../../../utils/services/dashboard/ServiceCateg
 import { ModalAlert } from "../../../shared";
 import { useNavigate } from "react-router-dom";
 import { getCountries } from "../../../../utils/services/dashboard/ServiceCountry";
+import { getProvincias } from "../../../../utils/services/dashboard/ServiceProvince";
 
 const EditarMicroemprendimiento = ({ microBusinessId }) => {
   const [name, setName] = useState("");
   const [categoria, setCategoria] = useState("");
-  const [provincia, setProvincia] = useState("");
   const [description, setDescription] = useState("");
   const [moreInformation, setMoreInformation] = useState("");
   const [subTitle, setSubTitle] = useState("");
   const microemprendimientos = new ServiceHttp("/microbusiness");
   const [categories, setCategories] = useState([]);
   
+  const [province, setProvince] = useState("");
+  const [provincess, setProvincess] = useState([]);
   const [country, setCountry] = useState("");
   const [countriess, setCountriess] = useState([]);
   
@@ -35,20 +37,21 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
 
       console.log("Data del microemprendimiento correspondiente al id que llega de card:", data);
 
-      // Buscar el name de la categoría correspondiente al description recibido
       const matchedCategory = categories.find((cat) => cat.description === data.categoryDescription);
-
-      // Buscar el ID del país correspondiente al nombre recibido
       const matchedCountry = countriess.find((pais) => pais.name === data.provinceCountryName);
+      const matchedProvince = provincess.find((prov) => prov.name === data.provinceName);
 
-      // Actualizar el estado con la información recibida
       setName(data.name);
       setCategoria(matchedCategory ? matchedCategory.name : "");
       setCountry(matchedCountry ? matchedCountry.id : "");
-      setProvincia(data.provinceName);
+      setProvince(matchedProvince ? matchedProvince.id : "");
       setDescription(data.description);
       setMoreInformation(data.moreInformation);
       setSubTitle(data.subTitle);
+
+      if (matchedCountry) {
+        await fetchProvincias(matchedCountry.id);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -56,9 +59,9 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
 
   const fetchCategories = async () => {
     try {
-      const data = await getCategories(); // Usar la función importada
+      const data = await getCategories();
       console.log("Categorías obtenidas:", data);
-      setCategories(data); // Establecer las categorías en el estado
+      setCategories(data);
     } catch (error) {
       console.error("Error al obtener categorías:", error);
     }
@@ -66,22 +69,31 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
 
   const fetchCountries = async () => {
     try {
-      const data = await getCountries(); // Usar la función importada
+      const data = await getCountries();
       console.log("Países obtenidos:", data);
-      setCountriess(data); // Establecer los países en el estado
+      setCountriess(data);
     } catch (error) {
       console.error("Error al obtener países:", error);
     }
   };
 
+  const fetchProvincias = async (countryId) => {
+    try {
+      const data = await getProvincias(countryId);
+      setProvincess(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     const initialize = async () => {
-      await fetchCategories(); // Cargar las categorías primero
-      await fetchCountries(); // Cargar los países
-      getMicroEmprendimiento(microBusinessId); // Luego cargar los datos del microemprendimiento
+      await fetchCategories();
+      await fetchCountries();
+      getMicroEmprendimiento(microBusinessId);
     };
 
-    initialize(); // Ejecuta la inicialización
+    initialize();
   }, [microBusinessId]);
 
   useEffect(() => {
@@ -91,15 +103,18 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
   }, [categories, countriess, microBusinessId]);
 
   const handleCategoriaChange = (event) => {
-    setCategoria(event.target.value); // Simplemente asignar el valor seleccionado
+    setCategoria(event.target.value);
   };
 
-  const handlePaisChange = (event) => {
-    setCountry(event.target.value); // Asignar el ID del país seleccionado
+  const handlePaisChange = async (event) => {
+    const selectedCountryId = event.target.value;
+    setCountry(selectedCountryId);
+    await fetchProvincias(selectedCountryId);
+    setProvince(""); // Resetear la provincia seleccionada
   };
 
   const handleProvinciaChange = (event) => {
-    setProvincia(event.target.value);
+    setProvince(event.target.value);
   };
 
   const handleDescripcionChange = (event) => {
@@ -111,7 +126,6 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
   };
 
   const handleSubmit = async () => {
-    // Construir el objeto con los datos del formulario
     const updatedMicroBusiness = {
       name,
       description,
@@ -130,7 +144,6 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
     console.log("Token de autenticación:", token);
 
     try {
-      // Llamar al servicio para actualizar el microemprendimiento
       const data = await putMicrobusiness(microBusinessId, updatedMicroBusiness, token);
       console.log("Microemprendimiento actualizado:", data);
 
@@ -139,13 +152,13 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
       setModalOpen(true);
     } catch (error) {
       console.error("Error al actualizar el microemprendimiento:", error);
-
       setModalTitle("Lo sentimos, los cambios no pudieron ser guardados.");
       setModalSubTitle("Por favor, volvé a intentarlo.");
       setModalStatus("error");
       setModalOpen(true);
     }
   };
+
   return (
     <Box>
       <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -230,17 +243,6 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
         </Box>
 
         <Box sx={{ mt: "20px", width: "90%" }}>
-          <TextField
-            fullWidth
-            label="Subcategoría"
-            variant="outlined"
-            value={subTitle}
-            onChange={(e) => setSubTitle(e.target.value)}
-            helperText="Escribi la subcategoría del Microemprendimiento"
-          />
-        </Box>
-
-        <Box sx={{ mt: "20px", width: "90%" }}>
           <FormControl fullWidth variant="outlined">
             <InputLabel>País*</InputLabel>
             <Select
@@ -271,7 +273,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
           <FormControl fullWidth variant="outlined">
             <InputLabel>Provincia/Estado*</InputLabel>
             <Select
-              value={provincia}
+              value={province}
               onChange={handleProvinciaChange}
               label="Provincia/Estado*"
               MenuProps={{
@@ -284,11 +286,11 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
                 },
               }}
             >
-              <MenuItem value="Amazonas">Amazonas</MenuItem>
-              <MenuItem value="Buenos Aires">Buenos Aires</MenuItem>
-              <MenuItem value="Córdoba">Córdoba</MenuItem>
-              <MenuItem value="Mendoza">Mendoza</MenuItem>
-              <MenuItem value="San Luis">San Luis</MenuItem>
+              {provincess.map((prov) => (
+                <MenuItem key={prov.id} value={prov.id}>
+                  {prov.name}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText>Seleccioná una Provincia/Estado de la lista</FormHelperText>
           </FormControl>
