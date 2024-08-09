@@ -17,7 +17,8 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
   const [subTitle, setSubTitle] = useState("");
   const microemprendimientos = new ServiceHttp("/microbusiness");
   const [categories, setCategories] = useState([]);
-  
+  const [images, setImages] = useState([]);
+
   const [province, setProvince] = useState("");
   const [provincess, setProvincess] = useState([]);
   const [country, setCountry] = useState("");
@@ -48,6 +49,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
       setDescription(data.description);
       setMoreInformation(data.moreInformation);
       setSubTitle(data.subTitle);
+      setImages(data.images.map(img => img.url));
 
       if (matchedCountry) {
         await fetchProvincias(matchedCountry.id);
@@ -123,6 +125,16 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
 
   const handleMasInformacionChange = (event) => {
     setMoreInformation(event.target.value);
+  };
+
+  const handleEditImage = (index) => {
+    console.log(`Editar imagen en el índice: ${index}`);
+  };
+
+  const handleDeleteImage = (index) => {
+    const newImages = [...images];
+    newImages[index] = null;
+    setImages(newImages);
   };
 
   const handleSubmit = async () => {
@@ -345,7 +357,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
           />
         </Box>
 
-        <ImageEdit />
+          <ImageEdit images={images} onEditImage={handleEditImage} onDeleteImage={handleDeleteImage} />
 
         <ReusableButton nombre="Guardar cambios" handleClick={handleSubmit} />
       </Box>
