@@ -83,6 +83,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
     try {
       const data = await getProvincias(countryId);
       setProvincess(data);
+      console.log("Provincias obtenidas:", data); // Verifica que las provincias se obtienen correctamente
     } catch (error) {
       console.error(error);
     }
@@ -92,9 +93,9 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
     const initialize = async () => {
       await fetchCategories();
       await fetchCountries();
-      getMicroEmprendimiento(microBusinessId);
+      await getMicroEmprendimiento(microBusinessId);
     };
-
+  
     initialize();
   }, [microBusinessId]);
 
@@ -285,25 +286,26 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
           <FormControl fullWidth variant="outlined">
             <InputLabel>Provincia/Estado*</InputLabel>
             <Select
-              value={province}
-              onChange={handleProvinciaChange}
-              label="Provincia/Estado*"
-              MenuProps={{
-                PaperProps: {
-                  style: {
-                    maxHeight: 48 * 4.5 + 8,
-                    width: "auto",
-                    minWidth: "100%",
-                  },
-                },
-              }}
-            >
-              {provincess.map((prov) => (
-                <MenuItem key={prov.id} value={prov.id}>
-                  {prov.name}
-                </MenuItem>
-              ))}
-            </Select>
+  value={province}
+  onChange={handleProvinciaChange}
+  label="Provincia/Estado*"
+  MenuProps={{
+    PaperProps: {
+      style: {
+        maxHeight: 48 * 4.5 + 8,
+        width: "auto",
+        minWidth: "100%",
+      },
+    },
+  }}
+>
+  {provincess.map((prov) => (
+    <MenuItem key={prov.id} value={prov.id}>
+      {prov.name}
+    </MenuItem>
+  ))}
+</Select>
+
             <FormHelperText>Seleccioná una Provincia/Estado de la lista</FormHelperText>
           </FormControl>
         </Box>
