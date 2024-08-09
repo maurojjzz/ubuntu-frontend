@@ -36,7 +36,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
       const data = await microemprendimientos.getById(microBusinessId);
       if (data.error) throw data.error;
 
-      console.log("Data del microemprendimiento correspondiente al id que llega de card:", data);
+      // console.log("Data del microemprendimiento correspondiente al id que llega de card:", data);
 
       const matchedCategory = categories.find((cat) => cat.description === data.categoryDescription);
       const matchedCountry = countriess.find((pais) => pais.name === data.provinceCountryName);
@@ -62,7 +62,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
   const fetchCategories = async () => {
     try {
       const data = await getCategories();
-      console.log("Categorías obtenidas:", data);
+      // console.log("Categorías obtenidas:", data);
       setCategories(data);
     } catch (error) {
       console.error("Error al obtener categorías:", error);
@@ -72,7 +72,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
   const fetchCountries = async () => {
     try {
       const data = await getCountries();
-      console.log("Países obtenidos:", data);
+      // console.log("Países obtenidos:", data);
       setCountriess(data);
     } catch (error) {
       console.error("Error al obtener países:", error);
@@ -83,7 +83,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
     try {
       const data = await getProvincias(countryId);
       setProvincess(data);
-      console.log("Provincias obtenidas:", data); // Verifica que las provincias se obtienen correctamente
+      // console.log("Provincias obtenidas:", data); // Verifica que las provincias se obtienen correctamente
     } catch (error) {
       console.error(error);
     }
@@ -129,7 +129,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
   };
 
   const handleEditImage = (index) => {
-    console.log(`Editar imagen en el índice: ${index}`);
+    // console.log(`Editar imagen en el índice: ${index}`);
   };
 
   const handleDeleteImage = (index) => {
@@ -152,9 +152,9 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
     };
     const token = sessionStorage.getItem("token");
 
-    console.log("ID del microemprendimiento:", microBusinessId);
-    console.log("Datos del microemprendimiento a actualizar:", updatedMicroBusiness);
-    console.log("Token de autenticación:", token);
+    // console.log("ID del microemprendimiento:", microBusinessId);
+    // console.log("Datos del microemprendimiento a actualizar:", updatedMicroBusiness);
+    // console.log("Token de autenticación:", token);
 
     try {
       const data = await putMicrobusiness(microBusinessId, updatedMicroBusiness, token);
@@ -163,6 +163,12 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
       setModalTitle("Cambios guardados con éxito");
       setModalStatus("success");
       setModalOpen(true);
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+
+      
     } catch (error) {
       console.error("Error al actualizar el microemprendimiento:", error);
       setModalTitle("Lo sentimos, los cambios no pudieron ser guardados.");
@@ -310,7 +316,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
           </FormControl>
         </Box>
 
-        <Box sx={{ mt: "20px", width: "90%" }}>
+        {/* <Box sx={{ mt: "20px", width: "90%" }}>
           <TextField
             fullWidth
             label="Ciudad"
@@ -319,7 +325,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
             onChange={(e) => setName(e.target.value)}
             helperText="Sin abreviaturas, nombre completo"
           />
-        </Box>
+        </Box> */}
 
         <Box sx={{ mt: "20px", width: "90%" }}>
           <TextField

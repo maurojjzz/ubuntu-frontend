@@ -18,14 +18,14 @@ export const postMicroBusiness = async (body, token) => {
 
 export const putMicrobusiness = async (id, body, token) => {
   try {
-    console.log("ID del microemprendimiento:", id);
-    console.log("Datos del microemprendimiento a actualizar:", body);
-    console.log("Token de autenticación:", token);
+    // console.log("ID del microemprendimiento:", id);
+    // console.log("Datos del microemprendimiento a actualizar:", body);
+    // console.log("Token de autenticación:", token);
 
     // Llamar al servicio PUT con ID, cuerpo y token
     const data = await serviceMicroBusinessEdit.put(id, body, token);
 
-    console.log("Respuesta del servicio:", data);
+    // console.log("Respuesta del servicio:", data);
 
     if (data.error) throw data.error;
     return data;

@@ -27,7 +27,7 @@ const CargarMicroemprendimiento = () => {
   const [name, setName] = useState("");
   const [subTitle, setSubTitle] = useState("");
   const [province, setProvince] = useState("");
-  const [ciudad, setCiudad] = useState("");
+  // const [ciudad, setCiudad] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [moreInformation, setMoreInformation] = useState("");
   const [provincias, setProvincias] = useState([]);
@@ -322,7 +322,7 @@ const CargarMicroemprendimiento = () => {
           </FormControl>
         </Box>
 
-        <Box sx={{ mt: "20px", width: "90%" }}>
+        {/* <Box sx={{ mt: "20px", width: "90%" }}>
           <TextField
             fullWidth
             label="Ciudad"
@@ -331,7 +331,7 @@ const CargarMicroemprendimiento = () => {
             onChange={(e) => setCiudad(e.target.value)}
             helperText="Sin abreviaturas, nombre completo"
           />
-        </Box>
+        </Box> */}
 
         <Box sx={{ mt: "20px", width: "90%" }}>
           <TextField
