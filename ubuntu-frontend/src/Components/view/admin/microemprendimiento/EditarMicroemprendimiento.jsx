@@ -38,10 +38,13 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
       // Buscar el name de la categoría correspondiente al description recibido
       const matchedCategory = categories.find((cat) => cat.description === data.categoryDescription);
 
+      // Buscar el ID del país correspondiente al nombre recibido
+      const matchedCountry = countriess.find((pais) => pais.name === data.provinceCountryName);
+
       // Actualizar el estado con la información recibida
       setName(data.name);
       setCategoria(matchedCategory ? matchedCategory.name : "");
-      setCountry(data.provinceCountryName);
+      setCountry(matchedCountry ? matchedCountry.id : "");
       setProvincia(data.provinceName);
       setDescription(data.description);
       setMoreInformation(data.moreInformation);
@@ -92,7 +95,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
   };
 
   const handlePaisChange = (event) => {
-    setCountry(event.target.value);
+    setCountry(event.target.value); // Asignar el ID del país seleccionado
   };
 
   const handleProvinciaChange = (event) => {
@@ -116,7 +119,9 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
       subTitle,
       category: categoria,
       country: parseInt(country),
-      // provinceName: provincia,
+      province: {
+        id: parseInt(province)
+      }
     };
     const token = sessionStorage.getItem("token");
 
@@ -141,7 +146,6 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
       setModalOpen(true);
     }
   };
-
   return (
     <Box>
       <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -226,6 +230,17 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
         </Box>
 
         <Box sx={{ mt: "20px", width: "90%" }}>
+          <TextField
+            fullWidth
+            label="Subcategoría"
+            variant="outlined"
+            value={subTitle}
+            onChange={(e) => setSubTitle(e.target.value)}
+            helperText="Escribi la subcategoría del Microemprendimiento"
+          />
+        </Box>
+
+        <Box sx={{ mt: "20px", width: "90%" }}>
           <FormControl fullWidth variant="outlined">
             <InputLabel>País*</InputLabel>
             <Select
@@ -243,7 +258,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
               }}
             >
               {countriess.map((pais) => (
-                <MenuItem key={pais.id} value={pais.name}>
+                <MenuItem key={pais.id} value={pais.id}>
                   {pais.name}
                 </MenuItem>
               ))}
