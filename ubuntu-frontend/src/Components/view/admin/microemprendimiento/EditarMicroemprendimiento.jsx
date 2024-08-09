@@ -6,23 +6,26 @@ import { ServiceHttp } from "../../../../utils/services/serviceHttp";
 import { getCategories } from "../../../../utils/services/dashboard/ServiceCategories";
 import { ModalAlert } from "../../../shared";
 import { useNavigate } from "react-router-dom";
+import { getCountries } from "../../../../utils/services/dashboard/ServiceCountry";
 
 const EditarMicroemprendimiento = ({ microBusinessId }) => {
   const [name, setName] = useState("");
   const [categoria, setCategoria] = useState("");
-  const [pais, setPais] = useState("");
   const [provincia, setProvincia] = useState("");
   const [description, setDescription] = useState("");
   const [moreInformation, setMoreInformation] = useState("");
   const [subTitle, setSubTitle] = useState("");
   const microemprendimientos = new ServiceHttp("/microbusiness");
   const [categories, setCategories] = useState([]);
-
+  
+  const [country, setCountry] = useState("");
+  const [countriess, setCountriess] = useState([]);
+  
   const [modalOpen, setModalOpen] = useState(false);
   const [modalStatus, setModalStatus] = useState("success");
   const [modalTitle, setModalTitle] = useState("");
   const [modalSubTitle, setModalSubTitle] = useState("");
-
+  
   const navigate = useNavigate();
 
   const getMicroEmprendimiento = async (microBusinessId) => {
@@ -38,7 +41,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
       // Actualizar el estado con la información recibida
       setName(data.name);
       setCategoria(matchedCategory ? matchedCategory.name : "");
-      setPais(data.provinceCountryName);
+      setCountry(data.provinceCountryName);
       setProvincia(data.provinceName);
       setDescription(data.description);
       setMoreInformation(data.moreInformation);
@@ -58,9 +61,20 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
     }
   };
 
+  const fetchCountries = async () => {
+    try {
+      const data = await getCountries(); // Usar la función importada
+      console.log("Países obtenidos:", data);
+      setCountriess(data); // Establecer los países en el estado
+    } catch (error) {
+      console.error("Error al obtener países:", error);
+    }
+  };
+
   useEffect(() => {
     const initialize = async () => {
       await fetchCategories(); // Cargar las categorías primero
+      await fetchCountries(); // Cargar los países
       getMicroEmprendimiento(microBusinessId); // Luego cargar los datos del microemprendimiento
     };
 
@@ -68,17 +82,17 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
   }, [microBusinessId]);
 
   useEffect(() => {
-    if (categories.length > 0) {
+    if (categories.length > 0 && countriess.length > 0) {
       getMicroEmprendimiento(microBusinessId);
     }
-  }, [categories, microBusinessId]);
+  }, [categories, countriess, microBusinessId]);
 
   const handleCategoriaChange = (event) => {
     setCategoria(event.target.value); // Simplemente asignar el valor seleccionado
   };
 
   const handlePaisChange = (event) => {
-    setPais(event.target.value);
+    setCountry(event.target.value);
   };
 
   const handleProvinciaChange = (event) => {
@@ -101,7 +115,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
       moreInformation,
       subTitle,
       category: categoria,
-      // provinceCountryName: pais,
+      country: parseInt(country),
       // provinceName: provincia,
     };
     const token = sessionStorage.getItem("token");
@@ -215,7 +229,7 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
           <FormControl fullWidth variant="outlined">
             <InputLabel>País*</InputLabel>
             <Select
-              value={pais}
+              value={country}
               onChange={handlePaisChange}
               label="País*"
               MenuProps={{
@@ -228,11 +242,11 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
                 },
               }}
             >
-              <MenuItem value="Argentina">Argentina</MenuItem>
-              <MenuItem value="Brasil">Brasil</MenuItem>
-              <MenuItem value="Chile">Chile</MenuItem>
-              <MenuItem value="Uruguay">Uruguay</MenuItem>
-              <MenuItem value="Colombia">Colombia</MenuItem>
+              {countriess.map((pais) => (
+                <MenuItem key={pais.id} value={pais.name}>
+                  {pais.name}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText>Seleccione el país</FormHelperText>
           </FormControl>
