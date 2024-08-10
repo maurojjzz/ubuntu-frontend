@@ -1,8 +1,19 @@
+import { ChatBotBtn } from "../../../shared";
+import { Box } from "@mui/material";
+
 const Dashboard = () => {
   return (
-    <div>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        flexGrow: 1,
+      }}
+    >
       Dashboard en desarrollo
-    </div>
+      <ChatBotBtn />
+    </Box>
   );
 };
 

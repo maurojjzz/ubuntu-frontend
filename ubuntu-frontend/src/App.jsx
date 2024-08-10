@@ -24,7 +24,13 @@ function App() {
       <AuthProvider>
         <SearchProvider>
           <Router>
-            <div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                height: "100vh",
+              }}
+            >
               <Navbar />
               <Routes>
                 <Route path="/" element={<LandingPage />} />
@@ -35,7 +41,6 @@ function App() {
                 <Route path="/publicaciones" element={<ViewPublicaciones />} />
                 <Route path="/contacto/:id" element={<UserContact />} />
                 <Route path="/buscar" element={<SearchResults />} />
-                {/* Solo para poder acceder a ellas ahora luego se modifica */}
                 <Route path="/admin/microemprendimientos" element={<Microemprendimiento />} />
                 <Route path="/admin/microemprendimientos/cargar" element={<CargarMicroemprendimiento />} />
                 <Route path="/admin/microemprendimientos/editar" element={<EditarMicroemprendimiento />} />
