@@ -20,7 +20,6 @@ function SolicitudContacto() {
             const responseManage = await new ServiceHttp("/contact/search/manage").get();
             const data = responseNoManage.concat(responseManage);
             setData(data);
-            console.log(data);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -36,7 +35,6 @@ function SolicitudContacto() {
 
     const handleButtonClick = (data) => {
         setSelectedData(data);
-        console.log(data);
     };
 
     const handleOptionChange = (option) => {

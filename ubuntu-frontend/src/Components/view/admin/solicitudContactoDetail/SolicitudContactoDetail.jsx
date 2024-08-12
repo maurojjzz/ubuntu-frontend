@@ -52,9 +52,7 @@ function SolicitudContactoDetail({ microBusinessName, microBusinessId, stateRequ
                 microBusinessName,
                 microBusiness: {id: customId},
             };
-            console.log(payload)
             await axios.post(url, payload);
-            console.log('State updated successfully');
             setLocalDateUpdated(newStatus ? new Date().toISOString() : localDateUpdated);
             setModalStatus("success");
             setModalTitle("Estado modificado con éxito");

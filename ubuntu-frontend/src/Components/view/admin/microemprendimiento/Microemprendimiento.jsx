@@ -100,7 +100,12 @@ const Microemprendimiento = () => {
           <Typography variant="body1">Error al cargar</Typography>
         ) : (
           microBusiness.map((micro) => (
-            <MicrobusinessCard key={micro.id} title={micro.name} category={micro.categoryDescription} />
+            <MicrobusinessCard 
+              key={micro.id} 
+              id={micro.id}  
+              title={micro.name} 
+              category={micro.categoryDescription} 
+            />
           ))
         )}
       </Box>

@@ -10,7 +10,7 @@ import {
   Button
 } from "@mui/material";
 import { useState, useEffect } from "react";
-import UploadIcon from '@mui/icons-material/Upload'; // Asegúrate de tener instalado @mui/icons-material
+import UploadIcon from '@mui/icons-material/Upload';
 import { useTheme } from "@mui/material/styles";
 import { ReusableButton } from "../../../shared";
 import { getCountries } from "../../../../utils/services/dashboard/ServiceCountry";
@@ -18,12 +18,16 @@ import { getProvincias } from "../../../../utils/services/dashboard/ServiceProvi
 import { getCategories } from "../../../../utils/services/dashboard/ServiceCategories";
 import { postMicroBusiness } from "../../../../utils/services/dashboard/ServiceMicroBusiness";
 import { ServiceUploadImage } from '../../../../utils/ServiceImageUploader';
+import { ModalAlert } from "../../../shared";
+import { useNavigate } from "react-router-dom";
+
+
 
 const CargarMicroemprendimiento = () => {
   const [name, setName] = useState("");
   const [subTitle, setSubTitle] = useState("");
   const [province, setProvince] = useState("");
-  const [ciudad, setCiudad] = useState("");
+  // const [ciudad, setCiudad] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [moreInformation, setMoreInformation] = useState("");
   const [provincias, setProvincias] = useState([]);
@@ -33,7 +37,13 @@ const CargarMicroemprendimiento = () => {
   const [categoriess, setCategoriess] = useState([]);
   const [base64Images, setBase64Images] = useState([]);
   const [imageNames, setImageNames] = useState([]);
+  
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalStatus, setModalStatus] = useState("success");
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalSubTitle, setModalSubTitle] = useState("");
 
+  const navigate = useNavigate();
   
   const theme = useTheme();
 
@@ -129,8 +139,17 @@ const CargarMicroemprendimiento = () => {
       }
 
       console.log("Imágenes subidas con éxito");
+
+      setModalTitle("Microemprendimiento cargado con éxito");
+      setModalStatus("success");
+      setModalOpen(true);
     } catch (error) {
       console.error("Error al enviar los datos:", error);
+
+      setModalTitle("Lo sentimos, el Microemprendimiento no pudo ser cargado.");
+      setModalSubTitle("Por favor, volvé a intentarlo.");
+      setModalStatus("error");
+      setModalOpen(true);
     }
   };
   
@@ -303,7 +322,7 @@ const CargarMicroemprendimiento = () => {
           </FormControl>
         </Box>
 
-        <Box sx={{ mt: "20px", width: "90%" }}>
+        {/* <Box sx={{ mt: "20px", width: "90%" }}>
           <TextField
             fullWidth
             label="Ciudad"
@@ -312,7 +331,7 @@ const CargarMicroemprendimiento = () => {
             onChange={(e) => setCiudad(e.target.value)}
             helperText="Sin abreviaturas, nombre completo"
           />
-        </Box>
+        </Box> */}
 
         <Box sx={{ mt: "20px", width: "90%" }}>
           <TextField
@@ -405,6 +424,15 @@ const CargarMicroemprendimiento = () => {
 
         <ReusableButton nombre="Cargar Microemprendimiento" handleClick={handleSubmit} />
       </Box>
+      <ModalAlert
+        status={modalStatus}
+        title={modalTitle}
+        subTitle={modalSubTitle}
+        open={modalOpen}
+        onClose={()=> setModalOpen(false)}
+        onSuccessAction={() => navigate("/admin/microemprendimientos")}
+        onTryAgain={()=> setModalOpen(false)}
+      />
     </Box>
   );
 };
