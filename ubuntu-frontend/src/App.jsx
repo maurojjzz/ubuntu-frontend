@@ -17,6 +17,7 @@ import Dashboard from  "./components/view/admin/dashboard/Dashboard";
 import UserContact from "./components/view/contact/UserContact";
 import CargarMicroemprendimiento from "./components/view/admin/microemprendimiento/CargarMicroemprendimiento";
 import EditarMicroemprendimiento from "./components/view/admin/microemprendimiento/EditarMicroemprendimiento";
+import ProtectedRoute from "./token/rutes/ProtectedRoutes";
 
 function App() {
   return (
@@ -35,14 +36,25 @@ function App() {
                 <Route path="/publicaciones" element={<ViewPublicaciones />} />
                 <Route path="/contacto/:id" element={<UserContact />} />
                 <Route path="/buscar" element={<SearchResults />} />
-                {/* Solo para poder acceder a ellas ahora luego se modifica */}
-                <Route path="/admin/microemprendimientos" element={<Microemprendimiento />} />
-                <Route path="/admin/microemprendimientos/cargar" element={<CargarMicroemprendimiento />} />
-                <Route path="/admin/microemprendimientos/editar" element={<EditarMicroemprendimiento />} />
+                <Route path="/admin/microemprendimientos" element={
+                  <ProtectedRoute roles={['ADMIN']} element={<Microemprendimiento />} />
+                } />
+                <Route path="/admin/microemprendimientos/cargar" element={
+                  <ProtectedRoute roles={['ADMIN']} element={<CargarMicroemprendimiento />} />
+                } />
+                <Route path="/admin/microemprendimientos/editar" element={
+                  <ProtectedRoute roles={['ADMIN']} element={<EditarMicroemprendimiento />} />
+                } />
+                <Route path="/admin/solicitudes" element={
+                  <ProtectedRoute roles={['ADMIN']} element={<SolicitudContacto />} />
+                } />
+                <Route path="/admin/dashboard" element={
+                  <ProtectedRoute roles={['ADMIN']} element={<Dashboard />} />
+                } />
+                <Route path="/admin/publicaciones" element={
+                  <ProtectedRoute roles={['ADMIN']} element={<div> En desarrollo </div>} />
+                } />
 
-                <Route path="/admin/solicitudes" element={<SolicitudContacto/>} />
-                <Route path="/admin/publicaciones" element={<div> En desarrollo </div>} />
-                <Route path="/admin/dashboard" element={<Dashboard />} />
                 <Route path="/*" element={<Error />} />
               </Routes>
             </div>
