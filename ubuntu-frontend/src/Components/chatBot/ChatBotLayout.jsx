@@ -1,102 +1,200 @@
+import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import ChatBot from "react-chatbotify";
 import { Button } from "react-chatbotify";
 import robotIcon from "../../assets/img/icon-robot.png";
-
-
-const options = [
-  "Horarios de Atención",
-  "Ubicación",
-  "Contáctanos"
-];
-
-const flow = {
-  start: {
-    message: "¡Hola! Soy Tan Jin 👋. Bienvenido a React ChatBotify. Estoy emocionado de que estés usando nuestro chatbot 😊!",
-    transition: { duration: 1500 },
-    path: "show_options"
-  },
-  show_options: {
-    message: "Parece que aún no has configurado un flujo de conversación. ¡No te preocupes! Aquí tienes algunas cosas útiles que puedes consultar para comenzar:",
-    options: options,
-    path: "handle_selection"
-  },
-  handle_selection: {
-    transition: { duration: 0 },
-    path: async (params) => {
-      let responseMessage = "";
-      switch (params.userInput) {
-        case "Horarios de Atención":
-          responseMessage = "Estamos disponibles de lunes a viernes de 9:00 a 18:00.";
-          break;
-        case "Ubicación":
-          responseMessage = "Nuestra oficina se encuentra en la Calle Falsa 123, Ciudad.";
-          break;
-        case "Contáctanos":
-          responseMessage = "Puedes contactarnos a través del correo contacto@empresa.com.";
-          break;
-        default:
-          responseMessage = "No entiendo esa opciones. Por favor elige una opción de la lista.";
-          return "show_options";
-      }
-      await params.injectMessage(responseMessage);
-      return "repeat";
-    }
-  },
-  repeat: {
-    transition: { duration: 3000 },
-    path: "show_options"
-  }
-};
-
-const settings = {
-  general: {
-    primaryColor: "#2E8B57",
-    secondaryColor: "#4682B4",
-    fontFamily: "Lato",
-    showFooter: false,
-    showInputRow: false,
-  },
-  audio: {
-    disabled: true,
-  },
-  chatHistory: {
-    disabled: true,
-    storageKey: "conversations_summary",
-  },
-  tooltip: {
-    mode: "NEVER",
-  },
-  header: {
-    title: "UbuntuBOT",
-    buttons: [Button.CLOSE_CHAT_BUTTON],
-    showAvatar: false,
-  },
-  notification: {
-    disabled: true,
-  },
-};
-
-const styles = {
-  chatWindowStyle: {
-    position: "fixed",
-    right: "10px",
-    maxWidth: "360px",
-    minWidth: "280px",
-    width: "90%",
-  },
-  chatButtonStyle: {
-    background: `url(${robotIcon}), linear-gradient(135deg, #2E8B57 0%, #20B2AA 50%, #4682B4 100%)`,
-    backgroundImage: `url(${robotIcon})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  },
-}
+import { ServiceHttp } from "../../utils/services/serviceHttp.js";
 
 const ChatBotLayout = () => {
+  const [dataQuestions, setDataQuestions] = useState([]);
+  const [currentSubQuestions, setCurrentSubQuestions] = useState([]);
+
+  const [error, setError] = useState(null);
+
+
+  const questionService = new ServiceHttp("/questions/initial");
+  const subQuestionService = new ServiceHttp("/questions/subquestions");
+
+  const getInitialQuestions = async () => {
+    try {
+      const data = await questionService.get();
+      if (!Array.isArray(data)) {
+        throw new Error("Unexpected data format");
+      }
+      setDataQuestions(data);
+      if (data.error) throw data.error;
+      return data;
+    } catch (error) {
+      console.error(error);
+      setDataQuestions([]);
+      setError("Error al cargar las preguntas. Por favor, intenta de nuevo más tarde.");
+    }
+  };
+
+  const getSubQuestion = async (id) => {
+    try {
+      const data = await subQuestionService.getById(id);
+      if (!Array.isArray(data)) {
+        throw new Error("Unexpected data format");
+      }
+      if (data.error) throw data.error;
+      return data;
+    } catch (error) {
+      console.error(error);
+      setError("Error al cargar las subpreguntas. Por favor, intenta de nuevo más tarde.");
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    getInitialQuestions();
+  }, []);
+
+  const generateResponses = (questions) => {
+    if (!Array.isArray(questions)) {
+      console.error("Expected an array but got:", questions);
+      return {}; 
+    }
+    
+
+    const responses = {};
+    questions.forEach((question) => {
+      const answer = question.answers[0];
+      responses[question.questionText] = {
+        answerText: answer.answerText,
+        subQuestions: answer.subQuestions,
+      };
+    });
+    return responses;
+  };
+
+  const responses = generateResponses(dataQuestions);
+
+  const flow = {
+    start: {
+      message: "¡Hola! Soy UbuntuBOT 👋. Estoy emocionado de que estés usando nuestro chatbot 😊!",
+      transition: { duration: 2500 },
+      path: "show_options",
+    },
+    show_options: {
+      message: error || (currentSubQuestions.length === 0 ? "Selecciona una opcion de la lista" : ""),
+      options:
+        currentSubQuestions.length > 0
+          ? currentSubQuestions.map((subQuestion) => subQuestion.questionText)
+          : dataQuestions.map((question) => question.questionText),
+      path: "handle_selection",
+    },
+    handle_selection: {
+      transition: { duration: 500 },
+      path: async (params) => {
+        if (error) {
+          await params.injectMessage(error);
+          setError(null); 
+          return "repeat";
+        }
+  
+        const selectedQuestion = responses[params.userInput];
+        const idToFind = dataQuestions.find(
+          (question) => question.questionText === params.userInput
+        );
+  
+        let responseMessage =
+          selectedQuestion?.answerText || "No entiendo esa opción. Por favor elige una opción de la lista.";
+  
+        await params.injectMessage(responseMessage);
+  
+        if (selectedQuestion?.subQuestions?.length > 0) {
+          const subQuestionData = await getSubQuestion(idToFind.id);
+          if (subQuestionData && subQuestionData.length > 0) {
+            setCurrentSubQuestions(subQuestionData);
+            await new Promise(resolve => setTimeout(resolve, 100));
+            return "show_options_with_subquestions";
+          }
+        }
+  
+        setCurrentSubQuestions([]);
+        return "repeat";
+      },
+    },
+    show_options_with_subquestions: {
+      options:
+        currentSubQuestions.map((subQuestion) => subQuestion.questionText),
+      path: "handle_subquestion_selection",
+    },
+    handle_subquestion_selection: {
+      transition: { duration: 500 },
+      path: async (params) => {
+        if (error) {
+          await params.injectMessage(error);
+          setError(null); 
+          return "repeat";
+        }
+  
+        const selectedSubQuestion = currentSubQuestions.find(
+          (subQuestion) => subQuestion.questionText === params.userInput
+        );
+        let responseMessage =
+          selectedSubQuestion?.answers[0]?.answerText || "Aun no tengo respuesta para esa pregunta 🤬😭 Lo siento";
+  
+        await params.injectMessage(responseMessage);
+  
+        setCurrentSubQuestions([]);
+        return "repeat";
+      },
+    },
+    repeat: {
+      transition: { duration: 3000 },
+      path: "show_options",
+    },
+  };
+
+  const settings = {
+    general: {
+      primaryColor: "#2E8B57",
+      secondaryColor: "#4682B4",
+      fontFamily: "Lato",
+      showFooter: false,
+      showInputRow: false,
+    },
+    audio: {
+      disabled: false,
+    },
+    chatHistory: {
+      disabled: true,
+      storageKey: "conversations_summary",
+    },
+    tooltip: {
+      mode: "NEVER",
+    },
+    header: {
+      title: "UbuntuBOT",
+      buttons: [Button.CLOSE_CHAT_BUTTON],
+      showAvatar: false,
+    },
+    notification: {
+      disabled: true,
+    },
+  };
+
+  const styles = {
+    chatWindowStyle: {
+      position: "fixed",
+      right: "10px",
+      maxWidth: "360px",
+      minWidth: "280px",
+      width: "90%",
+    },
+    chatButtonStyle: {
+      background: `url(${robotIcon}), linear-gradient(135deg, #2E8B57 0%, #20B2AA 50%, #4682B4 100%)`,
+      backgroundImage: `url(${robotIcon})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    },
+  };
+
   return (
     <Box>
-      <ChatBot flow={flow} settings={settings} styles={styles}/>
+      <ChatBot flow={flow} settings={settings} styles={styles} />
     </Box>
   );
 };

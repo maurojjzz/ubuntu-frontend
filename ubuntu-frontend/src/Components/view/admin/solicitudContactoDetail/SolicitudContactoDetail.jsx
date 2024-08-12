@@ -1,18 +1,98 @@
-import { Box, Typography, Button, Menu, MenuItem } from "@mui/material";
-import "./SolicitudContactoDetail.css"
-import theme from "../../../../theme/theme";
+import React, { useState, useEffect } from 'react';
+import { Box, Typography, Select, MenuItem, FormControl, OutlinedInput } from '@mui/material';
+import axios from 'axios';
+import theme from '../../../../theme/theme';
+import ModalAlert from '../../../shared/modalAlert/ModalAlert';
+import './SolicitudContactoDetail.css';
 
-function SolicitudContactoDetail({ title, date, status, name, surname, email, phone, text }) {
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 0;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 2.5 + ITEM_PADDING_TOP,
+            width: 150,
+        },
+    },
+};
 
-    const nombreCompleto = `${surname}, ${name}`
-    const className = status === "unprocessed" ? "solicitudContactoDetail__orangeDot" : "solicitudContactoDetail__greenDot";
-    const statusText = status === "unprocessed" ? "No gestionada" : "Gestionada";
-    const fechaText = status === "unprocessed" ? "Fecha de solicitud:" : "Fecha de gestión";
+const formatDate = (date) => {
+    if (!date) return '';
+    const d = new Date(date);
+    return d.toISOString().split('T')[0]; 
+};
+
+function SolicitudContactoDetail({ microBusinessName, microBusinessId, stateRequest, fullName, email, phoneNumber, message, id, dateCreated, dateUpdated, refreshData }) {
+    const [currentStatus, setCurrentStatus] = useState(stateRequest);
+    const [loading, setLoading] = useState(false);
+    const [localDateUpdated, setLocalDateUpdated] = useState(dateUpdated);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalStatus, setModalStatus] = useState("success");
+    const [modalTitle, setModalTitle] = useState("");
+    const [modalSubTitle, setModalSubTitle] = useState("");
+
+    useEffect(() => {
+        setLocalDateUpdated(dateUpdated);
+    }, [dateUpdated]);
+
+    const handleStatusChange = async (event) => {
+        const newStatus = event.target.value === 'true';
+        setLoading(true);
+        setCurrentStatus(newStatus);
+
+        try {
+            const customId = microBusinessId;
+            const url = `http://localhost:8080/api/v1/contact/update/${id}`;
+            const payload = {
+                stateRequest: newStatus,
+                fullName,
+                email,
+                phoneNumber,
+                message,
+                microBusinessName,
+                microBusiness: {id: customId},
+            };
+            console.log(payload)
+            await axios.post(url, payload);
+            console.log('State updated successfully');
+            setLocalDateUpdated(newStatus ? new Date().toISOString() : localDateUpdated);
+            setModalStatus("success");
+            setModalTitle("Estado modificado con éxito");
+            setModalSubTitle("");
+            if (refreshData) {
+                refreshData();
+            }
+        } catch (error) {
+            console.error('Error updating state:', error);
+            setModalStatus("error");
+            setModalTitle("Lo sentimos, el Estado no pudo ser modificado.");
+            setModalSubTitle("Por favor, volvé a intentarlo.");
+        } finally {
+            setLoading(false);
+            setModalOpen(true);
+        }
+    };
+
+    const handleModalClose = () => {
+        setModalOpen(false);
+    };
+
+    const handleSuccessAction = () => {
+        handleModalClose();
+    };
+
+    const handleTryAgain = () => {
+        handleModalClose();
+        handleStatusChange({ target: { value: currentStatus ? 'false' : 'true' } });
+    };
+
+    const className = currentStatus === false ? 'solicitudContactoDetail__orangeDot' : 'solicitudContactoDetail__greenDot';
+    const statusText = currentStatus === false ? 'No gestionada' : 'Gestionada';
+    const fechaText = currentStatus === false ? 'Fecha de solicitud:' : 'Fecha de gestión';
+    const fechaShow = currentStatus === false ? formatDate(dateCreated) : formatDate(localDateUpdated);
 
     return (
-        <Box sx={{
-            width: '94vw'
-        }}>
+        <Box sx={{ width: '94vw' }}>
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -21,8 +101,7 @@ function SolicitudContactoDetail({ title, date, status, name, surname, email, ph
                 gap: '5px',
                 marginBottom: '2vh'
             }}>
-                <Box className={className}>
-                </Box>
+                <Box className={className}></Box>
                 <Box>
                     <Typography sx={{
                         fontFamily: 'Lato',
@@ -39,14 +118,26 @@ function SolicitudContactoDetail({ title, date, status, name, surname, email, ph
                 alignItems: 'center',
                 justifyContent: 'flex-end'
             }}>
-                <Button sx={{ color: 'black' }}>
-                    Estado
-                    {/* 
-                    TODO
-                    <Menu>
-                        <MenuItem> Gestionada</MenuItem>
-                    </Menu> */}
-                </Button>
+                <FormControl sx={{ width: 150 }}>
+                    <Select
+                        value=""
+                        onChange={handleStatusChange}
+                        displayEmpty
+                        input={<OutlinedInput />}
+                        MenuProps={MenuProps}
+                        inputProps={{ 'aria-label': 'Without label' }}
+                    >
+                        <MenuItem disabled value="">
+                            <em>Estado</em>
+                        </MenuItem>
+                        {currentStatus === false && (
+                            <MenuItem value="true">Gestionada</MenuItem>
+                        )}
+                        {currentStatus === true && (
+                            <MenuItem value="false">No gestionada</MenuItem>
+                        )}
+                    </Select>
+                </FormControl>
             </Box>
             <Box sx={{
                 display: 'flex',
@@ -62,7 +153,7 @@ function SolicitudContactoDetail({ title, date, status, name, surname, email, ph
                     marginTop: '1vh',
                     marginBottom: '2vh'
                 }}>
-                    {title}
+                    {microBusinessName}
                 </Typography>
             </Box>
             <Box sx={{
@@ -77,7 +168,7 @@ function SolicitudContactoDetail({ title, date, status, name, surname, email, ph
                     lineHeight: '24px',
                     marginBottom: '2vh',
                 }}>
-                    {fechaText} {date}
+                    {fechaText} {fechaShow}
                 </Typography>
             </Box>
             <Box sx={{
@@ -90,7 +181,7 @@ function SolicitudContactoDetail({ title, date, status, name, surname, email, ph
                 <textarea
                     id="field1"
                     type="text"
-                    value={nombreCompleto}
+                    value={fullName}
                     readOnly
                     className="field__input"
                 />
@@ -120,7 +211,7 @@ function SolicitudContactoDetail({ title, date, status, name, surname, email, ph
                 <textarea
                     id="field3"
                     type="text"
-                    value={phone}
+                    value={phoneNumber}
                     readOnly
                     className="field__input"
                 />
@@ -134,11 +225,21 @@ function SolicitudContactoDetail({ title, date, status, name, surname, email, ph
                 <label htmlFor="field4" className="field__label">Mensaje</label>
                 <textarea
                     id="field4"
-                    value={text}
+                    value={message}
                     readOnly
                     className="field__textArea"
                 />
             </Box>
+
+            <ModalAlert
+                status={modalStatus}
+                title={modalTitle}
+                subTitle={modalSubTitle}
+                open={modalOpen}
+                onClose={handleModalClose}
+                onSuccessAction={handleSuccessAction}
+                onTryAgain={handleTryAgain}
+            />
         </Box>
     );
 }
