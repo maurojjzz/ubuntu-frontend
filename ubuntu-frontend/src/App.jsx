@@ -54,7 +54,6 @@ function App() {
                 <Route path="/admin/publicaciones" element={
                   <ProtectedRoute roles={['ADMIN']} element={<div> En desarrollo </div>} />
                 } />
-
                 <Route path="/*" element={<Error />} />
               </Routes>
             </div>
