@@ -5,21 +5,21 @@ import MicrobusinessCard from "../../../microbusinessCard/MicrobusinessCard";
 import { ServiceHttp } from "../../../../utils/services/serviceHttp";
 import { ButtonLoad } from "../../../shared";
 import { ModalAlert } from "../../../shared";
+import EditarMicroemprendimiento from "../../admin/microemprendimiento/EditarMicroemprendimiento";
 
 const Microemprendimiento = () => {
   const [microBusiness, setMicroBusiness] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
-  const [refresh, setRefresh] = useState(false);
+  const [editingMicroBusinessId, setEditingMicroBusinessId] = useState(null);
 
   const navigate = useNavigate();
-
   const microemprendimientos = new ServiceHttp("/microbusiness/findAll");
 
   const getMicroEmprendimientos = async () => {
     try {
       const data = await microemprendimientos.get("search=");
-      if(data.error) throw data.error
+      if (data.error) throw data.error;
       setMicroBusiness(Array.isArray(data) ? data : []);
     } catch (error) {
       setOpenModal(true);
@@ -31,7 +31,7 @@ const Microemprendimiento = () => {
 
   useEffect(() => {
     getMicroEmprendimientos();
-  }, [refresh]);
+  }, []);
 
   const handleTryAgain = () => {
     setLoading(true);
@@ -40,28 +40,36 @@ const Microemprendimiento = () => {
   };
 
   const handleEditSuccess = () => {
-    getMicroEmprendimientos();
+    setEditingMicroBusinessId(null);
+    getMicroEmprendimientos(); 
+  };
+
+  const handleEditClick = (id) => {
+    setEditingMicroBusinessId(id);
   };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      
-      <Typography
-        variant="h4"
-        sx={{
-          fontFamily: "Lato",
-          fontWeight: "500",
-          fontSize: "28px",
-          lineHeight: "35px",
-          mt: "40px",
-          mb: "24px",
-        }}
-        align="center"
-      >
-        Microemprendimientos
-      </Typography>
+      {!loading && microBusiness.length > 0 && !editingMicroBusinessId && (
+        <>
+          <Typography
+            variant="h4"
+            sx={{
+              fontFamily: "Lato",
+              fontWeight: "500",
+              fontSize: "28px",
+              lineHeight: "35px",
+              mt: "40px",
+              mb: "24px",
+            }}
+            align="center"
+          >
+            Microemprendimientos
+          </Typography>
 
-      <ButtonLoad btnText="Cargar Microemprendimiento" btnLink="/admin/microemprendimientos/cargar" />
+          <ButtonLoad btnText="Cargar Microemprendimiento" btnLink="/admin/microemprendimientos/cargar" />
+        </>
+      )}
 
       <Box
         sx={{
@@ -100,19 +108,25 @@ const Microemprendimiento = () => {
             ))}
           </>
         ) : microBusiness.length === 0 ? (
-          <Typography variant="body1">Error al cargar</Typography>
+          <Typography variant="body1">No hay microemprendimientos disponibles</Typography>
+        ) : editingMicroBusinessId ? (
+          <EditarMicroemprendimiento
+            microBusinessId={editingMicroBusinessId}
+            onEditSuccess={handleEditSuccess}
+          />
         ) : (
           microBusiness.map((micro) => (
-            <MicrobusinessCard 
-              key={micro.id} 
-              id={micro.id}  
-              title={micro.name} 
-              category={micro.categoryDescription} 
-              onEditSuccess={handleEditSuccess}
+            <MicrobusinessCard
+              key={micro.id}
+              id={micro.id}
+              title={micro.name}
+              category={micro.categoryDescription}
+              onEditClick={handleEditClick} 
             />
           ))
         )}
       </Box>
+
       <ModalAlert
         open={openModal}
         onClose={() => setOpenModal(false)}
@@ -123,7 +137,7 @@ const Microemprendimiento = () => {
         }}
         onTryAgain={handleTryAgain}
         title={"Error al cargar microemprendimientos"}
-        subTitle={"Intente nuevamente mas tarde"}
+        subTitle={"Intente nuevamente más tarde"}
       />
     </Box>
   );
