@@ -4,15 +4,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import OptionBox from "./optionBox/OptionBox";
 import EditarMicroemprendimiento from "../../components/view/admin/microemprendimiento/EditarMicroemprendimiento";
-// import { ServiceHttp } from "../../utils/services/serviceHttp";
 
-
-
-
-const MicrobusinessCard = ({ id, title, category }) => {
-  // const microemprendimientos = new ServiceHttp("/microbusiness/findAll");
-
-  // console.log("ID en MicrobusinessCard: ", id);
+const MicrobusinessCard = ({ id, title, category, onEditSuccess }) => {
   const [focused, setFocused] = useState(false);
   const [editing, setEditing] = useState(false);
 
@@ -24,11 +17,19 @@ const MicrobusinessCard = ({ id, title, category }) => {
     setEditing(true);
   };
 
+  const handleEditSuccess = (updatedMicrobusiness) => {
+    onEditSuccess(updatedMicrobusiness);
+    setEditing(false);
+  };
+
   const theme = useTheme();
   return (
     <Box>
       {editing ? (
-        <EditarMicroemprendimiento microBusinessId={id} />
+        <EditarMicroemprendimiento
+          microBusinessId={id}
+          onEditSuccess={handleEditSuccess}
+        />
       ) : (
         <Box
           sx={{
@@ -147,10 +148,14 @@ const MicrobusinessCard = ({ id, title, category }) => {
                     width: "24px",
                     backgroundColor: focused ? theme.palette.primary.azul : "transparent",
                     "&:hover": {
-                      backgroundColor: focused ? theme.palette.primary.azul : theme.palette.primary.grisMedio,
+                      backgroundColor: focused
+                        ? theme.palette.primary.azul
+                        : theme.palette.primary.grisMedio,
                     },
                     "& .MuiSvgIcon-root": {
-                      color: focused ? theme.palette.primary.main : theme.palette.primary.negro,
+                      color: focused
+                        ? theme.palette.primary.main
+                        : theme.palette.primary.negro,
                     },
                   }}
                   onClick={handleFocus}

@@ -10,6 +10,7 @@ const Microemprendimiento = () => {
   const [microBusiness, setMicroBusiness] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   const navigate = useNavigate();
 
@@ -30,13 +31,15 @@ const Microemprendimiento = () => {
 
   useEffect(() => {
     getMicroEmprendimientos();
-  }, []);
-
-
+  }, [refresh]);
 
   const handleTryAgain = () => {
     setLoading(true);
     setOpenModal(false);
+    getMicroEmprendimientos();
+  };
+
+  const handleEditSuccess = () => {
     getMicroEmprendimientos();
   };
 
@@ -105,6 +108,7 @@ const Microemprendimiento = () => {
               id={micro.id}  
               title={micro.name} 
               category={micro.categoryDescription} 
+              onEditSuccess={handleEditSuccess}
             />
           ))
         )}

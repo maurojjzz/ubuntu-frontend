@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { getCountries } from "../../../../utils/services/dashboard/ServiceCountry";
 import { getProvincias } from "../../../../utils/services/dashboard/ServiceProvince";
 
-const EditarMicroemprendimiento = ({ microBusinessId }) => {
+const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
   const [name, setName] = useState("");
   const [categoria, setCategoria] = useState("");
   const [description, setDescription] = useState("");
@@ -163,10 +163,8 @@ const EditarMicroemprendimiento = ({ microBusinessId }) => {
       setModalTitle("Cambios guardados con éxito");
       setModalStatus("success");
       setModalOpen(true);
+      onEditSuccess();
 
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
 
       
     } catch (error) {
