@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import SolicitudesCard from "../../../cards/SolicitudesCard";
 import SolicitudContactoDetail from "../solicitudContactoDetail/SolicitudContactoDetail";
 import { ServiceHttp } from '../../../../utils/services/serviceHttp';
+import CardEstadisticas from "../dashboard/cardEstadisticas/CardEstadisticas";
 
 function SolicitudContacto() {
     const [selectedOption, setSelectedOption] = useState("No gestionadas");

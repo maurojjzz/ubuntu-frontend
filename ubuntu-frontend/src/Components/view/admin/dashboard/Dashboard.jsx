@@ -1,8 +1,11 @@
+import { Box } from "@mui/material";
+import CardEstadisticas from "./cardEstadisticas/CardEstadisticas";
+
 const Dashboard = () => {
   return (
-    <div>
-      Dashboard en desarrollo
-    </div>
+    <Box sx={{display: 'flex', margin: '5vw'}}>
+      <CardEstadisticas/>
+    </Box>
   );
 };
 
