@@ -5,7 +5,7 @@ import { putMicrobusiness } from "../../../../utils/services/dashboard/ServiceMi
 import { ServiceHttp } from "../../../../utils/services/serviceHttp";
 import { getCategories } from "../../../../utils/services/dashboard/ServiceCategories";
 import { ModalAlert } from "../../../shared";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { getCountries } from "../../../../utils/services/dashboard/ServiceCountry";
 import { getProvincias } from "../../../../utils/services/dashboard/ServiceProvince";
 
@@ -29,7 +29,7 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
   const [modalTitle, setModalTitle] = useState("");
   const [modalSubTitle, setModalSubTitle] = useState("");
   
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const getMicroEmprendimiento = async (microBusinessId) => {
     try {
@@ -151,22 +151,19 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
       }
     };
     const token = sessionStorage.getItem("token");
-
-    // console.log("ID del microemprendimiento:", microBusinessId);
-    // console.log("Datos del microemprendimiento a actualizar:", updatedMicroBusiness);
-    // console.log("Token de autenticación:", token);
-
+  
     try {
       const data = await putMicrobusiness(microBusinessId, updatedMicroBusiness, token);
       console.log("Microemprendimiento actualizado:", data);
-
+  
       setModalTitle("Cambios guardados con éxito");
       setModalStatus("success");
       setModalOpen(true);
-      onEditSuccess();
-
-
-      
+  
+      // Retrasa la navegación para mostrar el modal
+      setTimeout(() => {
+        onEditSuccess();
+      }, 2000); // 2000 ms = 2 segundos
     } catch (error) {
       console.error("Error al actualizar el microemprendimiento:", error);
       setModalTitle("Lo sentimos, los cambios no pudieron ser guardados.");
@@ -178,7 +175,7 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
 
   return (
     <Box>
-      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center",  marginLeft:"10px"}}>
         <Typography
           variant="h4"
           sx={{
@@ -368,16 +365,11 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
         <ReusableButton nombre="Guardar cambios" handleClick={handleSubmit} />
       </Box>
       <ModalAlert
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
         status={modalStatus}
         title={modalTitle}
         subTitle={modalSubTitle}
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onSuccessAction={() => {
-          navigate("/admin/microemprendimientos");
-          setModalOpen(false);
-        }}
-        onTryAgain={() => setModalOpen(false)}
       />
     </Box>
   );
