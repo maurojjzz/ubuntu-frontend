@@ -1,6 +1,6 @@
 import { ChatBotBtn } from "../../../shared";
 import { Box } from "@mui/material";
-import CardEstadisticas from "./CardEstadisticas";
+import CardEstadisticas from "./cardEstadisticas/CardEstadisticas";
 
 const Dashboard = () => {
   return (
