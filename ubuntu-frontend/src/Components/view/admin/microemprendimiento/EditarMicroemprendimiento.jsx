@@ -49,7 +49,7 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
       setDescription(data.description);
       setMoreInformation(data.moreInformation);
       setSubTitle(data.subTitle);
-      setImages(data.images.map(img => img.url));
+      setImages(data.images.map(img => ({ id: img.id, url: img.url })));
 
       if (matchedCountry) {
         await fetchProvincias(matchedCountry.id);
@@ -128,14 +128,15 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
     setMoreInformation(event.target.value);
   };
 
-  const handleEditImage = (index) => {
-    // console.log(`Editar imagen en el índice: ${index}`);
+  const handleEditImage = (id) => {
+    console.log(`Editar imagen con ID: ${id}`);
+    // Aquí puedes agregar la lógica para editar la imagen con este ID
   };
 
-  const handleDeleteImage = (index) => {
-    const newImages = [...images];
-    newImages[index] = null;
-    setImages(newImages);
+  const handleDeleteImage = (id) => {
+    console.log(`Eliminar imagen con ID: ${id}`);
+    setImages(images.filter(img => img.id !== id));
+    // Aquí puedes agregar la lógica para eliminar la imagen con este ID
   };
 
   const handleSubmit = async () => {

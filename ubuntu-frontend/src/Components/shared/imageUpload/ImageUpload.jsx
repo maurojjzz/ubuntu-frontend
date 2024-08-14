@@ -2,7 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import UploadIcon from '@mui/icons-material/Upload'; // Asegúrate de tener instalado @mui/icons-material
 import { useTheme } from "@mui/material/styles";
-import { ServiceUploadImage } from '../../../utils/ServiceImageUploader'; // Asegúrate de ajustar la ruta
+import { ServiceUploadImage } from '../../../utils/ServiceImage'; // Asegúrate de ajustar la ruta
 
 const ImageUpload = ({ microBusinessId }) => {
   const [imageNames, setImageNames] = useState([]);

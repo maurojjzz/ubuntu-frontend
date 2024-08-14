@@ -17,7 +17,7 @@ import { getCountries } from "../../../../utils/services/dashboard/ServiceCountr
 import { getProvincias } from "../../../../utils/services/dashboard/ServiceProvince";
 import { getCategories } from "../../../../utils/services/dashboard/ServiceCategories";
 import { postMicroBusiness } from "../../../../utils/services/dashboard/ServiceMicroBusiness";
-import { ServiceUploadImage } from '../../../../utils/ServiceImageUploader';
+import { ServiceUploadImage } from '../../../../utils/ServiceImage';
 import { ModalAlert } from "../../../shared";
 import { useNavigate } from "react-router-dom";
 

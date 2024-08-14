@@ -6,23 +6,23 @@ const ImageEdit = ({ images, onEditImage, onDeleteImage }) => {
     return (
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: '20px', width: '90%' }}>
             {images.map((image, index) => (
-                <Box key={index} sx={{ position: 'relative', width: '30%', height: '150px', bgcolor: image ? 'transparent' : 'grey.300' }}>
-                    {image ? (
-                        <img src={image} alt={`imagen-${index}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <Box key={image.id} sx={{ position: 'relative', width: '30%', height: '150px', bgcolor: image ? 'transparent' : 'grey.300' }}>
+                    {image.url ? (
+                        <img src={image.url} alt={`imagen-${index}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     ) : (
                         <Box sx={{ width: '100%', height: '100%' }}></Box>
                     )}
                     <IconButton
                         aria-label="editar"
                         sx={{ position: 'absolute', top: 8, left: 8 }}
-                        onClick={() => onEditImage(index)}
+                        onClick={() => onEditImage(image.id)} // Pasar el id de la imagen
                     >
                         <EditIcon />
                     </IconButton>
                     <IconButton
                         aria-label="eliminar"
                         sx={{ position: 'absolute', top: 8, right: 8 }}
-                        onClick={() => onDeleteImage(index)}
+                        onClick={() => onDeleteImage(image.id)} // Pasar el id de la imagen
                     >
                         <DeleteIcon />
                     </IconButton>
