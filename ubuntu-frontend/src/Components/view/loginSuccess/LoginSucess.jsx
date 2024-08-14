@@ -13,7 +13,7 @@ function LoginSuccess() {
 
         if (token) {
             setToken(token);
-            navigate('/admin/microemprendimientos');
+            navigate('/admin/dashboard');
         }
     }, [location, setToken, navigate]);
 
