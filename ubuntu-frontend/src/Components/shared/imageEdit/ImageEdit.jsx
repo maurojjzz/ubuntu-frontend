@@ -1,22 +1,8 @@
-import { Box,  IconButton } from "@mui/material";
-import { useState } from "react";
+import { Box, IconButton } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const ImageEdit = () => {
-    const [images, setImages] = useState([null, null, null]);
-
-    const handleEditImage = (index) => {
-        
-        console.log(`Editar imagen en el índice: ${index}`);
-    };
-
-    const handleDeleteImage = (index) => {
-        const newImages = [...images];
-        newImages[index] = null;
-        setImages(newImages);
-    };
-
+const ImageEdit = ({ images, onEditImage, onDeleteImage }) => {
     return (
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: '20px', width: '90%' }}>
             {images.map((image, index) => (
@@ -29,14 +15,14 @@ const ImageEdit = () => {
                     <IconButton
                         aria-label="editar"
                         sx={{ position: 'absolute', top: 8, left: 8 }}
-                        onClick={() => handleEditImage(index)}
+                        onClick={() => onEditImage(index)}
                     >
                         <EditIcon />
                     </IconButton>
                     <IconButton
                         aria-label="eliminar"
                         sx={{ position: 'absolute', top: 8, right: 8 }}
-                        onClick={() => handleDeleteImage(index)}
+                        onClick={() => onDeleteImage(index)}
                     >
                         <DeleteIcon />
                     </IconButton>
@@ -45,4 +31,5 @@ const ImageEdit = () => {
         </Box>
     );
 };
+
 export default ImageEdit;

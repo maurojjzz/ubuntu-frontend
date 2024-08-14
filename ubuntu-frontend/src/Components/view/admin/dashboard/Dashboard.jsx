@@ -1,5 +1,6 @@
 import { ChatBotBtn } from "../../../shared";
 import { Box } from "@mui/material";
+import CardEstadisticas from "./CardEstadisticas";
 
 const Dashboard = () => {
   return (
@@ -13,8 +14,9 @@ const Dashboard = () => {
     >
       Dashboard en desarrollo
       <ChatBotBtn />
+      <CardEstadisticas/>
+
     </Box>
   );
 };
-
 export default Dashboard;
