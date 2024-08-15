@@ -39,13 +39,11 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
     try {
       const data = await microemprendimientos.getById(microBusinessId);
       if (data.error) throw data.error;
-
-      // console.log("Data del microemprendimiento correspondiente al id que llega de card:", data);
-
+  
       const matchedCategory = categories.find((cat) => cat.description === data.categoryDescription);
       const matchedCountry = countriess.find((pais) => pais.name === data.provinceCountryName);
       const matchedProvince = provincess.find((prov) => prov.name === data.provinceName);
-
+  
       setName(data.name);
       setCategoria(matchedCategory ? matchedCategory.name : "");
       setCountry(matchedCountry ? matchedCountry.id : "");
@@ -53,8 +51,10 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
       setDescription(data.description);
       setMoreInformation(data.moreInformation);
       setSubTitle(data.subTitle);
-      setImages(data.images.map(img => ({ id: img.id, url: img.url })));
-
+      setImages(data.images.map(img => ({ id: img.id, url: `${img.url}?t=${new Date().getTime()}` }))); // Agrega un parámetro único a la URL de la imagen
+  
+      console.log("Imágenes después de obtener el microemprendimiento:", data.images);
+  
       if (matchedCountry) {
         await fetchProvincias(matchedCountry.id);
       }
@@ -138,17 +138,31 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
     const token = sessionStorage.getItem("token");
     
     try {
-      await ServicePutImage(base64Image, id, token);
-      console.log(`Imagen con ID: ${id} actualizada exitosamente.`);
+      const response = await ServicePutImage(base64Image, id, token);
+      console.log(`Respuesta del servidor al actualizar la imagen con ID: ${id}:`, response);
       
-      // Actualiza la lista de imágenes si es necesario
-      setImages(images.map(img => img.id === id ? { ...img, url: URL.createObjectURL(new Blob([base64Image], { type: 'image/jpeg' })) } : img));
+      if (response.url) {
+        console.log(`Imagen con ID: ${id} actualizada exitosamente. Nueva URL: ${response.url}`);
+        
+        // Actualiza el estado de las imágenes para forzar la recarga
+        setImages(prevImages => {
+          const updatedImages = prevImages.map(img => 
+            img.id === id ? { ...img, url: `${response.url}?t=${new Date().getTime()}` } : img
+          );
+          console.log("Imágenes después de actualizar:", updatedImages);
+          return updatedImages;
+        });
+      } else {
+        console.error("La respuesta del servidor no contiene 'url'");
+      }
     } catch (error) {
       console.error("Error al actualizar la imagen:", error);
       // Agrega notificación de error si lo deseas
     }
   };
-  
+
+
+
 
   const handleDeleteImage = async (id) => {
     const token = sessionStorage.getItem("token");
@@ -191,7 +205,8 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
       setModalOpen(true);
   
       // Retrasa la navegación para mostrar el modal
-      setTimeout(() => {
+      setTimeout(async () => {
+        await getMicroEmprendimiento(microBusinessId); // Llamada para obtener los datos actualizados
         onEditSuccess();
       }, 2000); // 2000 ms = 2 segundos
     } catch (error) {
