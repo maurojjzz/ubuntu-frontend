@@ -53,6 +53,7 @@ const SearchResults = () => {
                                     location={result.provinceName.concat(", ", result.provinceCountryName)}
                                     details={result.description}
                                     moreInf={result.moreInformation}
+                                    id={result.id}
                                 />
                             </Grid>
                         ))}
