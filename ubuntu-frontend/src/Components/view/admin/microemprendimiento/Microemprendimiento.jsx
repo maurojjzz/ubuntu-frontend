@@ -115,15 +115,17 @@ const Microemprendimiento = () => {
             onEditSuccess={handleEditSuccess}
           />
         ) : (
-          microBusiness.map((micro) => (
-            <MicrobusinessCard
-              key={micro.id}
-              id={micro.id}
-              title={micro.name}
-              category={micro.categoryDescription}
-              onEditClick={handleEditClick} 
-            />
-          ))
+          microBusiness
+            .sort((a, b) => b.id - a.id) // Ordenar por ID en orden descendente
+            .map((micro) => (
+              <MicrobusinessCard
+                key={micro.id}
+                id={micro.id}
+                title={micro.name}
+                category={micro.categoryDescription}
+                onEditClick={handleEditClick} 
+              />
+            ))
         )}
       </Box>
 
