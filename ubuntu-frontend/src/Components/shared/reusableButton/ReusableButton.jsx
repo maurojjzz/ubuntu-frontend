@@ -28,7 +28,7 @@ const ReusableButton = ({ nombre, handleClick }) => {
         variant="p"
         sx={{
           textTransform: "none",
-          color: theme.palette.primary.white,
+          color: theme.palette.primary.blanco,
           fontFamily: "Lato",
           fontWeight: "700",
           fontSize: "16px",

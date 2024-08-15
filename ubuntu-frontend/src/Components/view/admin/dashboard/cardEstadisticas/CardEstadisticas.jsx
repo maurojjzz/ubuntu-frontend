@@ -28,7 +28,7 @@ const CardEstadisticas = () => {
     return (
         <Box sx={{display: 'flex', justifyContent: "space-between", width: '90vw'}}>
             <Box sx={{width: '43vw', border: '2px solid #1D9129', borderRadius: '8px', padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
-                <Typography sx={{fontFamily: 'Lato', fontWeight: '400', fontSize: '20px', lineHeight: '25px'}}>
+                <Typography sx={{fontFamily: 'Lato', fontWeight: '400', fontSize: '18px', lineHeight: '25px'}}>
                     Gestionados
                 </Typography>
                 <Divider sx={{width: '30%', borderColor: '#1D9129'}}/>
@@ -37,7 +37,7 @@ const CardEstadisticas = () => {
                 </Typography>
             </Box>
             <Box sx={{width: '43vw', border: '2px solid #B86B11', borderRadius: '8px', padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
-                <Typography sx={{fontFamily: 'Lato', fontWeight: '400', fontSize: '20px', lineHeight: '25px'}}>
+                <Typography sx={{fontFamily: 'Lato', fontWeight: '400', fontSize: '18px', lineHeight: '25px'}}>
                     No Gestionados
                 </Typography>
                 <Divider sx={{width: '30%', borderColor: '#B86B11'}}/>

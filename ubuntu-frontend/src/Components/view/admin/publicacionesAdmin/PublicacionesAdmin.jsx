@@ -36,7 +36,7 @@ const PublicacionesAdmin = () => {
                     Publicaciones
                 </Typography>
             </Box>
-            <ButtonLoad btnText="Crear Publicación" btnLink="/admin/publicaciones" />
+            <ButtonLoad btnText="Crear Publicación" btnLink="/admin/crearpublicacion" />
             <Box sx={{display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center', gap: '2vh'}}>
                 <Typography
                     sx={{

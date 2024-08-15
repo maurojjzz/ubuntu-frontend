@@ -19,6 +19,7 @@ import CargarMicroemprendimiento from "./components/view/admin/microemprendimien
 import EditarMicroemprendimiento from "./components/view/admin/microemprendimiento/EditarMicroemprendimiento";
 import ProtectedRoute from "./token/rutes/ProtectedRoutes";
 import PublicacionesAdmin from "./components/view/admin/publicacionesAdmin/PublicacionesAdmin";
+import CrearPublicacion from "./components/view/admin/publicacionesAdmin/CrearPublicacion";
 
 function App() {
   return (
@@ -54,6 +55,9 @@ function App() {
                 } />
                 <Route path="/admin/publicaciones" element={
                   <ProtectedRoute roles={['ADMIN']} element={<PublicacionesAdmin/>} />
+                } />
+                <Route path="/admin/crearpublicacion" element={
+                  <ProtectedRoute roles={['ADMIN']} element={<CrearPublicacion/>} />
                 } />
                 <Route path="/*" element={<Error />} />
               </Routes>
