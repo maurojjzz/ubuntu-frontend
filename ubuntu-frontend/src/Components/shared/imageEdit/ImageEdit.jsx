@@ -1,6 +1,3 @@
-//ImageEdit
-
-
 import { Box, IconButton, Input } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -42,14 +39,26 @@ const ImageEdit = ({ images, onEditImage, onDeleteImage }) => {
           )}
           <IconButton
             aria-label="editar"
-            sx={{ position: 'absolute', top: 8, left: 8 }}
+            sx={{ 
+              position: 'absolute', 
+              top: 8, 
+              left: 8, 
+              bgcolor: 'rgba(0, 0, 0, 0.5)', // Fondo semitransparente
+              color: 'white' // Color del icono
+            }}
             onClick={() => handleEditClick(image.id)} // Pasar el id de la imagen
           >
             <EditIcon />
           </IconButton>
           <IconButton
             aria-label="eliminar"
-            sx={{ position: 'absolute', top: 8, right: 8 }}
+            sx={{ 
+              position: 'absolute', 
+              top: 8, 
+              right: 8, 
+              bgcolor: 'rgba(0, 0, 0, 0.5)', // Fondo semitransparente
+              color: 'white' // Color del icono
+            }}
             onClick={() => onDeleteImage(image.id)} // Pasar el id de la imagen
           >
             <DeleteIcon />
@@ -67,4 +76,3 @@ const ImageEdit = ({ images, onEditImage, onDeleteImage }) => {
 };
 
 export default ImageEdit;
-
