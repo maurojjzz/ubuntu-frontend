@@ -8,3 +8,4 @@ export { default as ImageUpload } from './imageUpload/ImageUpload';
 export { default as ModalAlert } from './modalAlert/ModalAlert';
 export { default as ReusableButton } from './reusableButton/ReusableButton';
 export * from './searchContext/SearchContext';
+export { default as UbuntuLoader } from './ubuntuLoader/UbuntuLoader';

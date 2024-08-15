@@ -16,9 +16,11 @@ const ChatBotBtn = () => {
       sx={{
         fontFamily: "Lato",
         height: "64px",
-        width: "328px",
+        width: "90%",
+        maxWidth: "380px",
         color: "#18191A",
         border: "2px solid #18191A",
+        my: "40px",
         "&:hover": {
           border: "2px solid #18191A",
           backgroundColor: "#f5f4f4",
