@@ -10,10 +10,16 @@ const Microemprendimiento = () => {
   const [microBusiness, setMicroBusiness] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
+  const [idTohide, setIdTohide] = useState(null);
+
+  const [modalStatus, setModalStatus] = useState("success");
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalSubTitle, setModalSubTitle] = useState("");
 
   const navigate = useNavigate();
 
   const microemprendimientos = new ServiceHttp("/microbusiness/findAll");
+  const editMicroBussiness = new ServiceHttp("/microbusiness/update");
 
   const getMicroEmprendimientos = async () => {
     try {
@@ -22,6 +28,9 @@ const Microemprendimiento = () => {
       setMicroBusiness(Array.isArray(data) ? data : []);
     } catch (error) {
       setOpenModal(true);
+      setModalStatus("error");
+      setModalTitle("Error al cargar microemprendimientos");
+      setModalSubTitle("Intente nuevamente mas tarde");
       console.error(error);
     } finally {
       setLoading(false);
@@ -32,6 +41,32 @@ const Microemprendimiento = () => {
     getMicroEmprendimientos();
   }, []);
 
+  const handleHide = async (id) => {
+    const token = sessionStorage.getItem("token");
+    try {
+      const data = await editMicroBussiness.put(id, { managed: true }, token);
+      console.log(data);
+      if(data.error) throw data.error
+      setOpenModal(true);
+      setModalStatus("success");
+      setModalTitle("Microemprendimiento ocultado con éxito");
+      setIdTohide(null);
+      setMicroBusiness(microBusiness.filter((micro) => micro.id !== id));
+    } catch (error) {
+      console.log(error)
+      setOpenModal(true);
+      setModalStatus("error");
+      setModalTitle("Error al ocultar microemprendimiento");
+      setModalSubTitle("Intente nuevamente mas tarde");
+      setIdTohide(null);
+    }
+  };
+
+  useEffect(() => {
+    if(idTohide){
+      handleHide(idTohide);
+    }
+  },[idTohide])
 
 
   const handleTryAgain = () => {
@@ -99,12 +134,13 @@ const Microemprendimiento = () => {
         ) : microBusiness.length === 0 ? (
           <Typography variant="body1">Error al cargar</Typography>
         ) : (
-          microBusiness.map((micro) => (
+          microBusiness.map((micro) => micro.managed ? null : (
             <MicrobusinessCard 
               key={micro.id} 
               id={micro.id}  
               title={micro.name} 
               category={micro.categoryDescription} 
+              setIdTohide={setIdTohide}
             />
           ))
         )}
@@ -112,14 +148,16 @@ const Microemprendimiento = () => {
       <ModalAlert
         open={openModal}
         onClose={() => setOpenModal(false)}
-        status={"error"}
+        status={modalStatus}
         onSuccessAction={() => {
           setOpenModal(false);
-          navigate("/admin/dashboard");
+          if(idTohide){
+            navigate("/admin/dashboard");
+          }
         }}
         onTryAgain={handleTryAgain}
-        title={"Error al cargar microemprendimientos"}
-        subTitle={"Intente nuevamente mas tarde"}
+        title={modalTitle}
+        subTitle={modalSubTitle}
       />
     </Box>
   );

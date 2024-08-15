@@ -6,10 +6,7 @@ import OptionBox from "./optionBox/OptionBox";
 import EditarMicroemprendimiento from "../../components/view/admin/microemprendimiento/EditarMicroemprendimiento";
 // import { ServiceHttp } from "../../utils/services/serviceHttp";
 
-
-
-
-const MicrobusinessCard = ({ id, title, category }) => {
+const MicrobusinessCard = ({ id, title, category, setIdTohide }) => {
   // const microemprendimientos = new ServiceHttp("/microbusiness/findAll");
 
   // console.log("ID en MicrobusinessCard: ", id);
@@ -60,7 +57,12 @@ const MicrobusinessCard = ({ id, title, category }) => {
           >
             <Grow in={focused} timeout={10}>
               <Box>
-                <OptionBox setFocused={setFocused} onEdit={handleEdit} />
+                <OptionBox 
+                  setFocused={setFocused} 
+                  onEdit={handleEdit} 
+                  microBusinessId={id} 
+                  setIdTohide={setIdTohide}
+                />
               </Box>
             </Grow>
 
