@@ -27,7 +27,13 @@ function App() {
       <AuthProvider>
         <SearchProvider>
           <Router>
-            <div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                height: "100vh",
+              }}
+            >
               <Navbar />
               <Routes>
                 <Route path="/" element={<LandingPage />} />
