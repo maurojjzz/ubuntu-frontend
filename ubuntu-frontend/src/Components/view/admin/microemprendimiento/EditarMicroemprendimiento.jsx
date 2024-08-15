@@ -53,7 +53,7 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
       setSubTitle(data.subTitle);
       setImages(data.images.map(img => ({ id: img.id, url: `${img.url}?t=${new Date().getTime()}` }))); // Agrega un parámetro único a la URL de la imagen
   
-      console.log("Imágenes después de obtener el microemprendimiento:", data.images);
+      // console.log("Imágenes después de obtener el microemprendimiento:", data.images);
   
       if (matchedCountry) {
         await fetchProvincias(matchedCountry.id);
@@ -139,17 +139,17 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
     
     try {
       const response = await ServicePutImage(base64Image, id, token);
-      console.log(`Respuesta del servidor al actualizar la imagen con ID: ${id}:`, response);
+      // console.log(`Respuesta del servidor al actualizar la imagen con ID: ${id}:`, response);
       
       if (response.url) {
-        console.log(`Imagen con ID: ${id} actualizada exitosamente. Nueva URL: ${response.url}`);
+        // console.log(`Imagen con ID: ${id} actualizada exitosamente. Nueva URL: ${response.url}`);
         
         // Actualiza el estado de las imágenes para forzar la recarga
         setImages(prevImages => {
           const updatedImages = prevImages.map(img => 
             img.id === id ? { ...img, url: `${response.url}?t=${new Date().getTime()}` } : img
           );
-          console.log("Imágenes después de actualizar:", updatedImages);
+          // console.log("Imágenes después de actualizar:", updatedImages);
           return updatedImages;
         });
       } else {
@@ -168,12 +168,12 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
     const token = sessionStorage.getItem("token");
     
     try {
-      console.log(`Intentando eliminar la imagen con ID: ${id}`);
-      console.log(`Token de autenticación: ${token}`);
+      // console.log(`Intentando eliminar la imagen con ID: ${id}`);
+      // console.log(`Token de autenticación: ${token}`);
       
       await ServiceDeleteImage(id, token);
       
-      console.log(`Imagen con ID: ${id} eliminada exitosamente.`);
+      // console.log(`Imagen con ID: ${id} eliminada exitosamente.`);
       
       setImages(images.filter(img => img.id !== id)); // Actualiza el estado para eliminar la imagen de la UI
     } catch (error) {
@@ -198,7 +198,6 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
   
     try {
       const data = await putMicrobusiness(microBusinessId, updatedMicroBusiness, token);
-      console.log("Microemprendimiento actualizado:", data);
   
       setModalTitle("Cambios guardados con éxito");
       setModalStatus("success");

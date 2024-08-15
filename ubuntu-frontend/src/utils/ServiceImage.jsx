@@ -27,10 +27,10 @@ export const ServicePutImage = async (base64Image, id, token) => {
     };
 
     // Log para ver qué se está enviando
-    console.log("Enviando solicitud PUT al backend con los siguientes datos:");
-    console.log("URL:", `${id}`);
-    console.log("Cuerpo:", body);
-    console.log("Token:", token);
+    // console.log("Enviando solicitud PUT al backend con los siguientes datos:");
+    // console.log("URL:", `${id}`);
+    // console.log("Cuerpo:", body);
+    // console.log("Token:", token);
 
     // Realizar la solicitud PUT
     const data = await serviceImageUpdate.put(`${id}`, body, token);

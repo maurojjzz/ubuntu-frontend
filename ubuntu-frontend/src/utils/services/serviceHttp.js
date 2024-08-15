@@ -69,8 +69,8 @@ export class ServiceHttp {
 
   async post(body, token = null) {
     try {
-      console.log("Enviando el siguiente cuerpo:", body);
-      console.log("Token:", token);
+      // console.log("Enviando el siguiente cuerpo:", body);
+      // console.log("Token:", token);
       const response = await axios.post(`${this._route}${this._subRoute}`, body, {
         headers: { Authorization: `Bearer ${token}` }
       });
