@@ -2,8 +2,8 @@
 import { ServiceHttp } from './services/serviceHttp';
 
 const serviceImage = new ServiceHttp("/images/uploadBase64");
-const service22= new ServiceHttp("/images");
-
+const serviceImageDelete = new ServiceHttp("/images");
+const serviceImageUpdate = new ServiceHttp("/images/updateBase64");
 export const ServiceUploadImage = async (base64Image, microBusinessId, token) => {
   try {
     const body = {
@@ -23,22 +23,33 @@ export const ServiceUploadImage = async (base64Image, microBusinessId, token) =>
 export const ServicePutImage = async (base64Image, id, token) => {
   try {
     const body = {
-      fileBase64: base64Image,
-      id: id
+      fileBase64: base64Image      
     };
-    const data = await serviceImage.put(id, body, token);
+
+    // Log para ver qué se está enviando
+    console.log("Enviando solicitud PUT al backend con los siguientes datos:");
+    console.log("URL:", `${id}`);
+    console.log("Cuerpo:", body);
+    console.log("Token:", token);
+
+    // Realizar la solicitud PUT
+    const data = await serviceImageUpdate.put(`${id}`, body, token);
+    
     if (data.error) throw data.error;
+    
     return data;
   } catch (error) {
-    console.error(error);
+    console.error("Error en ServicePutImage:", error);
     throw error;
   }
-}
+};
+
+
 
 
 export const ServiceDeleteImage = async (id, token) => {
   try {
-    const data = await service22.delete(id, token);
+    const data = await serviceImageDelete.delete(id, token);
     if (data.error) throw data.error;
     return data;
   } catch (error) {

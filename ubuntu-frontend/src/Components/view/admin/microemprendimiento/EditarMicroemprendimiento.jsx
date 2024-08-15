@@ -132,6 +132,8 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
     setMoreInformation(event.target.value);
   };
 
+
+  
   const handleEditImage = async (id, base64Image) => {
     const token = sessionStorage.getItem("token");
     
