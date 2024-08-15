@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography, TextField, Button, FormHelperText } from '@mui/material';
+import { Box, Typography, TextField, FormHelperText } from '@mui/material';
 import { ReusableButton } from '../../../shared';
 
 const CrearPublicacion = () => {
@@ -9,9 +9,13 @@ const CrearPublicacion = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle form submission logic here
-        console.log('Title:', title);
-        console.log('Content:', content);
+
+        if (title && content) {
+            console.log('Title:', title);
+            console.log('Content:', content);
+        } else {
+            console.log('Please fill in all required fields.');
+        }
     };
 
     const handleContentChange = (e) => {
@@ -96,16 +100,7 @@ const CrearPublicacion = () => {
                     <span>Máximo 2000 caracteres</span>
                     <span>{`${content.length}/${maxCharacters}`}</span>
                 </FormHelperText>
-
-                <ReusableButton nombre="Crear publicación" handleClick={handleSubmit} />
-                <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                >
-                    Crear Publicación
-                </Button>
+                <ReusableButton nombre="Crear publicación" type="submit" />
             </Box>
         </Box>
     );
