@@ -2,6 +2,7 @@
 import { ServiceHttp } from './services/serviceHttp';
 
 const serviceImage = new ServiceHttp("/images/uploadBase64");
+const service22= new ServiceHttp("/images");
 
 export const ServiceUploadImage = async (base64Image, microBusinessId, token) => {
   try {
@@ -37,7 +38,7 @@ export const ServicePutImage = async (base64Image, id, token) => {
 
 export const ServiceDeleteImage = async (id, token) => {
   try {
-    const data = await serviceImage.delete(id, token);
+    const data = await service22.delete(id, token);
     if (data.error) throw data.error;
     return data;
   } catch (error) {

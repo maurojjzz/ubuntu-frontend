@@ -55,7 +55,10 @@ export class ServiceHttp {
 
   async delete(id, token = null) {
     try {
-      const response = await axios.delete(`${this._route}${this._subRoute}/${id}`, {
+      // Eliminar barras adicionales al concatenar
+      const url = `${this._route.replace(/\/+$/, '')}/${this._subRoute.replace(/^\/+/, '')}/${id}`;
+  
+      const response = await axios.delete(url, {
         headers: { Authorization: `Bearer ${token}` }
       });
       return response.data;

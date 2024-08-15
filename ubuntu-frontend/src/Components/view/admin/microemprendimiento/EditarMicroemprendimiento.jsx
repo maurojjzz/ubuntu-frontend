@@ -1,3 +1,5 @@
+//EditarMicroemprendimiento
+
 import { Box, Typography, TextField, MenuItem, FormControl, InputLabel, Select, FormHelperText } from "@mui/material";
 import { useState, useEffect } from "react";
 import { ReusableButton, ImageEdit } from "../../../shared";
@@ -8,6 +10,8 @@ import { ModalAlert } from "../../../shared";
 // import { useNavigate } from "react-router-dom";
 import { getCountries } from "../../../../utils/services/dashboard/ServiceCountry";
 import { getProvincias } from "../../../../utils/services/dashboard/ServiceProvince";
+import { ServicePutImage, ServiceDeleteImage } from "../../../../utils/ServiceImage";
+
 
 const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
   const [name, setName] = useState("");
@@ -128,17 +132,40 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
     setMoreInformation(event.target.value);
   };
 
-  const handleEditImage = (id) => {
-    console.log(`Editar imagen con ID: ${id}`);
-    // Aquí puedes agregar la lógica para editar la imagen con este ID
+  const handleEditImage = async (id, base64Image) => {
+    const token = sessionStorage.getItem("token");
+    
+    try {
+      await ServicePutImage(base64Image, id, token);
+      console.log(`Imagen con ID: ${id} actualizada exitosamente.`);
+      
+      // Actualiza la lista de imágenes si es necesario
+      setImages(images.map(img => img.id === id ? { ...img, url: URL.createObjectURL(new Blob([base64Image], { type: 'image/jpeg' })) } : img));
+    } catch (error) {
+      console.error("Error al actualizar la imagen:", error);
+      // Agrega notificación de error si lo deseas
+    }
   };
+  
 
-  const handleDeleteImage = (id) => {
-    console.log(`Eliminar imagen con ID: ${id}`);
-    setImages(images.filter(img => img.id !== id));
-    // Aquí puedes agregar la lógica para eliminar la imagen con este ID
+  const handleDeleteImage = async (id) => {
+    const token = sessionStorage.getItem("token");
+    
+    try {
+      console.log(`Intentando eliminar la imagen con ID: ${id}`);
+      console.log(`Token de autenticación: ${token}`);
+      
+      await ServiceDeleteImage(id, token);
+      
+      console.log(`Imagen con ID: ${id} eliminada exitosamente.`);
+      
+      setImages(images.filter(img => img.id !== id)); // Actualiza el estado para eliminar la imagen de la UI
+    } catch (error) {
+      console.error("Error al eliminar la imagen:", error);
+      // Puedes agregar un mensaje de error o una notificación aquí si lo deseas
+    }
   };
-
+  
   const handleSubmit = async () => {
     const updatedMicroBusiness = {
       name,
@@ -361,7 +388,7 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
           />
         </Box>
 
-          <ImageEdit images={images} onEditImage={handleEditImage} onDeleteImage={handleDeleteImage} />
+        <ImageEdit images={images} onEditImage={handleEditImage} onDeleteImage={handleDeleteImage} />
 
         <ReusableButton nombre="Guardar cambios" handleClick={handleSubmit} />
       </Box>
@@ -377,3 +404,4 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
 };
 
 export default EditarMicroemprendimiento;
+
