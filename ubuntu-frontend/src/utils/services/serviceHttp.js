@@ -55,7 +55,10 @@ export class ServiceHttp {
 
   async delete(id, token = null) {
     try {
-      const response = await axios.delete(`${this._route}${this._subRoute}/${id}`, {
+      // Eliminar barras adicionales al concatenar
+      const url = `${this._route.replace(/\/+$/, '')}/${this._subRoute.replace(/^\/+/, '')}/${id}`;
+  
+      const response = await axios.delete(url, {
         headers: { Authorization: `Bearer ${token}` }
       });
       return response.data;
@@ -66,8 +69,8 @@ export class ServiceHttp {
 
   async post(body, token = null) {
     try {
-      console.log("Enviando el siguiente cuerpo:", body);
-      console.log("Token:", token);
+      // console.log("Enviando el siguiente cuerpo:", body);
+      // console.log("Token:", token);
       const response = await axios.post(`${this._route}${this._subRoute}`, body, {
         headers: { Authorization: `Bearer ${token}` }
       });

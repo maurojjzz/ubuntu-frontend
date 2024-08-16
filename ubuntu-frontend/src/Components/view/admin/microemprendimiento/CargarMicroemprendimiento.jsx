@@ -17,7 +17,7 @@ import { getCountries } from "../../../../utils/services/dashboard/ServiceCountr
 import { getProvincias } from "../../../../utils/services/dashboard/ServiceProvince";
 import { getCategories } from "../../../../utils/services/dashboard/ServiceCategories";
 import { postMicroBusiness } from "../../../../utils/services/dashboard/ServiceMicroBusiness";
-import { ServiceUploadImage } from '../../../../utils/ServiceImageUploader';
+import { ServiceUploadImage } from '../../../../utils/ServiceImage';
 import { ModalAlert } from "../../../shared";
 import { useNavigate } from "react-router-dom";
 
@@ -105,7 +105,7 @@ const CargarMicroemprendimiento = () => {
   };
 
   const handleSubmit = async () => {
-    console.log("Formulario enviado");
+    // console.log("Formulario enviado");
   
     const formData = {
       name,
@@ -124,21 +124,21 @@ const CargarMicroemprendimiento = () => {
   
     const token = sessionStorage.getItem('token');
   
-    console.log("Datos a enviar:", JSON.stringify(formData, null, 2));
-    console.log("Token:", token);
+    // console.log("Datos a enviar:", JSON.stringify(formData, null, 2));
+    // console.log("Token:", token);
   
     try {
       const response = await postMicroBusiness(formData, token);
-      console.log("Respuesta del servidor:", response);
+      // console.log("Respuesta del servidor:", response);
       const microBusinessId = response.id;
-      console.log("ID del microemprendimiento creado:", microBusinessId);
+      // console.log("ID del microemprendimiento creado:", microBusinessId);
 
       for (let image of base64Images) {
-        console.log("Objeto que envío al servidor:", { fileBase64: image.base64, microBusinessId });
+        // console.log("Objeto que envío al servidor:", { fileBase64: image.base64, microBusinessId });
         await ServiceUploadImage(image.base64, microBusinessId, token);
       }
 
-      console.log("Imágenes subidas con éxito");
+      // console.log("Imágenes subidas con éxito");
 
       setModalTitle("Microemprendimiento cargado con éxito");
       setModalStatus("success");
