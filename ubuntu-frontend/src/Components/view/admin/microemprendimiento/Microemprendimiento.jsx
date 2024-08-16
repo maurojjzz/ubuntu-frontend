@@ -5,6 +5,7 @@ import MicrobusinessCard from "../../../microbusinessCard/MicrobusinessCard";
 import { ServiceHttp } from "../../../../utils/services/serviceHttp";
 import { ButtonLoad } from "../../../shared";
 import { ModalAlert } from "../../../shared";
+import EditarMicroemprendimiento from "../../admin/microemprendimiento/EditarMicroemprendimiento";
 
 const Microemprendimiento = () => {
   const [microBusiness, setMicroBusiness] = useState([]);
@@ -15,16 +16,16 @@ const Microemprendimiento = () => {
   const [modalStatus, setModalStatus] = useState("success");
   const [modalTitle, setModalTitle] = useState("");
   const [modalSubTitle, setModalSubTitle] = useState("");
+  const [editingMicroBusinessId, setEditingMicroBusinessId] = useState(null);
 
   const navigate = useNavigate();
-
   const microemprendimientos = new ServiceHttp("/microbusiness/findAll");
   const editMicroBussiness = new ServiceHttp("/microbusiness/update");
 
   const getMicroEmprendimientos = async () => {
     try {
       const data = await microemprendimientos.get("search=");
-      if(data.error) throw data.error
+      if (data.error) throw data.error;
       setMicroBusiness(Array.isArray(data) ? data : []);
     } catch (error) {
       setOpenModal(true);
@@ -75,25 +76,37 @@ const Microemprendimiento = () => {
     getMicroEmprendimientos();
   };
 
+  const handleEditSuccess = () => {
+    setEditingMicroBusinessId(null);
+    getMicroEmprendimientos(); 
+  };
+
+  const handleEditClick = (id) => {
+    setEditingMicroBusinessId(id);
+  };
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      
-      <Typography
-        variant="h4"
-        sx={{
-          fontFamily: "Lato",
-          fontWeight: "500",
-          fontSize: "28px",
-          lineHeight: "35px",
-          mt: "40px",
-          mb: "24px",
-        }}
-        align="center"
-      >
-        Microemprendimientos
-      </Typography>
+      {!loading && microBusiness.length > 0 && !editingMicroBusinessId && (
+        <>
+          <Typography
+            variant="h4"
+            sx={{
+              fontFamily: "Lato",
+              fontWeight: "500",
+              fontSize: "28px",
+              lineHeight: "35px",
+              mt: "40px",
+              mb: "24px",
+            }}
+            align="center"
+          >
+            Microemprendimientos
+          </Typography>
 
-      <ButtonLoad btnText="Cargar Microemprendimiento" btnLink="/admin/microemprendimientos/cargar" />
+          <ButtonLoad btnText="Cargar Microemprendimiento" btnLink="/admin/microemprendimientos/cargar" />
+        </>
+      )}
 
       <Box
         sx={{
@@ -132,19 +145,28 @@ const Microemprendimiento = () => {
             ))}
           </>
         ) : microBusiness.length === 0 ? (
-          <Typography variant="body1">Error al cargar</Typography>
+          <Typography variant="body1">No hay microemprendimientos disponibles</Typography>
+        ) : editingMicroBusinessId ? (
+          <EditarMicroemprendimiento
+            microBusinessId={editingMicroBusinessId}
+            onEditSuccess={handleEditSuccess}
+          />
         ) : (
-          microBusiness.map((micro) => micro.managed ? null : (
-            <MicrobusinessCard 
-              key={micro.id} 
-              id={micro.id}  
-              title={micro.name} 
-              category={micro.categoryDescription} 
-              setIdTohide={setIdTohide}
-            />
-          ))
+          microBusiness
+            .sort((a, b) => b.id - a.id) 
+            .map((micro) => micro.managed ? null :  (
+              <MicrobusinessCard
+                key={micro.id}
+                id={micro.id}
+                title={micro.name}
+                category={micro.categoryDescription}
+                onEditClick={handleEditClick} 
+                setIdTohide={setIdTohide}
+              />
+            ))
         )}
       </Box>
+
       <ModalAlert
         open={openModal}
         onClose={() => setOpenModal(false)}
