@@ -4,7 +4,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import OptionBox from "./optionBox/OptionBox";
 
-const MicrobusinessCard = ({ id, title, category, onEditClick }) => {
+
+const MicrobusinessCard = ({ id, title, category, onEditClick, setIdTohide }) => {
   const [focused, setFocused] = useState(false);
   const theme = useTheme();
 
@@ -45,7 +46,6 @@ const MicrobusinessCard = ({ id, title, category, onEditClick }) => {
           position: "relative",
         }}
       >
-        {/* OptionBox Component for edit functionality */}
         <Grow in={focused} timeout={200}>
           <Box
             sx={{
@@ -75,6 +75,17 @@ const MicrobusinessCard = ({ id, title, category, onEditClick }) => {
               height: "48px",
             }}
           >
+            <Grow in={focused} timeout={10}>
+              <Box>
+                <OptionBox 
+                  setFocused={setFocused} 
+                  onEdit={handleEdit} 
+                  microBusinessId={id} 
+                  setIdTohide={setIdTohide}
+                />
+              </Box>
+            </Grow>
+
             <Typography
               variant="h5"
               sx={{
