@@ -3,6 +3,7 @@ import { ChatBotBtn, UbuntuLoader } from "../../../shared";
 import { Box, Typography } from "@mui/material";
 import CardEstadisticas from "./cardEstadisticas/CardEstadisticas";
 import CardMicrobusinessMonthly from "./cardMicrobusinessMonthly/CardMicrobusinessMonthly";
+import CardMonthlyCategories from "./cardMonthlyCategories/CardMonthlyCategories";
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -52,7 +53,7 @@ const Dashboard = () => {
       <CardMicrobusinessMonthly />
       <CardEstadisticas />
       {/* inicio micromprendimiento por categoria  */}
-      
+      <CardMonthlyCategories />
       {/* fin micromprendimiento por categoria  */}
       <Typography variant={"h6"} component={"h6"} mt={4} sx={styleTitle}>
         Visualizaciones por Publicación
