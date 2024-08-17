@@ -325,6 +325,7 @@ const LandingPage = () => {
             {data.slice(0, 3).map((publicacion, index) => (
               <PublicacionesCard
                 key={index}
+                id={publicacion.id}
                 title={publicacion.title}
                 images={publicacion.images.map((item) => item.url)}
                 date={publicacion.createdAt}
