@@ -1,22 +1,28 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
 import { Card, CardContent, Button, Box } from "@mui/material";
 import { ImageCarousel } from "../shared";
 import { useTheme } from "@mui/material/styles";
 import "./PublicacionesCard.css";
+import axios from "axios";
 
-const PublicacionesCard = ({ title, images, date, text }) => {
-  const [expanded, setExpanded] = useState(false);
+const PublicacionesCard = ({ title, images, date, text, id }) => {
+    const [expanded, setExpanded] = useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+    const handleExpandClick = async () => {
+        if (!expanded) { 
+            try {
+                await axios.get(`http://localhost:8080/publications/getAllPublications/${id}`);
+            } catch (error) {
+                console.error('Error updating viewCount:', error);
+            }
+        }
+        setExpanded(!expanded);
+    };
 
-  const theme = useTheme();
-
-  const paragraphs = text.split("\n\n");
-  const firstParagraph = paragraphs[0];
-  const remainingParagraphs = paragraphs.slice(1);
+    const theme = useTheme();
+    const paragraphs = text.split("\n\n");
+    const firstParagraph = paragraphs[0];
+    const remainingParagraphs = paragraphs.slice(1);
 
     return (
         <Card sx={{
@@ -28,7 +34,7 @@ const PublicacionesCard = ({ title, images, date, text }) => {
             borderRadius: '16px',
             backgroundColor: theme.palette.primary.grisClaro,
             boxShadow: 'none',
-            justifySelf:'center'
+            justifySelf: 'center'
         }}>
             <CardContent >
                 <Box className='publicacionesCard__container__title'>
@@ -51,20 +57,13 @@ const PublicacionesCard = ({ title, images, date, text }) => {
                         )
                 )}
                 <Box className='publicacionesCard__container__button'>
-                    <Button sx={{ color: theme.palette.primary.azul, textTransform: 'none',}} onClick={handleExpandClick}>
+                    <Button sx={{ color: theme.palette.primary.azul, textTransform: 'none', }} onClick={handleExpandClick}>
                         {expanded ? 'Ver menos' : 'Ver más'}
                     </Button>
                 </Box>
             </CardContent>
         </Card>
     );
-};
-
-PublicacionesCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  images: PropTypes.arrayOf(PropTypes.string).isRequired,
-  date: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
 };
 
 export default PublicacionesCard;

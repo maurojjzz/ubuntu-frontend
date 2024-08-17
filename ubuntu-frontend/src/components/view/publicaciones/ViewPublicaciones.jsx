@@ -4,16 +4,25 @@ import PublicacionesCard from '../../cards/PublicacionesCard';
 import SearchBar from '../../searchBar/SearchBar';
 import imagenPublicaciones from '../../../assets/img/imagen publicaciones.jpg';
 import './ViewPublicaciones.css';
-import jsonData from '../../../assets/json/publicaciones.json';
 import SvgMicroemp from '../../svg/MicroEmprSvg';
+import { ServiceHttp } from '../../../utils/services/serviceHttp';
 
 const ViewPublicaciones = () => {
 
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        setData(jsonData);
+        fetchData();
     }, []);
+
+    const fetchData = async () => {
+        try {
+            const publicacionesData = await new ServiceHttp("/publications/getAllPublications").get();
+            setData(publicacionesData);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
 
     return (
         <>
@@ -70,10 +79,11 @@ const ViewPublicaciones = () => {
                     {data.map((publicacion, index) => (
                         <Grid item xs={12} sm={6} md={4} key={index}>
                             <PublicacionesCard
+                                id = {publicacion.id}
                                 title={publicacion.title}
-                                images={publicacion.images}
-                                date={publicacion.date}
-                                text={publicacion.text}
+                                images={publicacion.images.map((item) => item.url)}
+                                date={publicacion.createdAt}
+                                text={publicacion.description}
                             />
                         </Grid>
                     ))}
