@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Card, CardContent, Button, Box } from "@mui/material";
 import { ImageCarousel } from "../shared";
 import { useTheme } from "@mui/material/styles";
 import "./PublicacionesCard.css";
 import axios from "axios";
+import AuthContext from "../../token/auth/AuthProvider";
 
 const PublicacionesCard = ({ title, images, date, text, id }) => {
     const [expanded, setExpanded] = useState(false);
-
+    const {user} = useContext(AuthContext);
+    
     const handleExpandClick = async () => {
-        if (!expanded) { 
+        if (!expanded && user.role != "ADMIN") { 
             try {
                 await axios.get(`http://localhost:8080/publications/getAllPublications/${id}`);
             } catch (error) {

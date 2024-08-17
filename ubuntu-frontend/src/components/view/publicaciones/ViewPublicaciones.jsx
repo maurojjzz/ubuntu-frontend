@@ -25,11 +25,11 @@ const ViewPublicaciones = () => {
     };
 
     return (
-        <>
+        <Box>
             <Box sx={{
                 position: 'relative',
                 width: '100%',
-                height: '60vh',
+                height: '55vh',
             }}>
                 <Box sx={{
                     position: 'absolute',
@@ -89,7 +89,7 @@ const ViewPublicaciones = () => {
                     ))}
                 </Grid>
             </Box>
-        </>
+        </Box>
     );
 };
 
