@@ -14,6 +14,7 @@ const theme = createTheme({
       rojo:'#BC1111',
       azul: '#093C59',
       negro: '#090909',
+      blanco: '#FDFDFE',
     },
     secondary: {
       main: '#59BA47',

@@ -219,6 +219,7 @@ const UserContact = () => {
             textAlign: "center",
             color: theme.palette.primary.azul,
           }}>
+            {/* CAMBIAR PARA QUE DINAMICAMENTE DESPLIEGUE EL NOMBRE DEL MICROEMPRENDIMIENTO CORRECTO */}
             EcoSenda
           </Typography>
           <Typography sx={{
