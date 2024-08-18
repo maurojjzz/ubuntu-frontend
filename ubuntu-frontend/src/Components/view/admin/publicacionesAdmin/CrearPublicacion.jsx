@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Box, Typography, TextField, FormHelperText, Button } from '@mui/material';
 import { ReusableButton } from '../../../shared';
 import axios from 'axios';
 import UploadIcon from '@mui/icons-material/Upload';
 import theme from '../../../../theme/theme';
+import AuthContext from '../../../../token/auth/AuthProvider'
 
 const CrearPublicacion = () => {
     const [title, setTitle] = useState('');
@@ -11,6 +12,8 @@ const CrearPublicacion = () => {
     const [imageFiles, setImageFiles] = useState([]);
     const [imageBase64, setImageBase64] = useState([]);
     const maxCharacters = 2000;
+    const {user} = useContext(AuthContext);
+
 
     // Convert images to base64 and send to backend
     const handleImageUpload = async (event) => {
@@ -62,7 +65,7 @@ const CrearPublicacion = () => {
         if (title && content) {
             try {
                 const payload = {
-                    user: { id: 6 },
+                    user: { id: user.id },
                     title: title,
                     description: content,
                     // images: imageBase64.map(base64 => ({

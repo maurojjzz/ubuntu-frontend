@@ -9,15 +9,17 @@ import AuthContext from "../../token/auth/AuthProvider";
 const PublicacionesCard = ({ title, images, date, text, id }) => {
     const [expanded, setExpanded] = useState(false);
     const {user} = useContext(AuthContext);
-    
+
     const handleExpandClick = async () => {
-        if (!expanded && user.role != "ADMIN") { 
+        if (!expanded) { 
+            if (!user) {
             try {
-                await axios.get(`http://localhost:8080/publications/getAllPublications/${id}`);
+                await axios.get(`http://localhost:8080/api/v1/publications/getAllPublications/${id}`);
             } catch (error) {
                 console.error('Error updating viewCount:', error);
             }
         }
+    }
         setExpanded(!expanded);
     };
 
