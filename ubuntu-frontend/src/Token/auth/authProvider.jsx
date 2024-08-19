@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
                 firstName: decodedToken.first_name || '',
                 lastName: decodedToken.last_name || '',
                 role: decodedToken.role || 'user',
+                id: decodedToken.id,
             };
             setUser(userData);
             console.log('User loaded successfully:', userData);

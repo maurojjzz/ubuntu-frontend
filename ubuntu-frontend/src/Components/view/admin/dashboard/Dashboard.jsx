@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
-import { ChatBotBtn, UbuntuLoader } from "../../../shared";
+import { /* ChatBotBtn,*/ UbuntuLoader } from "../../../shared";
 import { Box, Typography } from "@mui/material";
 import CardEstadisticas from "./cardEstadisticas/CardEstadisticas";
 import CardMicrobusinessMonthly from "./cardMicrobusinessMonthly/CardMicrobusinessMonthly";
+import CardMonthlyCategories from "./cardMonthlyCategories/CardMonthlyCategories";
+import PerfilEstadisticas from "./cardEstadisticas/PerfilEstadisticas";
+
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -19,10 +22,9 @@ const Dashboard = () => {
       setLoading(false);
     }, 2000);
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, []);
 
-  
   return (
     <Box
       sx={{
@@ -51,16 +53,17 @@ const Dashboard = () => {
       </Typography>
       <CardMicrobusinessMonthly />
       <CardEstadisticas />
-      {/* inicio micromprendimiento por categoria  */}
-      
-      {/* fin micromprendimiento por categoria  */}
-      <Typography variant={"h6"} component={"h6"} mt={4} sx={styleTitle}>
+      <CardMonthlyCategories />
+      {/* <Typography variant={"h6"} component={"h6"} align={"center"} mt={4} sx={styleTitle}>
         Visualizaciones por Publicación
-      </Typography>
+      </Typography> */}
+
+      <PerfilEstadisticas />
       {/* inicio visualizaciones por publicacion  */}
-      
+
       {/* fin visualizaciones por publicacion  */}
-      <ChatBotBtn />
+
+      {/* <ChatBotBtn /> */}
       {loading && <UbuntuLoader />}
     </Box>
   );

@@ -12,7 +12,7 @@ import {
 import { useState, useEffect } from "react";
 import UploadIcon from '@mui/icons-material/Upload';
 import { useTheme } from "@mui/material/styles";
-import { ReusableButton } from "../../../shared";
+import { ReusableButton, UbuntuLoader } from "../../../shared";
 import { getCountries } from "../../../../utils/services/dashboard/ServiceCountry";
 import { getProvincias } from "../../../../utils/services/dashboard/ServiceProvince";
 import { getCategories } from "../../../../utils/services/dashboard/ServiceCategories";
@@ -37,14 +37,15 @@ const CargarMicroemprendimiento = () => {
   const [categoriess, setCategoriess] = useState([]);
   const [base64Images, setBase64Images] = useState([]);
   const [imageNames, setImageNames] = useState([]);
-  
+
   const [modalOpen, setModalOpen] = useState(false);
   const [modalStatus, setModalStatus] = useState("success");
   const [modalTitle, setModalTitle] = useState("");
   const [modalSubTitle, setModalSubTitle] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  
+
   const theme = useTheme();
 
   const handleCategoriesChange = (event) => {
@@ -55,7 +56,7 @@ const CargarMicroemprendimiento = () => {
   const handleCountryChange = (event) => {
     const selectedPais = event.target.value;
     setCountry(selectedPais);
-    fetchProvincias(selectedPais); 
+    fetchProvincias(selectedPais);
   };
 
   const handleProvinciaChange = (event) => {
@@ -106,7 +107,7 @@ const CargarMicroemprendimiento = () => {
 
   const handleSubmit = async () => {
     // console.log("Formulario enviado");
-  
+
     const formData = {
       name,
       description: descripcion,
@@ -121,13 +122,14 @@ const CargarMicroemprendimiento = () => {
         id: 1
       }
     };
-  
+
     const token = sessionStorage.getItem('token');
-  
+
     // console.log("Datos a enviar:", JSON.stringify(formData, null, 2));
     // console.log("Token:", token);
-  
+
     try {
+      setLoading(true); 
       const response = await postMicroBusiness(formData, token);
       // console.log("Respuesta del servidor:", response);
       const microBusinessId = response.id;
@@ -146,13 +148,17 @@ const CargarMicroemprendimiento = () => {
     } catch (error) {
       console.error("Error al enviar los datos:", error);
 
+      setLoading(false);
+
       setModalTitle("Lo sentimos, el Microemprendimiento no pudo ser cargado.");
       setModalSubTitle("Por favor, volvé a intentarlo.");
       setModalStatus("error");
       setModalOpen(true);
+    } finally {
+      setLoading(false);
     }
   };
-  
+
   const fetchCategories = async () => {
     try {
       const data = await getCategories();
@@ -373,53 +379,51 @@ const CargarMicroemprendimiento = () => {
 
         <Box sx={{ mt: "20px", width: "90%", display: "flex", justifyContent: "flex-end" }}>
           <Box>
+            <Button
+              variant="contained"
+              startIcon={<UploadIcon />}
+              component="label"
+              sx={{
+                backgroundColor: "#093C59",
+                width: "95%",
+                maxWidth: "152px",
+                minWidth: "152px",
+                height: "40px",
+                borderRadius: "100px",
+                mb: "15px",
+                zIndex: 1,
+                "&:hover": {
+                  backgroundColor: theme.palette.primary.azul,
+                },
+                textTransform: "none",
+                color: "white",
+                fontFamily: "Lato",
+                fontWeight: "700",
+                fontSize: "14px",
+              }}
+            >
+              Subir Imágen
+              <input
+                type="file"
+                hidden
+                accept="image/*"
+                multiple
+                onChange={handleImageUpload}
+              />
+            </Button>
 
-          <Button
-            variant="contained"
-            startIcon={<UploadIcon />}
-            component="label"
-            sx={{
-              backgroundColor: "#093C59",
-              width: "95%",
-              maxWidth: "152px",
-              minWidth: "152px",
-              height: "40px",
-              borderRadius: "100px",
-              mb: "15px",
-              zIndex: 1,
-              "&:hover": {
-                backgroundColor: theme.palette.primary.azul,
-              },
-              textTransform: "none",
-              color: "white",
-              fontFamily: "Lato",
-              fontWeight: "700",
-              fontSize: "14px",
-            }}
-          >
-            Subir Imágen
-            <input
-              type="file"
-              hidden
-              accept="image/*"
-              multiple
-              onChange={handleImageUpload}
-            />
-          </Button>
-          
-          <Typography sx={{ fontSize: '14px', maxWidth: "152px", minWidth: "152px" }}>
-        *Requerida al menos una imagen<br />
-        Hasta 3 imágenes. Máximo 3Mb cada una
-      </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 2 }}>
-        {imageNames.map((name, index) => (
-          <Typography key={index} sx={{ fontSize: '14px', wordBreak: 'break-all', color:"red"}} >
-            Archivo:   {name}
-          </Typography>
-        ))}
-      </Box>
+            <Typography sx={{ fontSize: '14px', maxWidth: "152px", minWidth: "152px" }}>
+              *Requerida al menos una imagen<br />
+              Hasta 3 imágenes. Máximo 3Mb cada una
+            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 2 }}>
+              {imageNames.map((name, index) => (
+                <Typography key={index} sx={{ fontSize: '14px', wordBreak: 'break-all', color: "red" }} >
+                  Archivo:   {name}
+                </Typography>
+              ))}
+            </Box>
           </Box>
-          
         </Box>
 
         <ReusableButton nombre="Cargar Microemprendimiento" handleClick={handleSubmit} />
@@ -429,10 +433,12 @@ const CargarMicroemprendimiento = () => {
         title={modalTitle}
         subTitle={modalSubTitle}
         open={modalOpen}
-        onClose={()=> setModalOpen(false)}
+        onClose={() => setModalOpen(false)}
         onSuccessAction={() => navigate("/admin/microemprendimientos")}
-        onTryAgain={()=> setModalOpen(false)}
+        onTryAgain={() => setModalOpen(false)}
       />
+      {loading && <UbuntuLoader />}
+
     </Box>
   );
 };
