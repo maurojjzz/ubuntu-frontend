@@ -4,6 +4,8 @@ import { Box, Typography } from "@mui/material";
 import CardEstadisticas from "./cardEstadisticas/CardEstadisticas";
 import CardMicrobusinessMonthly from "./cardMicrobusinessMonthly/CardMicrobusinessMonthly";
 import CardMonthlyCategories from "./cardMonthlyCategories/CardMonthlyCategories";
+import PerfilEstadisticas from "./cardEstadisticas/PerfilEstadisticas";
+
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -52,9 +54,11 @@ const Dashboard = () => {
       <CardMicrobusinessMonthly />
       <CardEstadisticas />
       <CardMonthlyCategories />
-      <Typography variant={"h6"} component={"h6"} align={"center"} mt={4} sx={styleTitle}>
+      {/* <Typography variant={"h6"} component={"h6"} align={"center"} mt={4} sx={styleTitle}>
         Visualizaciones por Publicación
-      </Typography>
+      </Typography> */}
+
+      <PerfilEstadisticas />
       {/* inicio visualizaciones por publicacion  */}
 
       {/* fin visualizaciones por publicacion  */}
