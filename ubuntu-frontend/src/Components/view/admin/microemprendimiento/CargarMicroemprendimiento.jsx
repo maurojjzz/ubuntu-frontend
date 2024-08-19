@@ -12,7 +12,7 @@ import {
 import { useState, useEffect } from "react";
 import UploadIcon from '@mui/icons-material/Upload';
 import { useTheme } from "@mui/material/styles";
-import { ReusableButton } from "../../../shared";
+import { ReusableButton, UbuntuLoader } from "../../../shared";
 import { getCountries } from "../../../../utils/services/dashboard/ServiceCountry";
 import { getProvincias } from "../../../../utils/services/dashboard/ServiceProvince";
 import { getCategories } from "../../../../utils/services/dashboard/ServiceCategories";
@@ -42,6 +42,7 @@ const CargarMicroemprendimiento = () => {
   const [modalStatus, setModalStatus] = useState("success");
   const [modalTitle, setModalTitle] = useState("");
   const [modalSubTitle, setModalSubTitle] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   
@@ -128,6 +129,7 @@ const CargarMicroemprendimiento = () => {
     // console.log("Token:", token);
   
     try {
+      setLoading(true); 
       const response = await postMicroBusiness(formData, token);
       // console.log("Respuesta del servidor:", response);
       const microBusinessId = response.id;
@@ -146,10 +148,14 @@ const CargarMicroemprendimiento = () => {
     } catch (error) {
       console.error("Error al enviar los datos:", error);
 
+      setLoading(false);
+
       setModalTitle("Lo sentimos, el Microemprendimiento no pudo ser cargado.");
       setModalSubTitle("Por favor, volvé a intentarlo.");
       setModalStatus("error");
       setModalOpen(true);
+    } finally {
+      setLoading(false);
     }
   };
   
@@ -433,6 +439,8 @@ const CargarMicroemprendimiento = () => {
         onSuccessAction={() => navigate("/admin/microemprendimientos")}
         onTryAgain={()=> setModalOpen(false)}
       />
+      {loading && <UbuntuLoader />}
+
     </Box>
   );
 };
