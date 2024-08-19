@@ -2,7 +2,7 @@
 
 import { Box, Typography, TextField, MenuItem, FormControl, InputLabel, Select, FormHelperText } from "@mui/material";
 import { useState, useEffect } from "react";
-import { ReusableButton, ImageEdit } from "../../../shared";
+import { ReusableButton, ImageEdit, UbuntuLoader } from "../../../shared";
 import { putMicrobusiness } from "../../../../utils/services/dashboard/ServiceMicroBusiness";
 import { ServiceHttp } from "../../../../utils/services/serviceHttp";
 import { getCategories } from "../../../../utils/services/dashboard/ServiceCategories";
@@ -11,7 +11,6 @@ import { ModalAlert } from "../../../shared";
 import { getCountries } from "../../../../utils/services/dashboard/ServiceCountry";
 import { getProvincias } from "../../../../utils/services/dashboard/ServiceProvince";
 import { ServicePutImage, ServiceDeleteImage } from "../../../../utils/ServiceImage";
-
 
 const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
   const [name, setName] = useState("");
@@ -27,23 +26,25 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
   const [provincess, setProvincess] = useState([]);
   const [country, setCountry] = useState("");
   const [countriess, setCountriess] = useState([]);
-  
+
   const [modalOpen, setModalOpen] = useState(false);
   const [modalStatus, setModalStatus] = useState("success");
   const [modalTitle, setModalTitle] = useState("");
   const [modalSubTitle, setModalSubTitle] = useState("");
-  
+
+  const [loading, setLoading] = useState(false);
+
   // const navigate = useNavigate();
 
   const getMicroEmprendimiento = async (microBusinessId) => {
     try {
       const data = await microemprendimientos.getById(microBusinessId);
       if (data.error) throw data.error;
-  
+
       const matchedCategory = categories.find((cat) => cat.description === data.categoryDescription);
       const matchedCountry = countriess.find((pais) => pais.name === data.provinceCountryName);
       const matchedProvince = provincess.find((prov) => prov.name === data.provinceName);
-  
+
       setName(data.name);
       setCategoria(matchedCategory ? matchedCategory.name : "");
       setCountry(matchedCountry ? matchedCountry.id : "");
@@ -51,10 +52,10 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
       setDescription(data.description);
       setMoreInformation(data.moreInformation);
       setSubTitle(data.subTitle);
-      setImages(data.images.map(img => ({ id: img.id, url: `${img.url}?t=${new Date().getTime()}` }))); // Agrega un parámetro único a la URL de la imagen
-  
+      setImages(data.images.map((img) => ({ id: img.id, url: `${img.url}?t=${new Date().getTime()}` }))); // Agrega un parámetro único a la URL de la imagen
+
       // console.log("Imágenes después de obtener el microemprendimiento:", data.images);
-  
+
       if (matchedCountry) {
         await fetchProvincias(matchedCountry.id);
       }
@@ -99,7 +100,7 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
       await fetchCountries();
       await getMicroEmprendimiento(microBusinessId);
     };
-  
+
     initialize();
   }, [microBusinessId]);
 
@@ -132,21 +133,19 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
     setMoreInformation(event.target.value);
   };
 
-
-  
   const handleEditImage = async (id, base64Image) => {
     const token = sessionStorage.getItem("token");
-    
+
     try {
       const response = await ServicePutImage(base64Image, id, token);
       // console.log(`Respuesta del servidor al actualizar la imagen con ID: ${id}:`, response);
-      
+
       if (response.url) {
         // console.log(`Imagen con ID: ${id} actualizada exitosamente. Nueva URL: ${response.url}`);
-        
+
         // Actualiza el estado de las imágenes para forzar la recarga
-        setImages(prevImages => {
-          const updatedImages = prevImages.map(img => 
+        setImages((prevImages) => {
+          const updatedImages = prevImages.map((img) =>
             img.id === id ? { ...img, url: `${response.url}?t=${new Date().getTime()}` } : img
           );
           // console.log("Imágenes después de actualizar:", updatedImages);
@@ -161,27 +160,24 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
     }
   };
 
-
-
-
   const handleDeleteImage = async (id) => {
     const token = sessionStorage.getItem("token");
-    
+
     try {
       // console.log(`Intentando eliminar la imagen con ID: ${id}`);
       // console.log(`Token de autenticación: ${token}`);
-      
+
       await ServiceDeleteImage(id, token);
-      
+
       // console.log(`Imagen con ID: ${id} eliminada exitosamente.`);
-      
-      setImages(images.filter(img => img.id !== id)); // Actualiza el estado para eliminar la imagen de la UI
+
+      setImages(images.filter((img) => img.id !== id)); // Actualiza el estado para eliminar la imagen de la UI
     } catch (error) {
       console.error("Error al eliminar la imagen:", error);
       // Puedes agregar un mensaje de error o una notificación aquí si lo deseas
     }
   };
-  
+
   const handleSubmit = async () => {
     const updatedMicroBusiness = {
       name,
@@ -191,18 +187,19 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
       category: categoria,
       country: parseInt(country),
       province: {
-        id: parseInt(province)
-      }
+        id: parseInt(province),
+      },
     };
     const token = sessionStorage.getItem("token");
-  
+
     try {
+      setLoading(true);
       const data = await putMicrobusiness(microBusinessId, updatedMicroBusiness, token);
-  
+
       setModalTitle("Cambios guardados con éxito");
       setModalStatus("success");
       setModalOpen(true);
-  
+
       // Retrasa la navegación para mostrar el modal
       setTimeout(async () => {
         await getMicroEmprendimiento(microBusinessId); // Llamada para obtener los datos actualizados
@@ -210,16 +207,19 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
       }, 2000); // 2000 ms = 2 segundos
     } catch (error) {
       console.error("Error al actualizar el microemprendimiento:", error);
+      setLoading(false);
       setModalTitle("Lo sentimos, los cambios no pudieron ser guardados.");
       setModalSubTitle("Por favor, volvé a intentarlo.");
       setModalStatus("error");
       setModalOpen(true);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <Box>
-      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center",  marginLeft:"10px"}}>
+      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginLeft: "10px" }}>
         <Typography
           variant="h4"
           sx={{
@@ -331,25 +331,25 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
           <FormControl fullWidth variant="outlined">
             <InputLabel>Provincia/Estado*</InputLabel>
             <Select
-  value={province}
-  onChange={handleProvinciaChange}
-  label="Provincia/Estado*"
-  MenuProps={{
-    PaperProps: {
-      style: {
-        maxHeight: 48 * 4.5 + 8,
-        width: "auto",
-        minWidth: "100%",
-      },
-    },
-  }}
->
-  {provincess.map((prov) => (
-    <MenuItem key={prov.id} value={prov.id}>
-      {prov.name}
-    </MenuItem>
-  ))}
-</Select>
+              value={province}
+              onChange={handleProvinciaChange}
+              label="Provincia/Estado*"
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 48 * 4.5 + 8,
+                    width: "auto",
+                    minWidth: "100%",
+                  },
+                },
+              }}
+            >
+              {provincess.map((prov) => (
+                <MenuItem key={prov.id} value={prov.id}>
+                  {prov.name}
+                </MenuItem>
+              ))}
+            </Select>
 
             <FormHelperText>Seleccioná una Provincia/Estado de la lista</FormHelperText>
           </FormControl>
@@ -415,9 +415,9 @@ const EditarMicroemprendimiento = ({ microBusinessId, onEditSuccess }) => {
         title={modalTitle}
         subTitle={modalSubTitle}
       />
+      {loading && <UbuntuLoader />}
     </Box>
   );
 };
 
 export default EditarMicroemprendimiento;
-
