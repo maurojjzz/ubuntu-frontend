@@ -36,7 +36,7 @@ const CrearPublicacion = () => {
                     base64Images.push(base64);
                     imageNames.push(file.name);
 
-                    console.log('Image name:', file.name); // Debug line
+                    console.log('Image name:', file.name); 
 
                     // Send base64 image to the backend
                     try {
