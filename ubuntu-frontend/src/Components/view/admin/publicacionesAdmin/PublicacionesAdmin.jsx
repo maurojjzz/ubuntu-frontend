@@ -1,21 +1,44 @@
 import { Box, Typography, Grid } from "@mui/material";
 import { ButtonLoad } from "../../../shared";
-import jsonData from '../../../../assets/json/publicaciones.json';
 import PublicacionesAdminCard from "./PublicacionesAdminCard";
 import { useState, useEffect } from "react";
 import EditarPublicacion from "./EditarPublicacion";
+import { ServiceHttp } from "../../../../utils/services/serviceHttp";
+import axios from "axios";
 
 const PublicacionesAdmin = () => {
     const [data, setData] = useState([]);
     const [focusedCardId, setFocusedCardId] = useState(null);
     const [editingId, setEditingId] = useState(null);
+    const [deleteId, setDeleteId] = useState(null);
 
     useEffect(() => {
-        setData(jsonData);
+        fetchData();
     }, []);
 
     const handleEdit = (id) => {
         setEditingId(id); 
+    };
+
+    const handleDelete = async (id) => {
+        setDeleteId(id); 
+        console.log(id)
+        try {
+            await axios.delete(`http://localhost:8080/api/v1/publications/delete/${id}`);
+            setData(prevData => prevData.filter(publicacion => publicacion.id !== id));
+            setDeleteId(null);
+        } catch (error) {
+            console.error("Error deleting publication:", error);
+        }
+    };
+
+    const fetchData = async () => {
+        try {
+            const publicacionesData = await new ServiceHttp("/publications/getAllPublications").get();
+            setData(publicacionesData);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
     };
 
     return (
@@ -59,14 +82,15 @@ const PublicacionesAdmin = () => {
                             {data.map((publicacion, index) => (
                                 <Grid item xs={12} sm={6} md={4} key={index}>
                                     <PublicacionesAdminCard
-                                        cardId={index}
+                                        cardId={publicacion.id}
                                         title={publicacion.title}
-                                        images={publicacion.images}
-                                        date={publicacion.date}
-                                        text={publicacion.text}
+                                        images={publicacion.images.map((item) => item.url)}
+                                        date={publicacion.createdAt}
+                                        text={publicacion.description}
                                         focusedCardId={focusedCardId}
                                         setFocusedCardId={setFocusedCardId}
                                         onEdit={handleEdit} 
+                                        onDelete={handleDelete} 
                                     />
                                 </Grid>
                             ))}

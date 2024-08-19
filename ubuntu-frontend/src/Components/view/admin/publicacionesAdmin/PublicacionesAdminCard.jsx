@@ -1,5 +1,4 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
 import { Card, CardContent, Button, Box, Grow, IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { ImageCarousel } from "../../../shared";
@@ -7,7 +6,7 @@ import { useTheme } from "@mui/material/styles";
 import "../../../cards/PublicacionesCard.css";
 import PublicacionesAdminOptionBox from "./PublicacionesAdminOptionBox";
 
-const PublicacionesAdminCard = ({ title, images, date, text, cardId, focusedCardId, setFocusedCardId, onEdit }) => {
+const PublicacionesAdminCard = ({ title, images, date, text, cardId, focusedCardId, setFocusedCardId, onEdit, onDelete }) => {
     const [expanded, setExpanded] = useState(false);
 
     const handleExpandClick = () => {
@@ -27,7 +26,7 @@ const PublicacionesAdminCard = ({ title, images, date, text, cardId, focusedCard
     };
 
     const handleOcultar = () => {
-        console.log("ocultar");
+        onDelete(cardId);
     };
 
     const isFocused = focusedCardId === cardId;
