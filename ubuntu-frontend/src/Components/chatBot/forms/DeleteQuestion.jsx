@@ -2,10 +2,15 @@ import { Box, Button, Typography, MenuItem, Select, InputLabel, FormControl } fr
 import { useState, useEffect } from "react";
 import axios from "axios";
 import theme from "../../../theme/theme";
+import ModalAlert from "../../shared/modalAlert/ModalAlert";
 
 const DeleteQuestionForm = () => {
     const [questions, setQuestions] = useState([]);
     const [selectedQuestionId, setSelectedQuestionId] = useState('');
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalStatus, setModalStatus] = useState("success");
+    const [modalTitle, setModalTitle] = useState("");
+    const [modalSubTitle, setModalSubTitle] = useState("");
 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -21,17 +26,34 @@ const DeleteQuestionForm = () => {
 
     const handleDelete = async () => {
         if (!selectedQuestionId) {
-            alert("Por favor, seleccione una pregunta.");
+            setModalTitle("Error");
+            setModalSubTitle("Por favor, seleccione una pregunta.");
+            setModalStatus("error");
+            setModalOpen(true);
             return;
         }
         try {
             await axios.delete(`http://localhost:8080/api/v1/questions/delete/${selectedQuestionId}`);
-            alert("Pregunta eliminada con éxito!");
+            setModalTitle("Éxito");
+            setModalSubTitle("Pregunta eliminada con éxito!");
+            setModalStatus("success");
             setSelectedQuestionId(''); 
         } catch (error) {
             console.error("Error deleting question:", error);
-            alert("Hubo un error al eliminar la pregunta.");
+            setModalTitle("Error");
+            setModalSubTitle("Hubo un error al eliminar la pregunta.");
+            setModalStatus("error");
+        } finally {
+            setModalOpen(true);
         }
+    };
+
+    const handleModalClose = () => {
+        setModalOpen(false);
+    };
+
+    const handleSuccessAction = () => {
+        handleModalClose(true);
     };
 
     return (
@@ -71,15 +93,30 @@ const DeleteQuestionForm = () => {
                 variant="contained"
                 onClick={handleDelete}
                 sx={{
-                    backgroundColor: theme.palette.primary.azul,
-                    color: "#FFFFFF",
-                    "&:hover": {
-                        backgroundColor: "#0056b3",
-                    },
-                }}
+                     backgroundColor: theme.palette.primary.azul,
+                     color: 'white',
+                     fontFamily: 'Lato',
+                     borderRadius: '10px',
+                     textTransform: 'none',
+                     padding: '0.5rem 1rem',
+                     '&:hover': {
+                       backgroundColor: theme.palette.primary.verdeFuentes,
+                       color: 'white',
+                     }
+                    }}
             >
                 Eliminar
             </Button>
+
+            <ModalAlert
+                status={modalStatus}
+                title={modalTitle}
+                subTitle={modalSubTitle}
+                open={modalOpen}
+                onClose={handleModalClose}
+                onSuccessAction={handleSuccessAction}
+                onTryAgain={() => {}}
+            />
         </Box>
     );
 };

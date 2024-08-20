@@ -2,44 +2,73 @@ import { Box, TextField, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
 import { useTheme } from '@mui/material/styles';
+import SubQuestions from "./CreateSubQuestion";
+import ModalAlert from "../../shared/modalAlert/ModalAlert";
 
 const CreateQuestionsForm = () => {
     const theme = useTheme();
     
     const [question, setQuestion] = useState("");
     const [answer, setAnswer] = useState("");
-    const [subQuestion, setSubQuestion] = useState("");
-    const [subAnswer, setSubAnswer] = useState("");
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalStatus, setModalStatus] = useState("success");
+    const [modalTitle, setModalTitle] = useState("");
+    const [modalSubTitle, setModalSubTitle] = useState("");
 
+    const handleCreateQuestion = async () => {
+        try {
+            const response = await axios.post('http://localhost:8080/api/v1/questions/create', {
+                questionText: question, 
+                hierarchyDescription: "GENERAL",
+                active: true,
+                answers: []
+            });
+            return response.data.id;
+        } catch (error) {
+            console.error("Error al crear la pregunta:", error);
+            throw error;
+        }
+    };
+
+    const handleCreateAnswer = async (questionId) => {
+        try {
+            await axios.post('http://localhost:8080/api/v1/answers/create', {
+                answerText: answer,
+                questionId: questionId 
+            });
+        } catch (error) {
+            console.error("Error al crear la respuesta:", error);
+            throw error;
+        }
+    };
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
+    
         try {
-            const questionResponse = await axios.post('http://localhost:8080/api/v1/questions/create', {
-                question, 
-                answer
-            });
-            
-            const questionId = questionResponse.data.id; 
-            
-            if (subQuestion && subAnswer) {
-                await axios.post(`http://localhost:8080/api/v1/questions/create/${questionId}/subquestion`, {
-                    question: subQuestion, 
-                    answer: subAnswer
-                });
-            }
-
-            alert("Pregunta y respuestas creadas con éxito!");
-            
+            const questionId = await handleCreateQuestion(); 
+            await handleCreateAnswer(questionId); 
+    
+            setModalTitle("Éxito");
+            setModalSubTitle("Pregunta y respuesta creadas con éxito!");
+            setModalStatus("success");
+        } catch (error) {
+            setModalTitle("Error");
+            setModalSubTitle("Hubo un error al crear la pregunta y respuestas.");
+            setModalStatus("error");
+        } finally {
+            setModalOpen(true);
             setQuestion("");
             setAnswer("");
-            setSubQuestion("");
-            setSubAnswer("");
-
-        } catch (error) {
-            console.error("Error al crear la pregunta y respuestas:", error);
-            alert("Hubo un error al crear la pregunta y respuestas.");
         }
+    };
+
+    const handleModalClose = () => {
+        setModalOpen(false);
+    };
+
+    const handleModalSuccess = () => {
+        handleModalClose(true);
     };
 
     return (
@@ -92,37 +121,40 @@ const CreateQuestionsForm = () => {
                     value={answer}
                     onChange={(e) => setAnswer(e.target.value)}
                 />
-                <TextField
-                    fullWidth
-                    label="Subpregunta"
-                    variant="outlined"
-                    margin="normal"
-                    value={subQuestion}
-                    onChange={(e) => setSubQuestion(e.target.value)}
-                />
-                <TextField
-                    fullWidth
-                    label="Subrespuesta"
-                    variant="outlined"
-                    margin="normal"
-                    value={subAnswer}
-                    onChange={(e) => setSubAnswer(e.target.value)}
-                />
                 <Button
                     type="submit"
                     variant="contained"
-                    sx={{ 
-                        marginTop: "1rem", 
-                        backgroundColor: theme.palette.primary.azul, 
-                        color: theme.palette.primary.blanco,
-                        "&:hover": {
-                            backgroundColor: theme.palette.primary.verdeFuentes,
-                        }
-                    }}
+                    sx={{ mt: 2,
+                        backgroundColor: theme.palette.primary.azul,
+                         color: 'white',
+                         fontFamily: 'Lato',
+                         borderRadius: '10px',
+                         textTransform: 'none',
+                         padding: '0.5rem 1rem',
+                         '&:hover': {
+                           backgroundColor: theme.palette.primary.verdeFuentes,
+                           color: 'white',
+                         }
+                        }}
                 >
                     Crear Pregunta
                 </Button>
             </form>
+            <Box sx={{
+                marginTop: "2rem",
+                width: "100%",
+                maxWidth: "400px",
+            }}>
+                <SubQuestions />
+            </Box>
+            <ModalAlert
+                status={modalStatus}
+                title={modalTitle}
+                subTitle={modalSubTitle}
+                open={modalOpen}
+                onClose={handleModalClose}
+                onSuccessAction={handleModalSuccess}
+            />
         </Box>
     );
 };

@@ -55,17 +55,22 @@ const ChatBotLayout = () => {
       console.error("Expected an array but got:", questions);
       return {};
     }
-
+  
     const responses = {};
     questions.forEach((question) => {
-      const answer = question.answers[0];
-      responses[question.questionText] = {
-        answerText: answer.answerText,
-        subQuestions: question.subQuestions,
-      };
+      const answer = question.answers?.[0];  
+      if (answer) {
+        responses[question.questionText] = {
+          answerText: answer.answerText,
+          subQuestions: question.subQuestions,
+        };
+      } else {
+        console.warn(`No answer found for question: ${question.questionText}`);
+      }
     });
     return responses;
   };
+  
 
   const responses = generateResponses(dataQuestions);
 
