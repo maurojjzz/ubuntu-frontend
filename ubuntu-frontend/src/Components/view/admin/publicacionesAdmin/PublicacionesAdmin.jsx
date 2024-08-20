@@ -64,6 +64,10 @@ const PublicacionesAdmin = () => {
         fetchData();
     };
 
+    const handleCancel = () => {
+        setEditingId(null);
+    };
+
     return (
         <Box sx={{
             display: "flex",
@@ -124,6 +128,7 @@ const PublicacionesAdmin = () => {
                 <EditarPublicacion 
                     publicacion={data.find(pub => pub.id === editingId)} 
                     onSuccess={handleEditSuccess} 
+                    onCancel={handleCancel}
                 /> 
             )}
 
